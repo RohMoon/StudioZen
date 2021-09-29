@@ -243,7 +243,7 @@ public class BoardController extends HttpServlet {
                 response.setContentLength((int) file.length());
 
                 String browser = getBrowser(request);
-                String disposition = getDisposition(storedName, browser);
+                String disposition = getDisposition(realFilNm, browser);
 
                 response.setHeader("Content-Disposition", disposition);
                 response.setHeader("Content-Transfer-Encoding", "binary");

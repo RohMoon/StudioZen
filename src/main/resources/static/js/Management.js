@@ -415,6 +415,33 @@ function goDownloadQnaFileAction(p_stored_file_name) {
     DownloadQnaFileFormData.append('stored_file_name', stored_file_name);
     DownloadQnaFileFormData.append('qna_no', qna_no);
 // ---------------------------------->
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+
+            let fileName = getFileName(xhr.getResponseHeader('content-disposition'));
+            fileName = decodeURI(fileName);
+
+//this.response is what you're looking for
+    console.log(this.response, typeof this.response);
+    let a = document.createElement("a");
+    let url = URL.createObjectURL(this.response)
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+}
+}
+xhr.open('POST', '/qna/download');
+xhr.responseType = 'blob'; // !!필수!!
+xhr.send(DownloadQnaFileFormData);
+};
+
+
+//   --------------------------------- >
+/*
+
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -440,7 +467,9 @@ function goDownloadQnaFileAction(p_stored_file_name) {
     xhr.responseType = 'blob'; // !!필수!!
     xhr.send(DownloadQnaFileFormData);
 };
+*/
 
+// ------------------------------------------->
 
     /*  ajax POST 방식으로 값 전송*/
   /*  $.ajax({
