@@ -412,34 +412,96 @@ function goDownloadQnaFileAction(p_stored_file_name) {
 
 
     let DownloadQnaFileFormData = new FormData();
-    DownloadQnaFileFormData.append('stored_file_name',stored_file_name);
-    DownloadQnaFileFormData.append('qna_no',qna_no);
+    DownloadQnaFileFormData.append('stored_file_name', stored_file_name);
+    DownloadQnaFileFormData.append('qna_no', qna_no);
+// ---------------------------------->
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var filename = "";
+            var disposition = xhr.getResponseHeader('Content-Disposition');
+            if (disposition && disposition.indexOf('attachment') !== -1) {
+                var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                var matches = filenameRegex.exec(disposition);
+                if (matches != null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+            }
+//this.response is what you're looking for
+            console.log(this.response, typeof this.response);
+            var a = document.createElement("a");
+            var url = URL.createObjectURL(this.response)
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    }
+    xhr.open('POST', '/qna/download');
+    xhr.responseType = 'blob'; // !!필수!!
+    xhr.send(DownloadQnaFileFormData);
+};
 
 
     /*  ajax POST 방식으로 값 전송*/
-    $.ajax({
+  /*  $.ajax({
         method: 'POST',
         url: '/qna/download',
         contentType: false,
         enctype: 'multipart/form-data',
         data: DownloadQnaFileFormData,
+        responseType: 'blob',
+        // dataType: 'binary',
         processData: false,
-       /* method: 'POST',
+       /!* method: 'POST',
         url: '/qna/download',
         contentType: 'application/json', // 여기타입 안맞아서 그런듯? 근데 POST로 보내는데 JSOn으로 dto에 떤져주는뎅.. 포스트랑 컨텐트타입 상관없어요 헤더에 정의 된대로 해석할뿐헐 사기당했네;
-        data: JSON.stringify(({stored_file_name, qna_no})),*/
+        data: JSON.stringify(({stored_file_name, qna_no})),*!/
         error: function (xhr, status, error) {
             alert(error);
         },
-        success: function (data) {
+        success: function (data, textStatus, jqXhr) {
             console.log("Success");
             console.log(data);
 
+            if (!data) {
+                return;
+            }
+            try {
+                var blob = new Blob([data], { type: jqXhr.getResponseHeader('content-type') });
+                var fileName = getFileName(jqXhr.getResponseHeader('content-disposition'));
+                fileName = decodeURI(fileName);
+                if (window.navigator.msSaveOrOpenBlob) { // IE 10+
+                    window.navigator.msSaveOrOpenBlob(blob, fileName);
+                } else { // not IE
+                    var link = document.createElement('a');
+                    var url = window.URL.createObjectURL(blob);
+                    link.href = url;
+                    link.target = '_self';
+                    if (fileName) link.download = fileName;
+                    document.body.append(link);
+                    link.click();
+                    link.remove();
+                    window.URL.revokeObjectURL(url);
+                }
+            } catch (e) {
+                console.error(e)
+            }
 
-        },
-    });
-
+        }});}*/
+function getFileName (contentDisposition) {
+    var fileName = contentDisposition
+        .split(';')
+        .filter(function(ele) {
+            return ele.indexOf('filename') > -1
+        })
+        .map(function(ele) {
+            return ele
+                .replace(/"/g, '')
+                .split('=')[1]
+        });
+    return fileName[0] ? fileName[0] : null
 }
+
 
 /* 대쉬보드에서 지점관리 버튼, 혹은 슬라이드 메뉴에서 지점 관리 버튼 클릭시 */
 function goBranchOfficeListBoardAction() {

@@ -238,6 +238,7 @@ public class BoardController extends HttpServlet {
                 // 요부분 리스폰스에 컨텐트타입 application stream
 //                response.setContentType("application/octet-stream; charset=utf-8");
                 response.setContentType("application/octet-stream");
+//                response.setContentType("image/png");
 //            response.setContentLength(fileSize.intValue());
                 response.setContentLength((int) file.length());
 
