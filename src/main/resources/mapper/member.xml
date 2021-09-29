@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.studiozen.DTO.MemberDTO">
+    <select id="getLogin" parameterType="com.example.studiozen.DTO.MemberDTO" resultType="com.example.studiozen.DTO.MemberDTO" statementType="CALLABLE">
+        {CALL PROC_LOGIN(
+            #{member_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{member_password, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{result, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer})}
+    </select>
+    <select id="member_CUD" parameterType="com.example.studiozen.DTO.MemberDTO" resultType="com.example.studiozen.DTO.MemberDTO" statementType="CALLABLE" >
+        {CALL Proc_member_CUD(
+             #{tr_code, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{member_no, mode=IN, jdbcType=NUMERIC, javaType=java.lang.Integer}
+            ,#{member_password, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{member_name, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{member_mail, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{member_phone, mode=IN, jdbcType=NUMERIC, javaType=java.lang.Integer}
+            ,#{member_money, mode=IN, jdbcType=NUMERIC, javaType=java.lang.Integer}
+            ,#{result, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer}
+            ,#{userkey, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
+            )}
+    </select>
+
+    <update id="emailCertify" parameterType="com.example.studiozen.DTO.MemberDTO" statementType="PREPARED">
+        update MEMBER_TB
+        set MAILCONFIRM = 'Y'
+        where MEMBER_NO = #{member_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+    </update>
+
+    <select id="duplicateMailCheck" parameterType="com.example.studiozen.DTO.MemberDTO" resultType="com.example.studiozen.DTO.MemberDTO" statementType="CALLABLE" >
+        {CALL PROC_DuplicateEmailCheck(
+            #{member_mail, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{result, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer}
+            )}
+    </select>
+
+
+
+</mapper>

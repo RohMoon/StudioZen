@@ -1,0 +1,281 @@
+body {
+    margin: 0;
+}
+
+/* 테이블 헤더의 컬럼*/
+th{
+    vertical-align: center;
+    text-align: center;
+    align-content: center;
+}
+/* 테이블 로우가되는 컬럼 */
+td{
+    vertical-align: center;
+    text-align: center;
+    align-content: center;
+}
+tbody{
+    cursor: pointer;
+}
+
+/* 테이블 헤드*/
+thead{
+    text-align: center;
+}
+/* 테이블 꼬리*/
+tfoot{
+    text-align: center;
+}
+
+/* Body 위 베이스 페널 역할을 하는 영역 */
+#baseContainer {
+    height: 100vw;
+    width: 100vw;
+
+}
+/* 테이블 위치 */
+table {
+    margin-left: auto;
+    margin-right: auto;
+    overflow: auto;
+}
+
+/* 메인 페이지 상단 영역*/
+.upper {
+
+    position: static;
+    background-color: lightblue;
+    height: 5vw;
+    width: 100vw;
+    border-bottom: black;
+}
+
+/* 페이지가 갈아 끼워지는 메인 영역*/
+com-mainPanel {
+    position: static;
+    height: 80vw;
+    width: 100vw;
+    overflow: auto;
+}
+#mainPanel{
+    overflow: auto;
+}
+
+/* 하단부 회사명 회사정보등 표시란*/
+footer {
+    position: static;
+    background-color: #DEE9E7;
+    text-align: center;
+    height: 10vw;
+    width: 100vw;
+
+}
+
+/*메인 페이지 타이틀*/
+#title {
+    position: sticky;
+    margin-top: 0.7%;
+    margin-left: 35%;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+/*슬라이드 메뉴 집어넣기 버튼*/
+.btn-leftMenuIn {
+    margin-top: 1%;
+    margin-left: 2.5%;
+    position: fixed;
+    background-image: url("/images/clear_button.png");
+    background-repeat: round;
+    border-width: 0;
+    height: 3vw;
+    width: 3vw;
+    background-color: inherit;
+    cursor: pointer;
+
+}
+
+/* 슬라이드 메뉴 꺼내기 버튼*/
+.btn-leftMenuOut {
+    margin-top: 5%;
+    margin-left: 80%;
+    background-image: url("/images/clear_button.svg");
+    border-width: 0;
+    height: 1.5vw;
+    width: 1.5vw;
+    background-color: inherit;
+    cursor: pointer;
+
+}
+
+/*  본 슬라이드 메뉴  css  */
+.menu_wrap {
+    position: fixed;
+    top: 5vw;
+    left: -25vw;
+    overflow: auto;
+    z-index: 400;
+    background-color: white;
+    width: 25vw;
+    height: 80vw;
+    transition: left .7s ease-in-out;
+    box-sizing: border-box;
+}
+/*  로그인 후 변경되는 메뉴 페널들의 css*/
+.slideMenu {
+    margin-left: 25%;
+    width: 15vw;
+}
+
+/*  슬라이드 메뉴 안에서 로그인 하러가기 */
+#goLoginButton {
+    margin-left: 25%;
+    color: #000;
+    background-color: #ffc107;
+    border-color: #ffc107;
+    width: 10vw;
+}
+
+/* 슬라이드 메뉴 on 일때 이동 위치 */
+.menu_wrap.on {
+    left: 0;
+}
+/* 슬라이드메뉴 꺼낼시 다른 메뉴 잠그기 */
+#dimmed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 300;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+
+/************************* 로그인 패널  */
+
+/* 로그인 문구 */
+#loginTitle{
+    text-align: center;
+}
+/* 아이디 비밀번호 라벨*/
+.loginLabel{
+    width: 100%;
+    margin-left: 45%;
+}
+
+/* 로그인 페이지에서 사용하는 로그인, 회원가입 버튼*/
+.loginPageButton{
+    position: relative;
+    left: 53.5%;
+
+}
+/* Dash ICON  */
+.dash-icon{
+    width: 10vw;
+    height: 10vw;
+}
+
+/* qna 디테일 모달창*/
+.modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: none;
+
+    background-color: rgba(0, 0, 0, 0.4);
+
+
+}
+/* qna 모달창 팝업시에*/
+.modal.show {
+    display: block;
+}
+/* qna 모달창 위치*/
+.modal_body {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    margin-top: 8vw;
+    overflow: inherit;
+    width: 400px;
+    /*height: 600px;*/
+    height: 540px;
+
+    padding: 40px;
+
+    text-align: center;
+
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+
+    transform: translateX(-50%) translateY(-50%);
+}
+/* 모달 내용영역*/
+.modal_contentArea{
+    overflow: auto;
+
+}
+/* 예약 모달 내용 div */
+.detatilModal {
+    border: 1px #0b5ed7;
+    border: #0a58ca;
+}
+
+/* 글쓰기 모달 창 텍스트 에리어*/
+.clientQnaBoardWriteModalTextArea{
+    maxlength : 2048;
+    height: 350px;
+    resize: none;
+    border: black 1px;
+    width: 100%;
+    -webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
+    -moz-box-sizing: border-box; /* FF1+ */
+    box-sizing: border-box;
+}
+
+/* Q&A 글쓰기 모달창 제목 칸*/
+.clientQnaBoardWriteModalTitleArea{
+    border: black 1px;
+}
+
+/*card over flow*/
+.card{
+    overflow: auto;
+}
+
+
+
+.dropdown{
+    position: relative;
+    display: inline-block;
+}
+.branchoffice_button{
+    padding: 10px 40px;
+    font-size:20px;
+    /*background-color: brown;*/
+    /*color: wheat;*/
+}
+#drop-content{
+    position: absolute;
+    z-index: 1;
+}
+#drop-content a{
+    display:block;
+    font-size: 20px;
+    /*background-color: #dfdfdf;*/
+    /*color: black;*/
+    text-decoration: none;
+    padding: 10px 36px;
+    margin: 2px 0px 0px 0px;
+}
+
+#branchOfficeSelectList{
+    overflow: auto;
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.studiozen.DTO.SpaceDTO">
+
+    <select id="Space_CUD" parameterType="com.example.studiozen.DTO.SpaceDTO" resultType="com.example.studiozen.DTO.SpaceDTO" statementType="CALLABLE">
+        {CALL Proc_SPACE_CUD(
+             #{tr_code, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{branchoffice_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{space_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{space_name, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{space_basicprice, mode=IN, jdbcType=NUMERIC, javaType=java.lang.Integer}
+            ,#{space_maxpeople, mode=IN, jdbcType=NUMERIC, javaType=java.lang.Integer}
+            ,#{space_capacity, mode=IN, jdbcType=NUMERIC, javaType=java.lang.Integer}
+            ,#{space_description, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{result, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer}
+            )}
+    </select>
+
+    <select id="BracnchOfficeDetailSelect_ShowSpace" parameterType="com.example.studiozen.DTO.SpaceDTO" resultType="com.example.studiozen.DTO.BranchOfficeDTO" statementType="PREPARED">
+        SELECT
+            SPACE_NO,
+            BRANCHOFFICE_NO,
+            SPACE_BASICPRICE,
+            SPACE_MAXPEOPLE,
+            SPACE_CAPACITY,
+            SPACE_NAME,
+            SPACE_DESCRIPTION,
+            SPACE_REGDATE
+        FROM SPACE_TB
+        WHERE BRANCHOFFICE_NO = #{branchoffice_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+    </select>
+
+</mapper>

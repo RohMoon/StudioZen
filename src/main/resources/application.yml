@@ -1,0 +1,53 @@
+##??? ??
+spring:
+  main:
+    web-application-type: SERVLET
+  ##????????
+  datasource:
+    hikari:
+      jdbcUrl: jdbc:oracle:thin:@localhost:1521:orcl
+      username: scott
+      password: tiger
+      connection-timeout: 15000
+      minimum-idle: 5
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+      maximum-pool-size: 100
+      max-lifetime: 1800000
+      idle-timeout: 300000
+      pool-name: HikariCP
+      auto-commit: true
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+
+  ##JSP ????
+  mvc:
+    view:
+      prefix: /WEB-INF/view/
+      suffix: .jsp
+  devtools:
+    livereload:
+      enabled: true
+  freemarker:
+    cache: false
+
+  thymeleaf:
+    cache: false
+  servlet:
+    multipart:
+      resolve-lazily: false
+      enabled: true
+      file-size-threshold: 0B
+      location: ${java.io.tmpdir}
+      max-file-size: 50MB
+      max-request-size: 50MB
+##????
+#: 0~1024 ???? (?????? ??)
+#1024~ ????
+#FTP 21
+server:
+  tomcat:
+    additional-tld-skip-patterns: "*.jar"
+  port: 8080
+#WWW 8000~8999 ??? ??? ?? ????.
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.studiozen.DTO.BranchOffice">
+
+    <select id="BranchOffice_CUD" parameterType="com.example.studiozen.DTO.BranchOfficeDTO" resultType="com.example.studiozen.DTO.BranchOfficeDTO" statementType="CALLABLE">
+        {CALL Proc_BranchOffice_CUD(
+             #{tr_code, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{branchoffice_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{branchoffice_name, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{branchoffice_local, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{branchoffice_mobile, mode=IN, jdbcType=DECIMAL, javaType=java.lang.Long}
+            ,#{branchoffice_address, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{result, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer}
+            ,#{resultmessage, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{after_key, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
+            )}
+    </select>
+
+    <select id="BracnchOfficeSelect" parameterType="com.example.studiozen.DTO.BranchOfficeDTO" resultType="com.example.studiozen.DTO.BranchOfficeDTO" statementType="PREPARED">
+        Select
+            BRANCHOFFICE_NO,
+            BRANCHOFFICE_NAME,
+            BRANCHOFFICE_LOCAL,
+            BRANCHOFFICE_MOBILE,
+            BRANCHOFFICE_ADDRESS,
+            BRANCHOFFICE_REGDATE,
+            BRANCHOFFICE_DELSIGN
+        From BRANCHOFFICE_TB
+    </select>
+
+    <insert id="BracnchOffice_FileInsert" parameterType="com.example.studiozen.DTO.QNABoardDTO" statementType="PREPARED">
+        INSERT INTO BRANCHOFFICE_IMG_TB(
+            branchoffice_img__no,
+            branchoffice_no,
+            original_file_name,
+            stored_file_name,
+            file_size
+        )
+        VALUES(
+                  'BROFIMG'||BRANCHOFFICE_IMG_TB_SEQ.nextval,
+                  #{after_key, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String},
+                  #{original_file_name, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String},
+                  #{stored_file_name, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String},
+                  #{file_size, mode=IN, jdbcType=NUMERIC, javaType=java.lang.Long}
+              )
+    </insert>
+
+</mapper>

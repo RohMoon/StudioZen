@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.studiozen.DTO.QNABoardDTO">
+    <!--<resultMap id="QNABoardDTOMap" type="com.example.studiozen.DTO.QNABoardDTO">
+        <result property="qna_no" column="qna_no"/>
+        <result property="qna_writer" column="qna_writer"/>
+        <result property="qna_title" column="qna_title"/>
+        <result property="qna_content" column="qna_content"/>
+        <result property="qna_regidate" column="qna_regidate"/>
+        <result property="qna_recomment_no" column="qna_recomment_no"/>
+        <result property="qna_recomment_content" column="qna_recomment_regdate"/>
+        <result property="qna_recomment_writer" column="qna_recomment_writer"/>
+        <result property="qna_recomment_regdate" column="qna_recomment_regdate"/>
+        <result property="result" column="result"/>
+        <result property="qna_img_no" column="qna_img_no"/>
+        <result property="original_file_name" column="original_file_name"/>
+        <result property="stored_file_name" column="stored_file_name"/>
+        <result property="file_size" column="file_size"/>
+        <result property="crea_dtm" column="crea_dtm"/>
+        <result property="crea_id" column="crea_id"/>
+        <result property="del_gb" column="del_gb"/>
+    </resultMap>-->
+    <select id="qnaBoard_SELECT" parameterType="com.example.studiozen.DTO.QNABoardDTO"
+            resultType="com.example.studiozen.DTO.QNABoardDTO" statementType="PREPARED">
+        SELECT
+        rownum row_num,
+        qna_no,
+        qna_writer,
+        qna_title,
+        qna_content,
+        qna_regidate,
+        qna_confirmflag
+        FROM QNA_TB
+        WHERE QNA_DELSIGN = 'N'
+        <if test="qna_writer != 'MEM282108'">
+            AND QNA_WRITER = #{qna_writer}
+        </if>
+        ORDER BY QNA_NO ASC
+    </select>
+
+    <select id="qnaBoard_Detail" parameterType="com.example.studiozen.DTO.QNABoardDTO"
+            resultType="com.example.studiozen.DTO.QNABoardDTO" statementType="PREPARED">
+        SELECT qna.qna_no,
+               qna.qna_title,
+               qna.qna_content,
+               qna.qna_writer,
+               qna.qna_regidate
+        FROM qna_tb qna
+        WHERE qna.qna_no = #{qna_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+    </select>
+
+    <select id="qnaBoard_RecoDetail" parameterType="com.example.studiozen.DTO.QNABoardDTO"
+            resultType="com.example.studiozen.DTO.QNABoardDTO" statementType="PREPARED">
+        SELECT (row_number() over (order by QNA_RECOMMENT_REGDATE)) row_num,
+               reco.qna_recomment_no,
+               reco.qna_recomment_content,
+               reco.qna_recomment_regdate,
+               reco.qna_recomment_writer
+        FROM qna_recomment_tb reco
+        WHERE reco.qna_no = #{qna_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+          AND QNA_RECOMMENT_DELSIGN = 'N'
+        ORDER BY reco.qna_recomment_no ASC
+    </select>
+
+    <select id="qnaBoard_SelectUploadedFile" parameterType="com.example.studiozen.DTO.QNABoardDTO"
+            resultType="com.example.studiozen.DTO.QNABoardDTO" statementType="PREPARED">
+        SELECT QNA_IMG_NO,
+               ORIGINAL_FILE_NAME,
+               STORED_FILE_NAME,
+               FILE_SIZE,
+               CREA_DTM
+        FROM QNABOARD_FILE
+        WHERE QNA_NO = #{qna_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+    </select>
+
+
+    <update id="detailChecked" parameterType="com.example.studiozen.DTO.QNABoardDTO">
+        UPDATE QNA_TB
+        SET QNA_CONFIRMFLAG = 1
+        WHERE QNA_NO = #{qna_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+    </update>
+
+    <select id="qnaBoard_CUD" parameterType="com.example.studiozen.DTO.QNABoardDTO"
+            resultType="com.example.studiozen.DTO.QNABoardDTO" statementType="CALLABLE">
+        {CALL Proc_QNAboard_CUD(
+                #{tr_code, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            , #{qna_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            , #{qna_writer, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            , #{qna_title, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            , #{qna_content, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            , #{result, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer}
+            , #{resultmessage, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
+            , #{after_key, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
+            )}
+    </select>
+
+    <insert id="QNABoardFileInsert" parameterType="com.example.studiozen.DTO.QNABoardDTO" statementType="PREPARED">
+        INSERT INTO QNABOARD_FILE(QNA_IMG_NO,
+                                  QNA_NO,
+                                  ORIGINAL_FILE_NAME,
+                                  STORED_FILE_NAME,
+                                  FILE_SIZE)
+        VALUES ('F' || QNABOARD_FILE_TB_SEQ.nextval,
+                #{after_key, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String},
+                #{original_file_name, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String},
+                #{stored_file_name, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String},
+                #{file_size, mode=IN, jdbcType=NUMERIC, javaType=java.lang.Long})
+    </insert>
+
+    <select id="qnaReco_CUD" parameterType="com.example.studiozen.DTO.QNABoardDTO"
+            resultType="com.example.studiozen.DTO.QNABoardDTO" statementType="CALLABLE">
+        {CALL Proc_QNARecomment_CUD(
+                #{tr_code, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            , #{qna_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            , #{qna_recomment_no, mode=IN, jdbcType=NUMERIC, javaType=java.lang.Integer}
+            , #{qna_recomment_writer, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            , #{qna_recomment_content, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            , #{result, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer}
+            )}
+    </select>
+
+    <select id="getMemberData" parameterType="String">
+        select *
+        from board
+        where userName = #username#
+    </select>
+
+    <select id="PROC_CheckQnaFile" parameterType="com.example.studiozen.DTO.QNABoardDTO"
+            resultType="com.example.studiozen.DTO.QNABoardDTO" statementType="CALLABLE">
+        {CALL PROC_CheckQnaFile(
+            #{qna_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            , #{stored_file_name, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            , #{result, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer}
+            , #{resultmessage, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
+            )}
+    </select>
+
+    <select id="qnaBoardBringDownloadFile" parameterType="com.example.studiozen.DTO.QNABoardDTO" resultType="com.example.studiozen.DTO.QNABoardDTO" statementType="PREPARED">
+        SELECT
+            QNA_IMG_NO,
+            QNA_NO,
+            ORIGINAL_FILE_NAME,
+            STORED_FILE_NAME,
+            FILE_SIZE,
+            CREA_DTM,
+            CREA_ID,
+            DEL_GB
+        FROM QNABOARD_FILE
+        WHERE STORED_FILE_NAME = #{stored_file_name, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+    </select>
+
+</mapper>

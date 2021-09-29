@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.studiozen.DTO.ReservationDTO">
+    <resultMap id="ReservationDTO" type="com.example.studiozen.DTO.ReservationDTO">
+        <result property="reserv_no" column="reserv_no"/>
+        <result property="reserv_hostcode" column="reserv_hostcode"/>
+        <result property="reserv_date" column="reserv_date"/>
+        <result property="reserv_regdate" column="reserv_regdate"/>
+        <result property="reserv_start_time" column="reserv_start_time"/>
+        <result property="reserv_end_time" column="reserv_end_time"/>
+        <result property="reserv_host_mobile" column="reserv_host_mobile"/>
+        <result property="reserv_paystatement" column="reserv_paystatement"/>
+        <result property="reserv_host_email" column="reserv_host_email"/>
+        <result property="reserv_updatedate" column="reserv_updatedate"/>
+        <result property="reserv_del_reason" column="reserv_del_reason"/>
+        <result property="reserv_hostname" column="reserv_hostname"/>
+        <result property="reserv_space" column="reserv_space"/>
+        <result property="reserv_pay_limited" column="reserv_pay_limited"/>
+    </resultMap>
+    <select id="reservation_Select" parameterType="com.example.studiozen.DTO.ReservationDTO" resultType="com.example.studiozen.DTO.ReservationDTO" statementType="PREPARED">
+        SELECT
+            ROWNUM row_num,
+            RS.RESERV_NO,
+            RS.SPACE_NO,
+            sp.SPACE_NAME,
+            RS.RESERV_HOSTCODE,
+            RS.RESERV_DATE,
+            RS.RESERV_START_TIME,
+            RS.RESERV_END_TIME,
+            RS.RESERV_HOST_MOBILE,
+            RS.RESERV_PAYSTATEMENT,
+            (substr(to_char(RESERV_DATE)    ,0,10)) RESERV_DATE,
+            RS.RESERV_HOST_EMAIL,
+            RS.RESERV_UPDATEDATE,
+            RS.RESERV_DEL_SIGN,
+            RS.RESERV_DEL_REASON,
+            RS.RESERV_DEL_DATE,
+            RS.RESERV_PAY_LIMITED,
+            MEM.MEMBER_NAME as reserv_hostname
+        FROM RESERVATION_MANAGE_TB RS
+                 join MEMBER_TB MEM
+                      ON RS.RESERV_HOSTCODE = MEM.MEMBER_NO
+                 join SPACE_TB sp
+                      ON sp.SPACE_NO = rs.SPACE_NO
+        WHERE RESERV_DEL_SIGN = 'N'
+        <if test="reserv_hostcode != 'MEM282108'">
+            AND RS.RESERV_HOSTCODE = #{reserv_hostcode, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+        </if>
+    </select>
+    <select id="reservation_CUD" parameterType="com.example.studiozen.DTO.ReservationDTO" resultType="com.example.studiozen.DTO.ReservationDTO" statementType="CALLABLE">
+        {CALL Proc_RESERVATION_MANAGE_CUD(
+             #{tr_code, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{reserv_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{space_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{reserv_hostcode, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{reserv_date, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{reserv_start_time, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{reserv_end_time, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{reserv_host_mobile, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{reserv_host_email, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{reserv_paystatement, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{reserv_hostname, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{reserv_space, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{reserv_pay_limited, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{result, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer}
+            )}
+    </select>
+    <select id="reservation_Detail" parameterType="com.example.studiozen.DTO.ReservationDTO" resultType="com.example.studiozen.DTO.ReservationDTO" statementType="PREPARED">
+
+        select
+            reserv.RESERV_NO            ,
+            reserv.SPACE_NO             ,
+            sp.    SPACE_NAME           ,
+            reserv.RESERV_HOSTCODE      ,
+            mem.   MEMBER_NAME          as RESERV_HOSTNAME,
+            reserv.RESERV_DATE          ,
+            reserv.RESERV_START_TIME    ,
+            reserv.RESERV_END_TIME      ,
+            reserv.RESERV_HOST_MOBILE   ,
+            reserv.RESERV_PAYSTATEMENT  ,
+            reserv.RESERV_REGDATE       ,
+            reserv.RESERV_HOST_EMAIL    ,
+            reserv.RESERV_UPDATEDATE    ,
+            reserv.RESERV_DEL_SIGN      ,
+            reserv.RESERV_DEL_REASON    ,
+            reserv.RESERV_DEL_DATE      ,
+            reserv.RESERV_PAY_LIMITED
+        from RESERVATION_MANAGE_TB reserv
+                 join MEMBER_TB mem
+                      on reserv.RESERV_HOSTCODE = mem.MEMBER_NO
+                 join SPACE_TB sp
+                      on reserv.SPACE_NO = sp.SPACE_NO
+                where reserv.RESERV_NO = #{reserv_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+    </select>
+
+</mapper>
