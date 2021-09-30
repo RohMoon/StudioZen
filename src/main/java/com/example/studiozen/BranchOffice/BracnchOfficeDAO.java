@@ -38,6 +38,8 @@ public class BracnchOfficeDAO {
     public List<BranchOfficeDTO> BracnchOfficeSelect(BranchOfficeDTO branchOfficeDTO) throws SqlSessionException {
 
         List<BranchOfficeDTO> branchOfficeSelectList = sqlSessionTemplate.selectList("BracnchOfficeSelect",branchOfficeDTO);
+        branchOfficeSelectList.addAll(sqlSessionTemplate.selectList("BracnchOfficeImgSelect",branchOfficeDTO));
+
         return branchOfficeSelectList;
 
     }

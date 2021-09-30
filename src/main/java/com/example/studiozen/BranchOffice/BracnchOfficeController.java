@@ -2,16 +2,17 @@ package com.example.studiozen.BranchOffice;
 
 
 import com.example.studiozen.DTO.BranchOfficeDTO;
-import com.example.studiozen.DTO.SpaceDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class BracnchOfficeController {
 
     private final BracnchOfficeLogic bracnchOfficeLogic;
 
-    private final String imgPath = "images/branchoffice";
+    private final String branchOfficeImgPath = "C:\\dev\\file\\images\\branchoffice\\";
 
     //생성자 주입
     public BracnchOfficeController(BracnchOfficeLogic bracnchOfficeLogic) {
@@ -47,6 +48,101 @@ public class BracnchOfficeController {
         return fileName;
     }
 
+    //여기서 받아서 파람으로 받아서 !
+    public void fileDown(HttpServletRequest request, HttpServletResponse response,
+                         String storedName, String realFilNm, Long fileSize) throws IOException {
+
+        File file = new File(branchOfficeImgPath + storedName);
+        logger.info("\nroot ==>" + branchOfficeImgPath + storedName);
+        FileInputStream fis = null;
+        OutputStream out = null;
+        try {
+
+            if (file.exists() && file.isFile()) {//여기서 if문을 안타니까 바로 터진거
+                // 요부분 리스폰스에 컨텐트타입 application stream
+//                response.setContentType("application/octet-stream; charset=utf-8");
+                response.setContentType("application/octet-stream");
+//                response.setContentType("image/png");
+//            response.setContentLength(fileSize.intValue());
+                response.setContentLength((int) file.length());
+
+                String browser = getBrowser(request);
+                String disposition = getDisposition(realFilNm, browser);
+
+                response.setHeader("Content-Disposition", disposition);
+                response.setHeader("Content-Transfer-Encoding", "binary");
+
+
+                fis = new FileInputStream(file); // 아 얘네
+                out = response.getOutputStream();
+
+                FileCopyUtils.copy(fis, out);
+                // 얘가 이제 보내줘야하는데 여기서 뭐 다운이나 그런게 일어나질않음..
+                // 일단 파일자체는 리드 라이트임. 읽고 쓰는거임 그 내부과정에선 데이터 변환일어나는거구
+                //바이너리로 들어오는게 아니라 String으로 들어옴 js 자체에서 타입 검사 했을때 타입이 스트링으로 확인됨.
+                logger.info("FileDownLoad Loading");
+                if (fis != null) {
+                    fis.close();
+                    out.flush();
+                    out.close();
+                }
+
+            } else {
+                logger.info("Has not File");
+            }
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+        }finally {
+            if (fis != null) {
+                fis.close();
+                out.flush();
+                out.close();
+            }
+        }
+
+    }
+
+
+    private String getBrowser(HttpServletRequest request) {
+        String header = request.getHeader("User-Agent");
+        if (header.indexOf("MSIE") > -1 || header.indexOf("Trident") > -1)
+            return "MSIE";
+        else if (header.indexOf("Chrome") > -1)
+            return "Chrome";
+        else if (header.indexOf("Opera") > -1)
+            return "Opera";
+        return "Firefox";
+    }
+
+    private String getDisposition(String filename, String browser) throws UnsupportedEncodingException {
+        String dispositionPrefix = "attachment;filename=";
+        String encodedFilename = null;
+        if (browser.equals("MSIE")) {
+            encodedFilename = URLEncoder.encode(filename, "UTF-8").replaceAll(
+                    "\\+", "%20"
+            );
+        } else if (browser.equals("Firefox")) {
+            encodedFilename = "\""
+                    + new String(filename.getBytes("UTF-8"), "8859_1") + "\"";
+        } else if (browser.equals("Opera")) {
+            encodedFilename = "\""
+                    + new String(filename.getBytes("UTF-8"), "8859_1") + "\"";
+        } else if (browser.equals("Chrome")) {
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < filename.length(); i++) {
+                char c = filename.charAt(i);
+                if (c > '~') {
+                    sb.append(URLEncoder.encode("" + c, "UTF-8"));
+                } else {
+                    sb.append(c);
+                }
+            }
+            encodedFilename = sb.toString();
+
+        }
+        return dispositionPrefix + encodedFilename;
+    }
+
 
     /******************************************지점 정보 검색 기능*****************************************************/
     /*********전체 지점 목록 조회********
@@ -56,7 +152,7 @@ public class BracnchOfficeController {
      }
      **********************/
     @PostMapping(value = "/select")
-    public ModelAndView BracnchOfficeSelect(HttpServletRequest httpServletRequest, BranchOfficeDTO branchOfficeDTO) {
+    public ModelAndView BracnchOfficeSelect(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,BranchOfficeDTO branchOfficeDTO) {
 
         //@ResponseBody을 설정하시면
         //반환되는 view객체에서 랜더링메소드을 타서 아웃풋을 내보내는게 아니라
@@ -71,8 +167,19 @@ public class BracnchOfficeController {
         List<BranchOfficeDTO> branchOfficeSelectList = bracnchOfficeLogic.BracnchOfficeSelect(branchOfficeDTO);
 
         logger.info("branchOfficeSelectList =====>" + branchOfficeSelectList);
-        logger.info("branchOfficeSelectList.get(0)) ====== >" + branchOfficeSelectList.toString());
+        for (int i=0; i<branchOfficeSelectList.size();i++){
+            logger.info(branchOfficeSelectList.get(i));
+        }
+//        logger.info("branchOfficeSelectList.get(0)) ====== >" + branchOfficeSelectList.size());
 //        logger.info("branchOfficeDTO =====> "+branchOfficeDTO);
+        try {
+            //요기서 DB에서 받아온 경로 파일이름 다잡아줘서 파람으로 넣어주고
+            fileDown(httpServletRequest, httpServletResponse, branchOfficeDTO.getStored_file_name(), branchOfficeDTO.getOriginal_file_name(), branchOfficeDTO.getFile_size());
+        } catch (Exception e) {
+            logger.info("e.getMessage() ==========================>" + e.getMessage());
+            logger.error("e.toString() ==========================>" + e.toString());
+        }
+
 
         ModelAndView modelAndView = new ModelAndView();
         httpServletRequest.setAttribute("branchOfficeSelectList",branchOfficeSelectList);
@@ -156,7 +263,7 @@ public class BracnchOfficeController {
             for (int i=0; i< multi.length; i++) {
                 try {
                     logger.info("=>=>=>=>=>=>=>=>=>Request has files ");
-                    String uploadpath = imgPath;
+                    String uploadpath = branchOfficeImgPath;
                     String originFilename = multi[i].getOriginalFilename();
                     String extName = originFilename.substring(originFilename.lastIndexOf("."), originFilename.length());
                     long size = multi[i].getSize();

@@ -33,7 +33,14 @@
                                 "<div class=\"row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center\">" +
                                 "<div class=\"col mb-5\">" +
                                 "<div class= \"card h-100\">" +
-                                "<!-- BranchOffice image-->" +
+                                /*이미지 컨터이너 부분 */
+                                /*<!-- BranchOffice image-->*/
+                                "<div class=\"slideshow-container\">"+
+                                "<div class=\"mySlides fade\">"+
+                                "<div class=\"numbertext\">1 / 6</div>"+
+                                "<div class=\"text\">ZENSTUDIO</div>"+
+                                "</div>"+
+                                "</div>"+
                                 "<img class=\"card-img-top\" src=\"https://dummyimage.com/450x300/dee2e6/6c757d.jpg\" >" +
                                 "<!-- BranchOffice details-->" +
                                 "<div class=\"card-body p-4\">" +
