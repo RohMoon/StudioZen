@@ -2,19 +2,19 @@ package com.example.studiozen.BranchOffice;
 
 
 import com.example.studiozen.DTO.BranchOfficeDTO;
+import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.URLEncoder;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("BracnchOffice")
@@ -49,100 +49,42 @@ public class BracnchOfficeController {
     }
 
     //여기서 받아서 파람으로 받아서 !
-    public void fileDown(HttpServletRequest request, HttpServletResponse response,
-                         String storedName, String realFilNm, Long fileSize) throws IOException {
+    public byte[] fileDown(String storedName) throws IOException {
 
         File file = new File(branchOfficeImgPath + storedName);
         logger.info("\nroot ==>" + branchOfficeImgPath + storedName);
         FileInputStream fis = null;
-        OutputStream out = null;
+        byte[] fileArray = null;
+        ByteArrayOutputStream byteArrayOutputStream = new  ByteArrayOutputStream();
+        int len=0;
         try {
 
             if (file.exists() && file.isFile()) {//여기서 if문을 안타니까 바로 터진거
-                // 요부분 리스폰스에 컨텐트타입 application stream
-//                response.setContentType("application/octet-stream; charset=utf-8");
-                response.setContentType("application/octet-stream");
-//                response.setContentType("image/png");
-//            response.setContentLength(fileSize.intValue());
-                response.setContentLength((int) file.length());
 
-                String browser = getBrowser(request);
-                String disposition = getDisposition(realFilNm, browser);
-
-                response.setHeader("Content-Disposition", disposition);
-                response.setHeader("Content-Transfer-Encoding", "binary");
-
-
+                byte[] buf = new byte[1024];
                 fis = new FileInputStream(file); // 아 얘네
-                out = response.getOutputStream();
-
-                FileCopyUtils.copy(fis, out);
-                // 얘가 이제 보내줘야하는데 여기서 뭐 다운이나 그런게 일어나질않음..
-                // 일단 파일자체는 리드 라이트임. 읽고 쓰는거임 그 내부과정에선 데이터 변환일어나는거구
-                //바이너리로 들어오는게 아니라 String으로 들어옴 js 자체에서 타입 검사 했을때 타입이 스트링으로 확인됨.
-                logger.info("FileDownLoad Loading");
-                if (fis != null) {
-                    fis.close();
-                    out.flush();
-                    out.close();
+                while ((len=fis.read(buf))!=-1){
+                    byteArrayOutputStream.write(buf,0,len);
                 }
+                logger.info("FileDownLoad Loading");
+                fileArray = byteArrayOutputStream.toByteArray();
 
             } else {
                 logger.info("Has not File");
             }
         } catch (Exception e) {
             logger.info(e.getMessage());
-        }finally {
+        } finally {
             if (fis != null) {
                 fis.close();
-                out.flush();
-                out.close();
             }
         }
-
+        return fileArray;
     }
-
-
-    private String getBrowser(HttpServletRequest request) {
-        String header = request.getHeader("User-Agent");
-        if (header.indexOf("MSIE") > -1 || header.indexOf("Trident") > -1)
-            return "MSIE";
-        else if (header.indexOf("Chrome") > -1)
-            return "Chrome";
-        else if (header.indexOf("Opera") > -1)
-            return "Opera";
-        return "Firefox";
+    public static byte[] encodingBase64(byte[] targetBytes){
+        Base64.Encoder encoder = Base64.getEncoder();
+        return encoder.encode(targetBytes);
     }
-
-    private String getDisposition(String filename, String browser) throws UnsupportedEncodingException {
-        String dispositionPrefix = "attachment;filename=";
-        String encodedFilename = null;
-        if (browser.equals("MSIE")) {
-            encodedFilename = URLEncoder.encode(filename, "UTF-8").replaceAll(
-                    "\\+", "%20"
-            );
-        } else if (browser.equals("Firefox")) {
-            encodedFilename = "\""
-                    + new String(filename.getBytes("UTF-8"), "8859_1") + "\"";
-        } else if (browser.equals("Opera")) {
-            encodedFilename = "\""
-                    + new String(filename.getBytes("UTF-8"), "8859_1") + "\"";
-        } else if (browser.equals("Chrome")) {
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < filename.length(); i++) {
-                char c = filename.charAt(i);
-                if (c > '~') {
-                    sb.append(URLEncoder.encode("" + c, "UTF-8"));
-                } else {
-                    sb.append(c);
-                }
-            }
-            encodedFilename = sb.toString();
-
-        }
-        return dispositionPrefix + encodedFilename;
-    }
-
 
     /******************************************지점 정보 검색 기능*****************************************************/
     /*********전체 지점 목록 조회********
@@ -152,47 +94,60 @@ public class BracnchOfficeController {
      }
      **********************/
     @PostMapping(value = "/select")
-    public ModelAndView BracnchOfficeSelect(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,BranchOfficeDTO branchOfficeDTO) {
+    public ModelAndView BracnchOfficeSelect(HttpServletRequest httpServletRequest,
+                                           @RequestBody BranchOfficeDTO branchOfficeDTO) {
 
         //@ResponseBody을 설정하시면
         //반환되는 view객체에서 랜더링메소드을 타서 아웃풋을 내보내는게 아니라
         //메세지컨버터에서 response.out에 직접 처리됩니다
         //현재 상황은 jsonView객체을 메시지컨버터에 던진상태라서
         //jsonView객체 자체가 미디어타입에 의해서 설정된 json메시지컨버터의해
-        //json으로 아웃풋이 나가는 상태입니다
+        //json으로 아웃풋이 나가는 상태입니다.
+
         logger.info("< ==== BracnchOfficeSelect ==== > ");
 
         logger.info(" 주소로 들어온 session_no ==== > " + branchOfficeDTO.getSession_no());
 
-        List<BranchOfficeDTO> branchOfficeSelectList = bracnchOfficeLogic.BracnchOfficeSelect(branchOfficeDTO);
+        Gson gson = new Gson();
 
-        logger.info("branchOfficeSelectList =====>" + branchOfficeSelectList);
-        for (int i=0; i<branchOfficeSelectList.size();i++){
-            logger.info(branchOfficeSelectList.get(i));
-        }
-//        logger.info("branchOfficeSelectList.get(0)) ====== >" + branchOfficeSelectList.size());
-//        logger.info("branchOfficeDTO =====> "+branchOfficeDTO);
-        try {
-            //요기서 DB에서 받아온 경로 파일이름 다잡아줘서 파람으로 넣어주고
-            fileDown(httpServletRequest, httpServletResponse, branchOfficeDTO.getStored_file_name(), branchOfficeDTO.getOriginal_file_name(), branchOfficeDTO.getFile_size());
-        } catch (Exception e) {
-            logger.info("e.getMessage() ==========================>" + e.getMessage());
-            logger.error("e.toString() ==========================>" + e.toString());
-        }
+        Map<String, List<BranchOfficeDTO>> bracnchOfficeSelectMap  =
+                bracnchOfficeLogic.BracnchOfficeSelect(branchOfficeDTO);
 
+        logger.info("branchOfficeSelectList =====>\n" + bracnchOfficeSelectMap.get("branchOfficeSelectList"));
+        logger.info("branchOfficeSelectList JSON =====>\n" + gson.toJson(bracnchOfficeSelectMap));
+
+        for (int i = 0; i < bracnchOfficeSelectMap.get("branchOfficeImgSelectList").size(); i++) {
+
+            logger.info("Get =====> GET"+i+ "===?"+ bracnchOfficeSelectMap.get("branchOfficeImgSelectList").get(i));
+            try {
+                //요기서 DB에서 받아온 경로 파일이름 다잡아줘서 파람으로 넣어주고
+                byte[] imgBytes = fileDown(bracnchOfficeSelectMap.get("branchOfficeImgSelectList").get(i).getStored_file_name());
+                byte[] baseIncodingBytes = encodingBase64(imgBytes);
+                String imgOut = new String( baseIncodingBytes);
+                bracnchOfficeSelectMap.get("branchOfficeImgSelectList").get(i).setBranchoffice_img_code(imgOut);
+//                httpServletRequest.setAttribute("brImgCode"+i,bracnchOfficeSelectMap.get("branchOfficeImgSelectList").get(i).getBranchoffice_img_code());
+
+                logger.info("imgString=============>imgString=========>imgString=====>"+imgOut);
+            } catch (Exception e) {
+                logger.info("e.getMessage() ==========================>" + e.getMessage());
+                logger.error("e.toString() ==========================>" + e.toString());
+            }
+        }
 
         ModelAndView modelAndView = new ModelAndView();
-        httpServletRequest.setAttribute("branchOfficeSelectList",branchOfficeSelectList);
+        httpServletRequest.setAttribute("branchOfficeSelectList", bracnchOfficeSelectMap.get("branchOfficeSelectList"));
+        httpServletRequest.setAttribute("branchOfficeImgSelectList", bracnchOfficeSelectMap.get("branchOfficeImgSelectList"));
 //        modelAndView.addObject("branchOfficeSelectList",branchOfficeSelectList);
-
         //게시판 CUD 중 작성 성공 / 실패에 대한 결과값을 int result로 반환
         if (branchOfficeDTO.getResult() == 1) {
             logger.info("성공페이지 연결");
             modelAndView.setViewName("BranchOffice/BranchOfficeListBoard");
+            logger.info("modelAndView====>" + gson.toJson(modelAndView));
             return modelAndView;
 
         } else {
             modelAndView.setViewName("BranchOffice/BranchOfficeListBoard");
+            logger.info("modelAndView====>" + gson.toJson(modelAndView));
             return modelAndView;
 
         }
@@ -200,14 +155,14 @@ public class BracnchOfficeController {
     }// End of SelectAll Method   // End of SelectAll Method  // End of SelectAll Method
 
 
-/*
-    */
+    /*
+     */
 /********* 지점 상세 조회********
-     http://localhost:8080/BracnchOffice/select
-     {
-     "session_no" : "mem282108"
-     }
-     **********************//*
+ http://localhost:8080/BracnchOffice/select
+ {
+ "session_no" : "mem282108"
+ }
+ **********************//*
 
     @PostMapping(value = "/detail")
     public ModelAndView BracnchOfficeDetailSelect(HttpServletRequest httpServletRequest, BranchOfficeDTO branchOfficeDTO) {
@@ -254,13 +209,13 @@ public class BracnchOfficeController {
     @PostMapping(value = "/register")
     public String BracnchOfficeRegister(@RequestParam(name = "imgFile", required = false) MultipartFile[] multi, BranchOfficeDTO branchOfficeDTO) {
         logger.info(branchOfficeDTO.getTr_code());
-        logger.info("branchOfficeDTO ====== > \n"+branchOfficeDTO);
+        logger.info("branchOfficeDTO ====== > \n" + branchOfficeDTO);
 
 
         String result = bracnchOfficeLogic.BracnchOfficeRegister(branchOfficeDTO);
 
         if (multi != null) {
-            for (int i=0; i< multi.length; i++) {
+            for (int i = 0; i < multi.length; i++) {
                 try {
                     logger.info("=>=>=>=>=>=>=>=>=>Request has files ");
                     String uploadpath = branchOfficeImgPath;
@@ -292,10 +247,6 @@ public class BracnchOfficeController {
                 }
             }
         }
-
-
-
-
 
 
         logger.info("  CUD 동작 결과 구분   ====  > " + branchOfficeDTO.getResult());

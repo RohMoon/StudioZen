@@ -5,15 +5,36 @@
   Time: 오후 3:01
   To change this template use File | Settings | File Templates.
 --%>
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script>
+let testVar = "";
+alert("BBB");
+</script>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="com.example.studiozen.DTO.BranchOfficeDTO" %>
-
 <%
     List<BranchOfficeDTO> branchOfficeSelectList = (List<BranchOfficeDTO>) request.getAttribute("branchOfficeSelectList");
+    List<BranchOfficeDTO> branchOfficeImgSelectList = (List<BranchOfficeDTO>) request.getAttribute("branchOfficeImgSelectList");
     int size = 0;
+    String imgTest =branchOfficeImgSelectList.get(0).getBranchoffice_img_code();
+   out.print("<script>alert(\"aaaaa\");</script>");
+   out.print("why------?");
 %>
+
+<script type="text/javascript" defer>
+
+    window.onload = function () {
+        alert("TTT");
+    }
+    document.onreadystatechange =function () {
+        testVar = "<%=imgTest%>";
+        testVar = "";
+        alert("TEsta");
+    }
+</script>
+<div id="branchOfficeSelectList">
+
 <div id="modalSpace">
 
 </div>
@@ -22,7 +43,6 @@
 </div>
 
 
-<div id="branchOfficeSelectList">
 
     <%
         if (branchOfficeSelectList.size() > 0) {
@@ -67,21 +87,3 @@
     %>
 
 </div>
-<%--    ${branchOfficeDTOList}--%>
-</p>
-
-</p>
-<%--        <div class="col mb-5">
-            <div class="card h-100">
-                <!-- BranchOffice image-->
-                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="...">
-                <!-- BranchOffice details-->
-                <div class="card-body p-4">
-                    <div class="text-center">
-                        <!-- BranchOffice name-->
-                        <h5 class="fw-bolder">Fancy Product</h5>
-                        <!-- BranchOffice price-->
-                        $40.00 - $80.00
-                    </div>--%>
-
-<%--</main>--%>

@@ -26,6 +26,7 @@
             BRANCHOFFICE_REGDATE,
             BRANCHOFFICE_DELSIGN
         From BRANCHOFFICE_TB
+        ORDER BY BRANCHOFFICE_NO
     </select>
 
     <select id="BracnchOfficeImgSelect" parameterType="com.example.studiozen.DTO.BranchOfficeDTO" resultType="com.example.studiozen.DTO.BranchOfficeDTO" statementType="PREPARED">
