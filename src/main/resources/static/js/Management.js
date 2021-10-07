@@ -52,7 +52,7 @@ function qnaDetailBoardAction(e) {
 }
 
 /* 모달창 켜져있을때 클릭시 */
-    function qnaDetailModalAction() {
+function qnaDetailModalAction() {
     const body = document.querySelector('body');
     const modal = document.querySelector('.modal');
     const btnOpenPopup = document.querySelector('.btn-open-popup');
@@ -423,20 +423,20 @@ function goDownloadQnaFileAction(p_stored_file_name) {
             fileName = decodeURI(fileName);
 
 //this.response is what you're looking for
-    console.log(this.response, typeof this.response);
-    let a = document.createElement("a");
-    let url = URL.createObjectURL(this.response)
-    a.href = url;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    window.URL.revokeObjectURL(url);
+            console.log(this.response, typeof this.response);
+            let a = document.createElement("a");
+            let url = URL.createObjectURL(this.response)
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    }
+    xhr.open('POST', '/qna/download');
+    xhr.responseType = 'blob'; // !!필수!!
+    xhr.send(DownloadQnaFileFormData);
 }
-}
-xhr.open('POST', '/qna/download');
-xhr.responseType = 'blob'; // !!필수!!
-xhr.send(DownloadQnaFileFormData);
-};
 
 
 //   --------------------------------- >
@@ -471,59 +471,60 @@ xhr.send(DownloadQnaFileFormData);
 
 // ------------------------------------------->
 
-    /*  ajax POST 방식으로 값 전송*/
-  /*  $.ajax({
-        method: 'POST',
-        url: '/qna/download',
-        contentType: false,
-        enctype: 'multipart/form-data',
-        data: DownloadQnaFileFormData,
-        responseType: 'blob',
-        // dataType: 'binary',
-        processData: false,
-       /!* method: 'POST',
-        url: '/qna/download',
-        contentType: 'application/json', // 여기타입 안맞아서 그런듯? 근데 POST로 보내는데 JSOn으로 dto에 떤져주는뎅.. 포스트랑 컨텐트타입 상관없어요 헤더에 정의 된대로 해석할뿐헐 사기당했네;
-        data: JSON.stringify(({stored_file_name, qna_no})),*!/
-        error: function (xhr, status, error) {
-            alert(error);
-        },
-        success: function (data, textStatus, jqXhr) {
-            console.log("Success");
-            console.log(data);
+/*  ajax POST 방식으로 값 전송*/
 
-            if (!data) {
-                return;
-            }
-            try {
-                var blob = new Blob([data], { type: jqXhr.getResponseHeader('content-type') });
-                var fileName = getFileName(jqXhr.getResponseHeader('content-disposition'));
-                fileName = decodeURI(fileName);
-                if (window.navigator.msSaveOrOpenBlob) { // IE 10+
-                    window.navigator.msSaveOrOpenBlob(blob, fileName);
-                } else { // not IE
-                    var link = document.createElement('a');
-                    var url = window.URL.createObjectURL(blob);
-                    link.href = url;
-                    link.target = '_self';
-                    if (fileName) link.download = fileName;
-                    document.body.append(link);
-                    link.click();
-                    link.remove();
-                    window.URL.revokeObjectURL(url);
-                }
-            } catch (e) {
-                console.error(e)
-            }
+/*  $.ajax({
+      method: 'POST',
+      url: '/qna/download',
+      contentType: false,
+      enctype: 'multipart/form-data',
+      data: DownloadQnaFileFormData,
+      responseType: 'blob',
+      // dataType: 'binary',
+      processData: false,
+     /!* method: 'POST',
+      url: '/qna/download',
+      contentType: 'application/json', // 여기타입 안맞아서 그런듯? 근데 POST로 보내는데 JSOn으로 dto에 떤져주는뎅.. 포스트랑 컨텐트타입 상관없어요 헤더에 정의 된대로 해석할뿐헐 사기당했네;
+      data: JSON.stringify(({stored_file_name, qna_no})),*!/
+      error: function (xhr, status, error) {
+          alert(error);
+      },
+      success: function (data, textStatus, jqXhr) {
+          console.log("Success");
+          console.log(data);
 
-        }});}*/
-function getFileName (contentDisposition) {
+          if (!data) {
+              return;
+          }
+          try {
+              var blob = new Blob([data], { type: jqXhr.getResponseHeader('content-type') });
+              var fileName = getFileName(jqXhr.getResponseHeader('content-disposition'));
+              fileName = decodeURI(fileName);
+              if (window.navigator.msSaveOrOpenBlob) { // IE 10+
+                  window.navigator.msSaveOrOpenBlob(blob, fileName);
+              } else { // not IE
+                  var link = document.createElement('a');
+                  var url = window.URL.createObjectURL(blob);
+                  link.href = url;
+                  link.target = '_self';
+                  if (fileName) link.download = fileName;
+                  document.body.append(link);
+                  link.click();
+                  link.remove();
+                  window.URL.revokeObjectURL(url);
+              }
+          } catch (e) {
+              console.error(e)
+          }
+
+      }});}*/
+function getFileName(contentDisposition) {
     var fileName = contentDisposition
         .split(';')
-        .filter(function(ele) {
+        .filter(function (ele) {
             return ele.indexOf('filename') > -1
         })
-        .map(function(ele) {
+        .map(function (ele) {
             return ele
                 .replace(/"/g, '')
                 .split('=')[1]
@@ -531,236 +532,345 @@ function getFileName (contentDisposition) {
     return fileName[0] ? fileName[0] : null
 }
 
-
 /* 대쉬보드에서 지점관리 버튼, 혹은 슬라이드 메뉴에서 지점 관리 버튼 클릭시 */
 function goBranchOfficeListBoardAction() {
     console.log("goBranchOfficeListBoardAction");
 
-    let p_sid = (sessionStorage.getItem('sid')).split('=');
-    let session_no = p_sid[1];
 
-    /*  ajax POST 방식으로 값 전송*/
-    $.ajax({
-        method: 'POST',
-        url: '/BracnchOffice/select',
-        contentType: 'application/json',
-        data: JSON.stringify(({session_no})),
-        error: function (xhr, status, error) {
-            alert(error);
-        },
-        success: function (data) {
-            console.log("Success");
-            console.log(data);
-            $('#mainPanel').children().remove();
-            $('#mainPanel').html(data);
-            localStorage.setItem("session_no", session_no);
-            //div생성할것
+    // ---------------------------------->
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+
+            let elementMainPanel = document.getElementById("mainPanel");
+            elementMainPanel.removeChild(elementMainPanel.firstElementChild);
+            // $('#mainPanel').children().remove($('#mainPanel').children());
+            elementMainPanel.innerHTML += xhr.responseText;
+            // document.getElementById("modalSpace").innerHTML += "<script> console.log('ABCt'); </script>";
+            console.log(xhr.responseText);
+
+            // let fileName = getFileName(xhr.getResponseHeader('content-disposition'));
+            // fileName = decodeURI(fileName);
+
             if (localStorage.getItem('session_no') === 'MEM282108') {
                 let session_no = localStorage.getItem('session_no');
                 console.log(session_no);
                 let bracnchOfficeManageMenu = document.getElementById('dropdown');
-                bracnchOfficeManageMenu.innerHTML = "<button onclick=\"dp_menu()\" class=\"branchoffice_button btn btn-primary\">지점 관리</button>" +
+                bracnchOfficeManageMenu.innerHTML =
+                    "<button onclick=\"dp_menu()\" class=\"branchoffice_button btn btn-primary\">지점 관리</button>" +
                     "<div style=\"display: none;\" id=\"drop-content\">" +
                     "<button id='createBranchOffice' class=\"btn btn-primary\" onclick='doRegisterBranchOfficeAction()'>신규 지점</button>" +
                     "<button id='updateBranchOffice' class=\"btn btn-primary\" >지점 수정</button>" +
                     "<button id='deleteBranchOffice' class=\"btn btn-primary\"> 지점 삭제</button>" +
                     "</div>";
             }
-            /*
-            else {
-                let session_no = localStorage.getItem('session_no');
-                console.log(session_no);
-                let bracnchOfficeManageMenu = document.getElementById('dropdown');
-                bracnchOfficeManageMenu.innerHTML = "<button onclick=\"dp_menu()\" class=\"branchoffice_button btn btn-primary\">지점 관리</button>" +
-                    "<div style=\"display: none;\" id=\"drop-content\">" +
-                    "<button id='createBranchOffice' class=\"btn btn-primary\">신규 지점</button>" +
-                    "<button id='updateBranchOffice' class=\"btn btn-primary\" >지점 수정</button>" +
-                    "<button id='deleteBranchOffice' class=\"btn btn-primary\"> 지점 삭제</button>" +
-                    "</div>";
-            }
-            */
-        },
-    });
 
-}
-
-function dp_menu() {
-    let click = document.getElementById("drop-content");
-    if (click.style.display === "none") {
-        click.style.display = "block";
-
-    } else {
-        click.style.display = "none";
-
-    }
-}
-
-
-/* ClientDashBoard에서 문의하기 클릭시 눌렀을 때*/
-function doWriteQnaAction() {
-
-
-    console.log("doWriteQnaAction");
-    $('#modalSpace').load("/Client/qnaWrite.do #clientQnaBoardWriteModal", function () {
-        const body = document.querySelector('body');
-        const modal = document.querySelector('.modal');
-        const btnOpenPopup = document.querySelector('.btn-open-popup');
-
-        console.log("qnaDetailBoardAction Processing");
-        modal.classList.toggle('show');
-
-        if (modal.classList.contains('show')) {
-            body.style.overflow = 'hidden';
         }
-    });
-} //end of doWriteQnaAction
 
-
-/* 지점관리에서 신규지점 버튼 눌렀을때*/
-function doRegisterBranchOfficeAction() {
-
-    console.log("doRegisterBranchOfficeAction");
-    $('#modalSpace').load("/Management/newbranchoffice.do #branchOfficeInsertModal", function () {
-        const body = document.querySelector('body');
-        const modal = document.querySelector('.modal');
-        const btnOpenPopup = document.querySelector('.btn-open-popup');
-
-        console.log("BranchOfficeAction Processing");
-        modal.classList.toggle('show');
-
-        if (modal.classList.contains('show')) {
-            body.style.overflow = 'hidden';
-        }
-    });
-} //End of doRegisterBranchOfficeAction()
-
-/* 신규 지점 등록 */
-function newBranchOfficeInsert(e) {
-    'use strict'
-
-    console.log("newBranchOfficeInsert()");
-    let tr_code = 'insert';
-    let branchOffice_name = document.getElementById('newBranchOfficeName').value;
-    let branchOffice_local = document.getElementById('newBranchOfficeLocal').value;
-    let branchOffice_mobile = document.getElementById('newBranchOfficeMobile').value;
-    let branchOffice_address = document.getElementById('newBranchOfficeAddress').value;
-    let branchOffice_no = '0000a0';
-     let imgFile = document.getElementById('imageSelector').files;
-
-    console.log(imgFile);
-
-    for (var i =0; i<imgFile.length; i++) {
-        console.log(imgFile[i]);
     }
-
-    let newBranchOfficeFormData = new FormData();
-
-    if(imgFile.length != 0){
-        for (var i =0; i<imgFile.length; i++) {
-            newBranchOfficeFormData.append('imgFile', imgFile[i]);
-        }
-        }
-    for (var i =0; i<imgFile.length; i++) {
-        console.log('===> formData==>'+newBranchOfficeFormData.get('imgFile'));
-    }
-    console.log('===>>   '+newBranchOfficeFormData.getAll('imgFile'));
-
-    newBranchOfficeFormData.append('tr_code',tr_code);
-    newBranchOfficeFormData.append('branchoffice_name',branchOffice_name);
-    newBranchOfficeFormData.append('branchoffice_local',branchOffice_local);
-    newBranchOfficeFormData.append('branchoffice_mobile',branchOffice_mobile);
-    newBranchOfficeFormData.append('branchoffice_address',branchOffice_address);
-    newBranchOfficeFormData.append('branchoffice_no',branchOffice_no);
-
-    // FormData의 key 확인
-    for (let newBranchOfficeDatakey of newBranchOfficeFormData.keys()) {
-        console.log('FormData의 key 확인'+newBranchOfficeDatakey);
-    }
-
-// FormData의 value 확인
-    for (let newBranchOfficeFormValue of newBranchOfficeFormData.values()) {
-        console.log('FormData의 value 확인'+newBranchOfficeFormValue);
-    }
-
-    /*  ajax POST 방식으로 값 전송*/
-    $.ajax({
-        method: 'POST',
-        url: '/BracnchOffice/register',
-        contentType: false,
-        enctype: 'multipart/form-data',
-        data: newBranchOfficeFormData,
-        processData: false,
-        error: function (xhr, status, error) {
-            alert(error);
-        },
-        success: function (data) {
-            console.log("Success");
-            qnaDetailModalAction();
-            $('#mainPanel').children().remove();
-            $('#mainPanel').append("/BracnchOffice/select");
-
-        },
-    });
-}
-
-
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        for (let image of event.target.files) {
-            let reader = new FileReader();
-            reader.onload = function (e) {
-                let img = document.createElement("img");
-                // document.getElementById('preview').src = e.target.result;
-                // document.getElementById('preview').setAttribute('width', 250);
-                img.setAttribute("src", event.target.result);
-                document.querySelector("div#image_container").appendChild(img);
-                // document.querySelector("div#image_container").setAttribute('width',250);
-                // document.querySelector("div#image_container img").setAttribute('width',250);
-                var jb = document.querySelectorAll( 'div#image_container img' );
-                for ( var i = 0; i < jb.length; i++ ) {
-                    jb[i].style.width = 250;
-                    jb[i].addEventListener('dblclick',function () {
-                        if (document.querySelector("div#image_container") != null){
-                        document.querySelector("div#image_container").removeChild(this);
-                        }
-                    })
-                }
-
-            };
-
-            // reader.readAsDataURL(input.files[0]);
-            reader.readAsDataURL(image);
-        }
-    }
-    else {
-        document.getElementById('image_container').src = "";
-    }
-}
-
-
-/* 대쉬보드에서 지점관리 버튼, 혹은 슬라이드 메뉴에서 지점 관리 버튼 클릭시 */
-function goBranchOfficeDetailBoard() {
-    console.log("goBranchOfficeDetailBoard");
-
     let p_sid = (sessionStorage.getItem('sid')).split('=');
     let session_no = p_sid[1];
-
-    /*  ajax POST 방식으로 값 전송*/
-    $.ajax({
-        method: 'POST',
-        url: '/BracnchOffice/detail',
-        contentType: 'application/json',
-        data: JSON.stringify(({session_no})),
-        error: function (xhr, status, error) {
-            alert(error);
-        },
-        success: function (data) {
-            console.log("Success");
-            console.log(data);
-            $('#mainPanel').children().remove();
-            $('#mainPanel').html(data);
-            localStorage.setItem("session_no", session_no);
-        },
-    });
-
+    localStorage.setItem("session_no", session_no);
+    xhr.open('POST', '/BracnchOffice/select');
+    // xhr.responseType = 'blob'; // !!필수!!
+    xhr.setRequestHeader('Content-Type','application/json');
+    console.log(JSON.stringify(({session_no})));
+    xhr.send(JSON.stringify(({session_no})));
 }
+//----------------
+
+    /*    //---------
+        method: 'POST',
+            url: '/qna/download',
+            contentType: false,
+            enctype: 'multipart/form-data',
+            data: DownloadQnaFileFormData,
+            responseType: 'blob',
+            // dataType: 'binary',
+            processData: false,
+        // ---*/
+    //
+    // /*  ajax POST 방식으로 값 전송*/
+    // $.ajax({
+    //     method: 'POST',
+    //     url: '/BracnchOffice/select',
+    //     // contentType: 'application/json',
+    //     contentType: false,
+    //     enctype: 'multipart/form-data',
+    //     data: JSON.stringify(({session_no})),
+    //     responseType: 'blob',
+    //     // responseType: 'blo',
+    //     error: function (xhr, status, error) {
+    //         alert(error);
+    //     },
+    //     success: function (data) {
+    //         console.log("Success");
+    //         console.log(data);
+    //         $('#mainPanel').children().remove();
+    //
+    //         $('#mainPanel').html(data);
+    //         // $('#mainPanel').load("/BracnchOffice/select #branchOfficeSelectList");
+    //         localStorage.setItem("session_no", session_no);
+    //         //div생성할것
+    //         if (localStorage.getItem('session_no') === 'MEM282108') {
+    //             let session_no = localStorage.getItem('session_no');
+    //             console.log(session_no);
+    //             let bracnchOfficeManageMenu = document.getElementById('dropdown');
+    //             bracnchOfficeManageMenu.innerHTML = "<button onclick=\"dp_menu()\" class=\"branchoffice_button btn btn-primary\">지점 관리</button>" +
+    //                 "<div style=\"display: none;\" id=\"drop-content\">" +
+    //                 "<button id='createBranchOffice' class=\"btn btn-primary\" onclick='doRegisterBranchOfficeAction()'>신규 지점</button>" +
+    //                 "<button id='updateBranchOffice' class=\"btn btn-primary\" >지점 수정</button>" +
+    //                 "<button id='deleteBranchOffice' class=\"btn btn-primary\"> 지점 삭제</button>" +
+    //                 "</div>";
+    //         }
+    /*
+    else {
+        let session_no = localStorage.getItem('session_no');
+        console.log(session_no);
+        let bracnchOfficeManageMenu = document.getElementById('dropdown');
+        bracnchOfficeManageMenu.innerHTML = "<button onclick=\"dp_menu()\" class=\"branchoffice_button btn btn-primary\">지점 관리</button>" +
+            "<div style=\"display: none;\" id=\"drop-content\">" +
+            "<button id='createBranchOffice' class=\"btn btn-primary\">신규 지점</button>" +
+            "<button id='updateBranchOffice' class=\"btn btn-primary\" >지점 수정</button>" +
+            "<button id='deleteBranchOffice' class=\"btn btn-primary\"> 지점 삭제</button>" +
+            "</div>";
+    }
+    */
+//         },
+//     })
+//
+// }
+
+    function dp_menu() {
+        let click = document.getElementById("drop-content");
+        if (click.style.display === "none") {
+            click.style.display = "block";
+
+        } else {
+            click.style.display = "none";
+
+        }
+    }
+
+
+    /* ClientDashBoard에서 문의하기 클릭시 눌렀을 때*/
+    function doWriteQnaAction() {
+
+
+        console.log("doWriteQnaAction");
+        $('#modalSpace').load("/Client/qnaWrite.do #clientQnaBoardWriteModal", function () {
+            const body = document.querySelector('body');
+            const modal = document.querySelector('.modal');
+            const btnOpenPopup = document.querySelector('.btn-open-popup');
+
+            console.log("qnaDetailBoardAction Processing");
+            modal.classList.toggle('show');
+
+            if (modal.classList.contains('show')) {
+                body.style.overflow = 'hidden';
+            }
+        });
+    } //end of doWriteQnaAction
+
+
+    /* 지점관리에서 신규지점 버튼 눌렀을때*/
+    function doRegisterBranchOfficeAction() {
+
+        console.log("doRegisterBranchOfficeAction");
+        $('#modalSpace').load("/Management/newbranchoffice.do #branchOfficeInsertModal", function () {
+            const body = document.querySelector('body');
+            const modal = document.querySelector('.modal');
+            const btnOpenPopup = document.querySelector('.btn-open-popup');
+
+            console.log("BranchOfficeAction Processing");
+            modal.classList.toggle('show');
+
+            if (modal.classList.contains('show')) {
+                body.style.overflow = 'hidden';
+            }
+        });
+    } //End of doRegisterBranchOfficeAction()
+
+    /* 신규 지점 등록 */
+    function newBranchOfficeInsert(e) {
+        'use strict'
+
+        console.log("newBranchOfficeInsert()");
+        let tr_code = 'insert';
+        let branchOffice_name = document.getElementById('newBranchOfficeName').value;
+        let branchOffice_local = document.getElementById('newBranchOfficeLocal').value;
+        let branchOffice_mobile = document.getElementById('newBranchOfficeMobile').value;
+        let branchOffice_address = document.getElementById('newBranchOfficeAddress').value;
+        let branchOffice_no = '0000a0';
+        let imgFile = document.getElementById('imageSelector').files;
+
+        console.log(imgFile);
+
+        for (var i = 0; i < imgFile.length; i++) {
+            console.log(imgFile[i]);
+        }
+
+        let newBranchOfficeFormData = new FormData();
+
+        if (imgFile.length != 0) {
+            for (var i = 0; i < imgFile.length; i++) {
+                newBranchOfficeFormData.append('imgFile', imgFile[i]);
+            }
+        }
+        for (var i = 0; i < imgFile.length; i++) {
+            console.log('===> formData==>' + newBranchOfficeFormData.get('imgFile'));
+        }
+        console.log('===>>   ' + newBranchOfficeFormData.getAll('imgFile'));
+
+        newBranchOfficeFormData.append('tr_code', tr_code);
+        newBranchOfficeFormData.append('branchoffice_name', branchOffice_name);
+        newBranchOfficeFormData.append('branchoffice_local', branchOffice_local);
+        newBranchOfficeFormData.append('branchoffice_mobile', branchOffice_mobile);
+        newBranchOfficeFormData.append('branchoffice_address', branchOffice_address);
+        newBranchOfficeFormData.append('branchoffice_no', branchOffice_no);
+
+        // FormData의 key 확인
+        for (let newBranchOfficeDatakey of newBranchOfficeFormData.keys()) {
+            console.log('FormData의 key 확인' + newBranchOfficeDatakey);
+        }
+
+// FormData의 value 확인
+        for (let newBranchOfficeFormValue of newBranchOfficeFormData.values()) {
+            console.log('FormData의 value 확인' + newBranchOfficeFormValue);
+        }
+
+        /*  ajax POST 방식으로 값 전송*/
+        $.ajax({
+            method: 'POST',
+            url: '/BracnchOffice/register',
+            contentType: false,
+            enctype: 'multipart/form-data',
+            data: newBranchOfficeFormData,
+            processData: false,
+            error: function (xhr, status, error) {
+                alert(error);
+            },
+            success: function (data) {
+                console.log("Success");
+                qnaDetailModalAction();
+                $('#mainPanel').children().remove();
+                $('#mainPanel').append("/BracnchOffice/select");
+
+            },
+        });
+    }
+
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            for (let image of event.target.files) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    let img = document.createElement("img");
+                    // document.getElementById('preview').src = e.target.result;
+                    // document.getElementById('preview').setAttribute('width', 250);
+                    img.setAttribute("src", event.target.result);
+                    document.querySelector("div#image_container").appendChild(img);
+                    // document.querySelector("div#image_container").setAttribute('width',250);
+                    // document.querySelector("div#image_container img").setAttribute('width',250);
+                    var jb = document.querySelectorAll('div#image_container img');
+                    for (var i = 0; i < jb.length; i++) {
+                        jb[i].style.width = 250;
+                        jb[i].addEventListener('dblclick', function () {
+                            if (document.querySelector("div#image_container") != null) {
+                                document.querySelector("div#image_container").removeChild(this);
+                            }
+                        })
+                    }
+
+                };
+
+                // reader.readAsDataURL(input.files[0]);
+                reader.readAsDataURL(image);
+            }
+        } else {
+            document.getElementById('image_container').src = "";
+        }
+    }
+
+
+    /* 대쉬보드에서 지점관리 버튼, 혹은 슬라이드 메뉴에서 지점 관리 버튼 클릭시 */
+    function goBranchOfficeDetailBoard() {
+        console.log("goBranchOfficeDetailBoard");
+
+        let p_sid = (sessionStorage.getItem('sid')).split('=');
+        let session_no = p_sid[1];
+
+        /*  ajax POST 방식으로 값 전송*/
+        $.ajax({
+            method: 'POST',
+            url: '/BracnchOffice/detail',
+            contentType: 'application/json',
+            data: JSON.stringify(({session_no})),
+            error: function (xhr, status, error) {
+                alert(error);
+            },
+            success: function (data) {
+                console.log("Success");
+                console.log(data);
+                $('#mainPanel').children().remove();
+                $('#mainPanel').html(data);
+                localStorage.setItem("session_no", session_no);
+            },
+        });
+
+    }
+
+    /* 지점 별 사진 슬라이드쇼 */
+    var slideIndex = 0; //slide index
+
+// HTML 로드가 끝난 후 동작
+    window.onload = function () {
+        showSlides(slideIndex);
+
+        // Auto Move Slide
+        var sec = 3000;
+        setInterval(function () {
+            slideIndex++;
+            showSlides(slideIndex);
+
+        }, sec);
+    }
+
+
+// Next/previous controls
+    function moveSlides(n) {
+        slideIndex = slideIndex + n
+        showSlides(slideIndex);
+    }
+
+// Thumbnail image controls
+    function currentSlide(n) {
+        slideIndex = n;
+        showSlides(slideIndex);
+    }
+
+    function showSlides(n) {
+
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        var size = slides.length;
+
+        if ((n + 1) > size) {
+            slideIndex = 0;
+            n = 0;
+        } else if (n < 0) {
+            slideIndex = (size - 1);
+            n = (size - 1);
+        }
+
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+
+        slides[n].style.display = "block";
+        dots[n].className += " active";
+    }

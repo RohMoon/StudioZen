@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 import java.sql.SQLException;
-import java.util.Base64;
 import java.util.Calendar;
 import java.util.List;
 

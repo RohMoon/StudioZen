@@ -9,7 +9,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class BracnchOfficeDAO {
@@ -33,12 +35,16 @@ public class BracnchOfficeDAO {
         sqlSessionTemplate.selectList("BracnchOffice_FileInsert",branchOfficeDTO);
 
     }
-    
-    /* 지점 전체 조회 */
-    public List<BranchOfficeDTO> BracnchOfficeSelect(BranchOfficeDTO branchOfficeDTO) throws SqlSessionException {
 
+    /* 지점 전체 조회 */
+    public Map<String, List<BranchOfficeDTO>> BracnchOfficeSelect(BranchOfficeDTO branchOfficeDTO) throws SqlSessionException {
+        Map<String, List<BranchOfficeDTO>> bracnchOfficeSelectMap = new HashMap<>();
         List<BranchOfficeDTO> branchOfficeSelectList = sqlSessionTemplate.selectList("BracnchOfficeSelect",branchOfficeDTO);
-        return branchOfficeSelectList;
+        List<BranchOfficeDTO> branchOfficeImgSelectList = sqlSessionTemplate.selectList("BracnchOfficeImgSelect",branchOfficeDTO);
+        bracnchOfficeSelectMap.put("branchOfficeSelectList",branchOfficeSelectList);
+        bracnchOfficeSelectMap.put("branchOfficeImgSelectList",branchOfficeImgSelectList);
+
+        return bracnchOfficeSelectMap;
 
     }
 

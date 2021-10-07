@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BracnchOfficeLogic {
@@ -20,17 +21,16 @@ public class BracnchOfficeLogic {
     }
 
     /* 지점 검색 Select 기능 서비스 메소드   */
-    public List<BranchOfficeDTO> BracnchOfficeSelect(BranchOfficeDTO branchOfficeDTO) {
-
-        List<BranchOfficeDTO> branchOfficeSelectList = null;
+    public Map<String, List<BranchOfficeDTO>> BracnchOfficeSelect(BranchOfficeDTO branchOfficeDTO) {
+        Map<String, List<BranchOfficeDTO>> bracnchOfficeSelectMap = null;
 
         try {
-            branchOfficeSelectList = bracnchOfficeDAO.BracnchOfficeSelect(branchOfficeDTO);
+            bracnchOfficeSelectMap = bracnchOfficeDAO.BracnchOfficeSelect(branchOfficeDTO);
         } catch (Exception e) {
             logger.info(e.getStackTrace());
             logger.info("e.getMessage()====== > " + e.getMessage());
         } // end of Catch
-        return branchOfficeSelectList;
+        return bracnchOfficeSelectMap;
 
     } //end of BracnchOfficeSelect Method
 
@@ -43,14 +43,14 @@ public class BracnchOfficeLogic {
 
             bracnchOfficeDAO.BracnchOffice_CUD(branchOfficeDTO);
 
-                try {
-                    //파일 인서트 DAO 메소드로 연결
-                    bracnchOfficeDAO.BracnchOffice_FileInsert(branchOfficeDTO);
-                    //파일 저장 완료
-                } catch (Exception e) {
-                    logger.info(e.getStackTrace());
-                    logger.info(e.getMessage());
-                } // end of file insert catch //end of file insert catch
+//                try {
+//                    //파일 인서트 DAO 메소드로 연결
+//                    bracnchOfficeDAO.BracnchOffice_FileInsert(branchOfficeDTO);
+//                    //파일 저장 완료
+//                } catch (Exception e) {
+//                    logger.info(e.getStackTrace());
+//                    logger.info(e.getMessage());
+//                } // end of file insert catch //end of file insert catch
 
         } catch (Exception e) {
             result = "bad";
