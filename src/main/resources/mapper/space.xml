@@ -16,7 +16,7 @@
             )}
     </select>
 
-    <select id="BracnchOfficeDetailSelect_ShowSpace" parameterType="com.example.studiozen.DTO.SpaceDTO" resultType="com.example.studiozen.DTO.BranchOfficeDTO" statementType="PREPARED">
+    <select id="BracnchOfficeDetailSelect_ShowSpace" parameterType="com.example.studiozen.DTO.SpaceDTO" resultType="com.example.studiozen.DTO.SpaceDTO" statementType="PREPARED">
         SELECT
             SPACE_NO,
             BRANCHOFFICE_NO,

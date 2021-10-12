@@ -2,6 +2,7 @@ package com.example.studiozen.BranchOffice;
 
 
 import com.example.studiozen.DTO.BranchOfficeDTO;
+import com.example.studiozen.DTO.SpaceDTO;
 import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -93,9 +94,9 @@ public class BracnchOfficeController {
      "session_no" : "mem282108"
      }
      **********************/
-    @PostMapping(value = "/select")
+    @RequestMapping(value = "/select")
     public ModelAndView BracnchOfficeSelect(HttpServletRequest httpServletRequest,
-                                           @RequestBody BranchOfficeDTO branchOfficeDTO) {
+                                            BranchOfficeDTO branchOfficeDTO) {
 
         //@ResponseBody을 설정하시면
         //반환되는 view객체에서 랜더링메소드을 타서 아웃풋을 내보내는게 아니라
@@ -162,14 +163,15 @@ public class BracnchOfficeController {
  {
  "session_no" : "mem282108"
  }
- **********************//*
+ **********************/
 
     @PostMapping(value = "/detail")
-    public ModelAndView BracnchOfficeDetailSelect(HttpServletRequest httpServletRequest, BranchOfficeDTO branchOfficeDTO) {
+    public ModelAndView BracnchOfficeDetailSelect(HttpServletRequest httpServletRequest, @RequestBody SpaceDTO spaceDTO) {
 
         logger.info("< ==== BracnchOffice 'Detatil' Select ==== > ");
+        logger.info("Space DTO=============>"+spaceDTO.getBranchoffice_no());
 
-        List<SpaceDTO> spaceSelectList = bracnchOfficeLogic.BracnchOfficeDetailSelect(branchOfficeDTO);
+        List<SpaceDTO> spaceSelectList = bracnchOfficeLogic.BracnchOfficeDetailSelect(spaceDTO);
 
         logger.info("spaceSelectList =====>" + spaceSelectList);
         logger.info("\n branchOfficeDetailSelectList.toString  ====== >" + spaceSelectList.toString());
@@ -177,20 +179,20 @@ public class BracnchOfficeController {
         ModelAndView bracnchOfficeDetailSelectModelAndView = new ModelAndView();
         httpServletRequest.setAttribute("spaceSelectList",spaceSelectList);
 
+
         //게시판 CUD 중 작성 성공 / 실패에 대한 결과값을 int result로 반환
-        if (space.getResult() == 1) {
+        if (spaceSelectList.size()!=0) {
             logger.info("성공페이지 연결");
-            bracnchOfficeDetailSelectModelAndView.setViewName("BranchOffice/BranchOfficeListBoard");
+            bracnchOfficeDetailSelectModelAndView.setViewName("BranchOffice/BranchOfficeBoardDetailModal");
             return bracnchOfficeDetailSelectModelAndView;
 
         } else {
-            modelAndView.setViewName("BranchOffice/BranchOfficeListBoard");
-            return modelAndView;
+            bracnchOfficeDetailSelectModelAndView.setViewName("BranchOffice/BranchOfficeBoardDetailModal");
+            return bracnchOfficeDetailSelectModelAndView;
 
         }
 
     }// End of SelectDetail Method   // End of SelectDetail Method  // End of SelectDetail Method
-*/
 
 
     /********************************************지점 정보 관리 기능*****************************************************/

@@ -111,13 +111,11 @@ public class BracnchOfficeLogic {
     } // End of BracnchOfficeDelete Method
 
     /* 지점 상세 검색 DetailSelect 기능 서비스 메소드   */
-    public List<SpaceDTO> BracnchOfficeDetailSelect(BranchOfficeDTO branchOfficeDTO) {
+    public List<SpaceDTO> BracnchOfficeDetailSelect(SpaceDTO spaceDTO) {
 
         List<SpaceDTO> spaceSelectList = null;
 
         try {
-            SpaceDTO spaceDTO = new SpaceDTO();
-            spaceDTO.setBranchoffice_no(branchOfficeDTO.getBranchoffice_no());
             spaceSelectList = bracnchOfficeDAO.BracnchOfficeDetailSelect(spaceDTO);
         } catch (Exception e) {
             logger.info(e.getStackTrace());

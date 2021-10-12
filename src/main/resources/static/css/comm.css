@@ -249,12 +249,18 @@ footer {
 .card{
     overflow: auto;
 }
-
+.button{
+    padding: 10px 40px;
+    font-size:20px;
+    background-color: brown;
+    color: wheat;
+}
 
 
 .dropdown{
     position: relative;
     display: inline-block;
+    min-height: 100px;
 }
 .branchoffice_button{
     padding: 10px 40px;
@@ -266,41 +272,26 @@ footer {
     position: absolute;
     z-index: 1;
 }
-#drop-content a{
+/*#drop-content button{
     display:block;
     font-size: 20px;
-    /*background-color: #dfdfdf;*/
-    /*color: black;*/
+    !*background-color: #dfdfdf;*!
+    !*color: black;*!
     text-decoration: none;
     padding: 10px 36px;
     margin: 2px 0px 0px 0px;
-}
+}*/
 
 #branchOfficeSelectList{
     overflow: auto;
 }
 
-/* 지점 사진 슬라이드쇼 */
+/*        ***슬라드쇼 ***         */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing:border-box;
-}
-/* 지점 사진 슬라이드쇼 */
-/* Slideshow container */
-.slideshow-container {
-    max-width: 1200px;
-    max-height: 750px;
-    position: relative;
-    margin: auto;
-}
-/* 지점 사진 슬라이드쇼 */
 .slideshow-container .mySlides img {
-    height: 750px;
+    height: 400px;
 }
 
-/* 지점 사진 슬라이드쇼 */
 /* Hide the images by default */
 .mySlides {
     display: none;
@@ -357,7 +348,7 @@ footer {
 .dot {
     cursor: pointer;
     height: 15px;
-    width:15px;
+    width: 15px;
     margin: 0 2px;
     background-color: #bbb;
     border-radius: 50%;
@@ -367,6 +358,7 @@ footer {
 
 .active, .dot:hover {
     background-color: #717171;
+
 }
 
 /* Fading animation */
@@ -386,5 +378,8 @@ footer {
     from {opacity: .4}
     to {opacity: 1}
 }
+/* https://myhappyman.tistory.com/13 << 슬라이드쇼 */
 
-/* 지점 사진 슬라이드 쇼 끝*/
+.branchOfficeBoardDetailArea{
+border-width: 0px;
+}

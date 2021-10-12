@@ -10,6 +10,7 @@ public class BranchOfficeDTO extends CommonDTO {
     private String branchoffice_regdate;
     private String branchoffice_img_no;
     private String branchoffice_img_code;
+    private String branchoffice_haspic;
 
     @Override
     public int getResult() {
@@ -101,6 +102,14 @@ public class BranchOfficeDTO extends CommonDTO {
 
     public void setBranchoffice_img_code(String branchoffice_img_code) {
         this.branchoffice_img_code = branchoffice_img_code;
+    }
+
+    public String getBranchoffice_haspic() {
+        return branchoffice_haspic;
+    }
+
+    public void setBranchoffice_haspic(String branchoffice_haspic) {
+        this.branchoffice_haspic = branchoffice_haspic;
     }
 
     @Override
