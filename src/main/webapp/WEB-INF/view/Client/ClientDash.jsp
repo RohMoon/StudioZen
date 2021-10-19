@@ -10,21 +10,21 @@
 <div id="clientDashBoard" class="main com-mainPanel">
     <div>
         <script type="text/javascript">
-            let tr_code;
-            let reserv_no;
-            let space_no;
-            let space_name;
-            let reserv_hostcode;
-            let member_name;
-            let reserv_date;
-            let reserv_start_time;
-            let reserv_end_time;
-            let reserv_host_mobile;
-            let reserv_paystatement;
-            let reserv_regdate;
-            let reserv_host_email;
-            let reserv_updatedate;
-            let reserv_pay_limited;
+            // let tr_code;
+            // let reserv_no;
+            // let space_no;
+            // let space_name;
+            // let reserv_hostcode;
+            // let member_name;
+            // let reserv_date;
+            // let reserv_start_time;
+            // let reserv_end_time;
+            // let reserv_host_mobile;
+            // let reserv_paystatement;
+            // let reserv_regdate;
+            // let reserv_host_email;
+            // let reserv_updatedate;
+            // let reserv_pay_limited;
         </script>
 
 

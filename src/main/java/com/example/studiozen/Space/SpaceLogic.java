@@ -22,7 +22,6 @@ public class SpaceLogic {
 
         String result = null;
 
-
 /*        logger.info(       "\n"+
                        "getTr_code()            ====  >> "+reservationDTO.getTr_code()           +"\n"+
                        "getReserv_no()          ====  >> "+reservationDTO.getReserv_no()         +"\n"+
@@ -35,6 +34,7 @@ public class SpaceLogic {
                        "getReserv_host_email()  ====  >> "+reservationDTO.getReserv_host_email() +"\n"+
                        "getReserv_del_reason()  ====  >> "+reservationDTO.getReserv_del_reason()
         );*/
+
         try {
             spaceDAO.Space_CUD(spaceDTO);
 

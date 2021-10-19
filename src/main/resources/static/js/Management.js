@@ -1,3 +1,51 @@
+let tr_code;
+let poolBase ;
+let p_sid ;
+let sid   ;
+
+let member_name;
+
+let reserv_no;
+let reserv_date;
+let reserv_hostcode;
+let reserv_start_time;
+let reserv_end_time;
+let reserv_host_mobile;
+let reserv_paystatement;
+let reserv_regdate;
+let reserv_host_email;
+let reserv_updatedate;
+let reserv_pay_limited;
+
+let qna_no;
+let qna_recomment_no;
+let qna_recomment_writer;
+let qna_recomment_content;
+
+let branchoffice_no;
+let branchoffice_name;
+let branchoffice_local;
+let branchoffice_address;
+let branchoffice_mobile;
+
+let space_no;
+let space_name;
+let space_description   ;
+let space_capacity      ;
+let space_maxpeople     ;
+let space_basicprice    ;
+let spaceUpdateButton   ;
+let spaceUpdateSubmitButton   ;
+let spaceUpdateAbortButton   ;
+let spaceAddSubmitButton   ;
+
+let imgFile                 ;
+let stored_file_name        ;
+let DownloadQnaFileFormData ;
+let image                   ;
+let reader                  ;
+let img                     ;
+
 /*  대시보드에서 Q&A 이미지영역 눌렀을 때*/
 function qnaListBoardAction() {
     console.log("checkListBoardAction");
@@ -5,13 +53,12 @@ function qnaListBoardAction() {
     $('#mainPanel').children().remove();
     $('#mainPanel').load(("/qna/select/MEM282108 #qnaListBoard"));
 
-
 }
 
 /*  Q&A 게시판에서 셀 클릭시 눌렀을 때*/
 function qnaDetailBoardAction(e) {
     console.log('qnaDetailBoardAction');
-    let qna_no = e.childNodes[1].innerText;
+    qna_no = e.childNodes[1].innerText;
 
     /* 입력 값 JSON 문법으로 변형 확인*/
     console.log(JSON.stringify({qna_no}));
@@ -71,10 +118,10 @@ function qnaDetailModalAction() {
 function goWritingQNARecommentAction(sid, qna_no) {
     console.log('goWritingQNARecommentAction');
 
-    let tr_code = 'insert';
-    let qna_recomment_writer = sid;
-    let qna_recomment_content = ($("input[name=qna_recomment_content]").serialize()).substr(22);
-    let poolBase = 0;
+    tr_code = 'insert';
+    qna_recomment_writer = sid;
+    qna_recomment_content = ($("input[name=qna_recomment_content]").serialize()).substr(22);
+    poolBase = 0;
 
     /*  ajax POST 방식으로 값 전송*/
     $.ajax({
@@ -124,10 +171,10 @@ function recommentUpdateSubmitAction(sid, qna_no, indexNo, recoNo) {
         console.log(sid);
         console.log(qna_no);
         console.log(indexNo);
-        let tr_code = 'update';
-        let qna_recomment_writer = sid;
-        let qna_recomment_content = ($("input[name=qna_recomment_content]").serialize()).substr(22);
-        let qna_recomment_no = recoNo;
+        tr_code = 'update';
+        qna_recomment_writer = sid;
+        qna_recomment_content = ($("input[name=qna_recomment_content]").serialize()).substr(22);
+        qna_recomment_no = recoNo;
 
         /*  ajax POST 방식으로 값 전송*/
         $.ajax({
@@ -156,10 +203,10 @@ function goDeletingQNARecommentAction(sid, qna_no, indexNo, recoNo) {
     console.log(sid);
     console.log(qna_no);
     console.log(indexNo);
-    let tr_code = 'delete';
-    let qna_recomment_writer = sid;
-    let qna_recomment_content = ($("input[name=qna_recomment_content]").serialize()).substr(22);
-    let qna_recomment_no = recoNo;
+   tr_code = 'delete';
+   qna_recomment_writer = sid;
+   qna_recomment_content = ($("input[name=qna_recomment_content]").serialize()).substr(22);
+   qna_recomment_no = recoNo;
 
     console.log(tr_code);
     console.log('qna_recomment_writer' + qna_recomment_writer);
@@ -238,8 +285,8 @@ function goDashBoardPageAction() {
     console.log("goManagementDashBoardPageAction");
 
     slideIn();
-    let p_sid = (sessionStorage.getItem('sid')).split('=');
-    let sid = p_sid[1];
+    p_sid = (sessionStorage.getItem('sid')).split('=');
+    sid = p_sid[1];
 
     $('#mainPanel').children().remove();
 
@@ -407,11 +454,10 @@ function UpdatingReservAction() {
 /* 파일 다운로드 액션  */
 function goDownloadQnaFileAction(p_stored_file_name) {
     'use strict'
-    let stored_file_name = p_stored_file_name;
+    stored_file_name = p_stored_file_name;
     // console.log(JSON.stringify(({stored_file_name, qna_no})));
 
-
-    let DownloadQnaFileFormData = new FormData();
+    DownloadQnaFileFormData = new FormData();
     DownloadQnaFileFormData.append('stored_file_name', stored_file_name);
     DownloadQnaFileFormData.append('qna_no', qna_no);
 // ---------------------------------->
@@ -716,13 +762,13 @@ function newBranchOfficeInsert(e) {
     'use strict'
 
     console.log("newBranchOfficeInsert()");
-    let tr_code = 'insert';
-    let branchOffice_name = document.getElementById('newBranchOfficeName').value;
-    let branchOffice_local = document.getElementById('newBranchOfficeLocal').value;
-    let branchOffice_mobile = document.getElementById('newBranchOfficeMobile').value;
-    let branchOffice_address = document.getElementById('newBranchOfficeAddress').value;
-    let branchOffice_no = '0000a0';
-    let imgFile = document.getElementById('imageSelector').files;
+    tr_code = 'insert';
+    branchoffice_name = document.getElementById('newBranchOfficeName').value;
+    branchoffice_local = document.getElementById('newBranchOfficeLocal').value;
+    branchoffice_mobile = document.getElementById('newBranchOfficeMobile').value;
+    branchoffice_address = document.getElementById('newBranchOfficeAddress').value;
+    branchoffice_no = '0000a0';
+    imgFile = document.getElementById('imageSelector').files;
 
     console.log(imgFile);
 
@@ -779,14 +825,15 @@ function newBranchOfficeInsert(e) {
         },
     });
 }
-
-
+                      let image
+                      let reader
+                      let img
 function readURL(input) {
     if (input.files && input.files[0]) {
-        for (let image of event.target.files) {
-            let reader = new FileReader();
+        for (image of event.target.files) {
+             reader = new FileReader();
             reader.onload = function (e) {
-                let img = document.createElement("img");
+                img = document.createElement("img");
                 // document.getElementById('preview').src = e.target.result;
                 // document.getElementById('preview').setAttribute('width', 250);
                 img.setAttribute("src", event.target.result);
@@ -805,6 +852,7 @@ function readURL(input) {
 
             };
 
+            document.getElementById("SpaceList_Head").setAttribute('cur', 'default')
             // reader.readAsDataURL(input.files[0]);
             reader.readAsDataURL(image);
         }
@@ -824,30 +872,13 @@ function goBranchOfficeDetailBoard(){
 // ) {
     console.log("goBranchOfficeDetailBoard");
 
-    /*
-    let branchoffice_no = document.getElementById("branchOffice_no").textContent;
-    let branchoffice_name = document.getElementById("branchOffice_name").textContent;
-    let branchOffice_local = document.getElementById("branchOffice_local").textContent;
-    let branchOffice_address = document.getElementById("branchOffice_address").textContent;
-    let branchOffice_mobile = document.getElementById("branchOffice_mobile").textContent;
-    */
-    // document.getElementById().parentNode.parentNode.parentNode.firstElementChild.firstElementChild.
-    // document.getElementById().parentNode.parentNode.parentNode.firstElementChild.firstElementChild.nextElementSibling
-    // branchoffice_no      = event.target.parentNode.parentNode.parentNode.firstElementChild.firstElementChild.firstElementChild.textContent;
     let parent = event.target.closest(".card");
+
     branchoffice_no      = parent.getElementsByClassName("branchOffice_no").item(0).textContent;
     branchoffice_name    = parent.getElementsByClassName("branchOffice_name").item(0).textContent;
-    // branchoffice_name    = event.target.parentNode.parentNode.parentNode.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.textContent;
-    // branchoffice_name    = e.target.parentNode.parentNode.parentNode.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.textContent;
-    // branchOffice_local   = event.target.parentNode.parentNode.parentNode.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.textContent.split("\n")[0];
     branchOffice_local   = parent.getElementsByClassName("branchOffice_local").item(0).textContent;
-    // branchOffice_address = event.target.parentNode.parentNode.parentNode.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.textContent.split("\n")[1];
-    // branchOffice_address = event.target.parentNode.parentNode.parentNode.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.textContent;
     branchOffice_address = parent.getElementsByClassName("branchOffice_address").item(0).textContent;
-    // branchOffice_mobile  = event.target.parentNode.parentNode.parentNode.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.textContent.split("\n")[2];
-    // branchOffice_mobile  = event.target.parentNode.parentNode.parentNode.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.textContent
     branchOffice_mobile  = parent.getElementsByClassName("branchOffice_mobile").item(0).textContent;
-
 
     console.log(JSON.stringify(({branchoffice_no})));
 
@@ -856,6 +887,29 @@ function goBranchOfficeDetailBoard(){
     sessionStorage.setItem("branchOffice_local", branchOffice_local);
     sessionStorage.setItem("branchOffice_address", branchOffice_address);
     sessionStorage.setItem("branchOffice_mobile", branchOffice_mobile);
+
+    // document.getElementById("branchOfficeBoardDetailTableTbody").
+    // document.getElementById().parentNode.parentNode.parentNode.firstElementChild.firstElementChild.
+    // document.getElementById().parentNode.parentNode.parentNode.firstElementChild.firstElementChild.nextElementSibling
+    // branchoffice_no      = event.target.parentNode.parentNode.parentNode.firstElementChild.firstElementChild.firstElementChild.textContent;
+    // document.getElementById("branchOfficeBoardDetailTableTbody").lastElementChild.getElementsByTagName("td").item(0).
+
+    /*
+    let branchoffice_no = document.getElementById("branchOffice_no").textContent;
+    let branchoffice_name = document.getElementById("branchOffice_name").textContent;
+    let branchOffice_local = document.getElementById("branchOffice_local").textContent;
+    let branchOffice_address = document.getElementById("branchOffice_address").textContent;
+    let branchOffice_mobile = document.getElementById("branchOffice_mobile").textContent;
+    */
+
+    // branchoffice_name    = event.target.parentNode.parentNode.parentNode.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.textContent;
+    // branchoffice_name    = e.target.parentNode.parentNode.parentNode.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.textContent;
+    // branchOffice_local   = event.target.parentNode.parentNode.parentNode.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.textContent.split("\n")[0];
+    // branchOffice_address = event.target.parentNode.parentNode.parentNode.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.textContent.split("\n")[1];
+    // branchOffice_address = event.target.parentNode.parentNode.parentNode.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.textContent;
+    // branchOffice_mobile  = event.target.parentNode.parentNode.parentNode.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.textContent.split("\n")[2];
+    // branchOffice_mobile  = event.target.parentNode.parentNode.parentNode.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.textContent
+
 
     /*  ajax POST 방식으로 값 전송*/
     $.ajax({
@@ -872,15 +926,21 @@ function goBranchOfficeDetailBoard(){
             const body = document.querySelector('body');
             const modal = document.querySelector('.modal');
             const btnOpenPopup = document.querySelector('.btn-open-popup');
-
             console.log("qnaDetailBoardAction Processing");
             modal.classList.toggle('show');
+            /* 대여 공간 디테일창을 관리자가 봤을 때*/
 
             if (modal.classList.contains('show')) {
                 body.style.overflow = 'hidden';
 
+            };
+
+            if ((sessionStorage.getItem("sid").split("=")[1])=='MEM282108'){
+                console.log("관리자 확인.");
+                document.getElementById("spaceAddButton").setAttribute("style","display:block;");
+                document.getElementById("spaceAddButton").setAttribute("style","font-size:1.5rem;");
             }
-            ;
+
         }
 
     });

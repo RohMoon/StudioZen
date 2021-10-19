@@ -5,7 +5,9 @@ package com.example.studiozen.Space;
 import com.example.studiozen.DTO.SpaceDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("space")
@@ -36,7 +38,7 @@ public class SpaceController {
     @PostMapping(value = "/register")
     public String SpaceRegister(@RequestBody SpaceDTO spaceDTO) {
 
-        logger.info(spaceDTO.getSpace_no());
+        logger.info("====> register===> SpaceDTO====> "+spaceDTO.toString());
         String result = spaceLogic.SpaceRegister(spaceDTO);
 
         logger.info("  CUD 동작 결과 구분   ====  > " + spaceDTO.getResult());
@@ -66,10 +68,11 @@ public class SpaceController {
      "qna_Content" :  "Method PUT TEST Content"
      }
      **********************/
-    @PutMapping(value = "/update")
+    @PostMapping(value = "/update")
     //@RequestMapping(value = "/write", method = RequestMethod.PUT)
-    public String SpaceUpdater(@RequestBody SpaceDTO spaceDTO) {
+    public String SpaceUpdater(@RequestParam(name = "imgFile", required = false) MultipartFile[] multi, SpaceDTO spaceDTO) {
 
+        logger.info("====>  SpaceDTO====> "+spaceDTO.toString());
         String result = spaceLogic.SpaceUpdater(spaceDTO);
 
         logger.info(spaceDTO.getResult());
@@ -78,11 +81,11 @@ public class SpaceController {
         //게시판 CUD 중 수정 성공 / 실패에 대한 결과값을 int result로 반환
         if (spaceDTO.getResult() == 1) {
             logger.info("성공페이지 연결");
-            return "index";
+            return "수정 성공";
 
         } else {
 
-            return "fail";
+            return "수정 실패";
 
         }
 

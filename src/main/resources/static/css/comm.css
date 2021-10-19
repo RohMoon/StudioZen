@@ -190,7 +190,6 @@ footer {
 
     background-color: rgba(0, 0, 0, 0.4);
 
-
 }
 /* qna 모달창 팝업시에*/
 .modal.show {
@@ -286,10 +285,23 @@ footer {
     overflow: auto;
 }
 
-/*        ***슬라드쇼 ***         */
+/*        ***슬라이드쇼 ***         */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+}
 
+/* Slideshow container */
+.slideshow-container {
+    max-width: 1200px;
+    max-height: 750px;
+    position: relative;
+    margin: auto;
+}
 .slideshow-container .mySlides img {
     height: 400px;
+    margin-left: 20%;
 }
 
 /* Hide the images by default */
@@ -358,7 +370,6 @@ footer {
 
 .active, .dot:hover {
     background-color: #717171;
-
 }
 
 /* Fading animation */
@@ -382,4 +393,61 @@ footer {
 
 .branchOfficeBoardDetailArea{
 border-width: 0px;
+}
+.spaceList{
+    transition-timing-function: ease-out;
+    transition-duration: 1s;
+}
+
+.spaceList:hover{
+    background-color: #0c63e4;
+    animation-delay: 3s;
+    color: white;
+    transition-timing-function: ease-out;
+    transition-duration: 1s;
+}
+
+
+/* Extra Modal */
+
+.extraModal {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    /*display: none;*/
+
+    background-color: rgba(0, 0, 0, 0.4);
+
+}
+
+/*
+
+.extraModal.show {
+     display: block;
+}
+*/
+
+.extraModal_body {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    margin-top: 8vw;
+    overflow: inherit;
+    width: 500px;
+    height: 400px;
+
+    padding: 40px;
+
+    text-align: center;
+
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+
+    z-index: 10000;
+    transform: translateX(30%) translateY(-50%);
 }

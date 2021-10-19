@@ -28,11 +28,20 @@
 <div id="modalSpace">
 
     <script>
-        let branchoffice_no;
-        let branchoffice_name;
-        let branchOffice_local;
-        let branchOffice_address;
-        let branchOffice_mobile;
+        // let branchoffice_no;
+        // let branchoffice_name;
+        // let branchOffice_local;
+        // let branchOffice_address;
+        // let branchOffice_mobile;
+        //
+        // let space_description   ;
+        // let space_capacity      ;
+        // let space_maxpeople     ;
+        // let space_basicprice    ;
+        // let spaceUpdateButton   ;
+        // let spaceUpdateSubmitButton   ;
+        // let spaceUpdateAbortButton   ;
+        // let spaceAddSubmitButton   ;
     </script>
 </div>
 <%-- 관리자 번호를 갖고 있다면 메뉴를 보여주지않는다. --%>
@@ -60,7 +69,7 @@
                         out.print("\n");
                         out.print("\n");
                         out.print("\n");
-                        out.print("<div class=\"numbertext\">"+imgNo+" /5</div>");//
+                        out.print("<div class=\"numbertext\">"+imgNo+"/5</div>");//
                         out.print("\n");
                         out.print("<div class=\"text\">Zen Studio</div>");//
                         out.print("\n");
@@ -114,7 +123,8 @@
                             "<div class=\"card-body p-4\">" + "\n"+
                             "<div class=\"text-center\">" +   "\n"+
                             "<!-- BranchOffice name-->" +     "\n"+
-                            "<h9 id=\"branchOffice_no"+i+"\" class=\"branchOffice_no fw-bolder\" style = \"display: none;\">" + branchOfficeSelectList.get(i).getBranchoffice_no() + "</h9>" +"\n"+
+//                            "<h9 id=\"branchOffice_no"+i+"\" class=\"branchOffice_no fw-bolder\" style = \"display: none;\">" + branchOfficeSelectList.get(i).getBranchoffice_no() + "</h9>" +"\n"+
+                            "<h9 id=\"branchOffice_no"+i+"\" class=\"branchOffice_no fw-bolder\" >" + branchOfficeSelectList.get(i).getBranchoffice_no() + "</h9>" +"\n"+
                             "<h5 id=\"branchOffice_name"+i+"\" class=\"branchOffice_name fw-bolder\">" + branchOfficeSelectList.get(i).getBranchoffice_name() + "</h5>" +"\n"+
                             "<!-- BranchOffice price-->" +"\n"+
                             "<h8 id=\"branchOffice_local"+i+"\" class=\"branchOffice_local\">"+branchOfficeSelectList.get(i).getBranchoffice_local()+"</h8></br>" +"\n"+
@@ -253,21 +263,22 @@ out.print("\n");
     %>
 --%>
 
+
 </div>
 
 <script>
 
 
-    /* 지점 별 사진 슬라이드쇼 */
+
     var slideIndex = 0; //slide index
 
     // HTML 로드가 끝난 후 동작
-    window.onload = function () {
+    window.onload=function(){
         showSlides(slideIndex);
 
         // Auto Move Slide
         var sec = 3000;
-        setInterval(function () {
+        setInterval(function(){
             slideIndex++;
             showSlides(slideIndex);
 
@@ -293,13 +304,13 @@ out.print("\n");
         var dots = document.getElementsByClassName("dot");
         var size = slides.length;
 
-        if ((n + 1) > size) {
-            slideIndex = 0;
-            n = 0;
-        } else if (n < 0) {
-            slideIndex = (size - 1);
-            n = (size - 1);
+        if ((n+1) > size) {
+            slideIndex = 0; n = 0;
+        }else if (n < 0) {
+            slideIndex = (size-1);
+            n = (size-1);
         }
+
         for (i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";
         }
@@ -309,9 +320,5 @@ out.print("\n");
 
         slides[n].style.display = "block";
         dots[n].className += " active";
-
-        // document.getElementById("slideshow-container").appendChild(document.createElement("div class")).className='myslide';
-
     }
-
 </script>

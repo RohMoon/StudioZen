@@ -278,11 +278,14 @@ public class BracnchOfficeController {
      "qna_Content" :  "Method PUT TEST Content"
      }
      **********************/
-    @PutMapping(value = "/update")
+    @PostMapping(value = "/update")
     //@RequestMapping(value = "/write", method = RequestMethod.PUT)
     public String BracnchOfficeUpdater(@RequestBody BranchOfficeDTO branchOfficeDTO) {
 
+        logger.info("============> "+branchOfficeDTO);
         String result = bracnchOfficeLogic.BracnchOfficeUpdater(branchOfficeDTO);
+
+
 
         logger.info(branchOfficeDTO.getResult());
         logger.info(result);

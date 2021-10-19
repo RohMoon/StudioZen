@@ -98,7 +98,7 @@ public class SpaceDTO extends BranchOfficeDTO {
 
     @Override
     public String toString() {
-        return "\n SpaceDTO{" +
+        return "SpaceDTO{" +
                 "space_no='" + space_no + '\'' +
                 ", space_basicprice=" + space_basicprice +
                 ", space_maxpeople=" + space_maxpeople +
@@ -106,6 +106,8 @@ public class SpaceDTO extends BranchOfficeDTO {
                 ", space_name='" + space_name + '\'' +
                 ", space_description='" + space_description + '\'' +
                 ", space_regdate='" + space_regdate + '\'' +
+                ", Tr_code='" + getTr_code() + '\'' +
+                ", Branchoffice_no='" + getBranchoffice_no() + '\'' +
                 '}';
     }
 }

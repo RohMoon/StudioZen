@@ -417,15 +417,15 @@ legend + * {
   clear: left;
 }
 
-::-webkit-datetime-edit-fields-wrapper,
-::-webkit-datetime-edit-text,
-::-webkit-datetime-edit-minute,
-::-webkit-datetime-edit-hour-field,
-::-webkit-datetime-edit-day-field,
-::-webkit-datetime-edit-month-field,
-::-webkit-datetime-edit-year-field {
-  padding: 0;
-}
+/*::-webkit-datetime-edit-fields-wrapper,*/
+/*::-webkit-datetime-edit-text,*/
+/*::-webkit-datetime-edit-minute,*/
+/*::-webkit-datetime-edit-hour-field,*/
+/*::-webkit-datetime-edit-day-field,*/
+/*::-webkit-datetime-edit-month-field,*/
+/*::-webkit-datetime-edit-year-field {*/
+/*  padding: 0;*/
+/*}*/
 
 ::-webkit-inner-spin-button {
   height: auto;
@@ -2391,10 +2391,10 @@ textarea.form-control-lg {
 .form-control-color:not(:disabled):not([readonly]) {
   cursor: pointer;
 }
-.form-control-color::-moz-color-swatch {
-  height: 1.5em;
-  border-radius: 0.25rem;
-}
+/*.form-control-color::-moz-color-swatch {*/
+/*  height: 1.5em;*/
+/*  border-radius: 0.25rem;*/
+/*}*/
 .form-control-color::-webkit-color-swatch {
   height: 1.5em;
   border-radius: 0.25rem;
@@ -2688,10 +2688,10 @@ textarea.form-control-lg {
 .form-floating > .form-control::placeholder {
   color: transparent;
 }
-.form-floating > .form-control:not(:-moz-placeholder-shown) {
-  padding-top: 1.625rem;
-  padding-bottom: 0.625rem;
-}
+/*.form-floating > .form-control:not(:-moz-placeholder-shown) {*/
+/*  padding-top: 1.625rem;*/
+/*  padding-bottom: 0.625rem;*/
+/*}*/
 .form-floating > .form-control:not(:-ms-input-placeholder) {
   padding-top: 1.625rem;
   padding-bottom: 0.625rem;
@@ -2708,10 +2708,10 @@ textarea.form-control-lg {
   padding-top: 1.625rem;
   padding-bottom: 0.625rem;
 }
-.form-floating > .form-control:not(:-moz-placeholder-shown) ~ label {
-  opacity: 0.65;
-  transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
-}
+/*.form-floating > .form-control:not(:-moz-placeholder-shown) ~ label {*/
+/*  opacity: 0.65;*/
+/*  transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);*/
+/*}*/
 .form-floating > .form-control:not(:-ms-input-placeholder) ~ label {
   opacity: 0.65;
   transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
@@ -4110,7 +4110,7 @@ textarea.form-control-lg {
 }
 
 .navbar-nav-scroll {
-  max-height: var(--bs-scroll-height, 75vh);
+  /*max-height: var(--bs-scroll-height, 75vh);*/
   overflow-y: auto;
 }
 
@@ -4782,7 +4782,7 @@ textarea.form-control-lg {
   float: left;
   padding-right: 0.5rem;
   color: #6c757d;
-  content: var(--bs-breadcrumb-divider, "/") /* rtl: var(--bs-breadcrumb-divider, "/") */;
+  /*content: var(--bs-breadcrumb-divider, "/") !* rtl: var(--bs-breadcrumb-divider, "/") *!;*/
 }
 .breadcrumb-item.active {
   color: #6c757d;
@@ -5437,7 +5437,7 @@ textarea.form-control-lg {
 }
 
 .toast-container {
-  width: -webkit-max-content;
+  /*width: -webkit-max-content;*/
   width: -moz-max-content;
   width: max-content;
   max-width: 100%;
@@ -6400,7 +6400,7 @@ textarea.form-control-lg {
   }
 }
 .placeholder-wave {
-  -webkit-mask-image: linear-gradient(130deg, #000 55%, rgba(0, 0, 0, 0.8) 75%, #000 95%);
+  /*-webkit-mask-image: linear-gradient(130deg, #000 55%, rgba(0, 0, 0, 0.8) 75%, #000 95%);*/
           mask-image: linear-gradient(130deg, #000 55%, rgba(0, 0, 0, 0.8) 75%, #000 95%);
   -webkit-mask-size: 200% 100%;
           mask-size: 200% 100%;
@@ -7479,8 +7479,10 @@ textarea.form-control-lg {
 }
 
 .py-5 {
-  padding-top: 3rem !important;
-  padding-bottom: 3rem !important;
+  /*padding-top: 3rem !important;*/
+  padding-top: 0.1rem !important;
+  /*padding-bottom: 3rem !important;*/
+  padding-bottom: 0.1rem !important;
 }
 
 .pt-0 {

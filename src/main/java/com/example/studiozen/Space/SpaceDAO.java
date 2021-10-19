@@ -11,12 +11,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class SpaceDAO {
     private static Logger logger = LogManager.getLogger(SpaceDAO.class);
-    @Autowired
-    private SqlSessionTemplate sqlSessionTemplate;
+    private final SqlSessionTemplate sqlSessionTemplate;
+
+    public SpaceDAO(SqlSessionTemplate sqlSessionTemplate) {
+        this.sqlSessionTemplate = sqlSessionTemplate;
+    }
 
     public void Space_CUD(SpaceDTO spaceDTO) throws SqlSessionException {
 
-        sqlSessionTemplate.selectList("reservation_CUD",spaceDTO);
+        sqlSessionTemplate.selectList("Space_CUD",spaceDTO);
 
     }
 
