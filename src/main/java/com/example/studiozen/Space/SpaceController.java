@@ -3,11 +3,14 @@ package com.example.studiozen.Space;
 
 
 import com.example.studiozen.DTO.SpaceDTO;
+import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("space")
@@ -105,16 +108,19 @@ public class SpaceController {
      **********************/
     @PostMapping(value = "/delete")
     public String SpaceDelete(@RequestBody SpaceDTO spaceDTO) {
+        logger.info(spaceDTO.toString());
+        List<SpaceDTO> spaceSelectList = spaceLogic.SpaceDelete(spaceDTO);
 
-        String result = spaceLogic.SpaceDelete(spaceDTO);
+        Gson gson = new Gson();
+        gson.toJson(spaceSelectList);
 
         logger.info(spaceDTO.getResult());
-        logger.info(result);
+        logger.info(gson.toJson(spaceSelectList));
 
         //게시판 CUD 중 수정 성공 / 실패에 대한 결과값을 int result로 반환
         if (spaceDTO.getResult() == 1) {
             logger.info("성공페이지 연결");
-            return "index";
+            return gson.toJson(spaceSelectList);
 
         } else {
 

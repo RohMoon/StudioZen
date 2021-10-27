@@ -7,21 +7,21 @@
 --%>
 <div id="managementDashBoard" class="main com-mainPanel">
     <script type="text/javascript">
-        var tr_code
-        var reserv_no            ;
-        var space_no             ;
-        var space_name           ;
-        var reserv_hostcode      ;
-        var member_name          ;
-        var reserv_date          ;
-        var reserv_start_time    ;
-        var reserv_end_time      ;
-        var reserv_host_mobile   ;
-        var reserv_paystatement  ;
-        var reserv_regdate       ;
-        var reserv_host_email    ;
-        var reserv_updatedate    ;
-        var reserv_pay_limited   ;
+        // var tr_code
+        // var reserv_no            ;
+        // var space_no             ;
+        // var space_name           ;
+        // var reserv_hostcode      ;
+        // var member_name          ;
+        // var reserv_date          ;
+        // var reserv_start_time    ;
+        // var reserv_end_time      ;
+        // var reserv_host_mobile   ;
+        // var reserv_paystatement  ;
+        // var reserv_regdate       ;
+        // var reserv_host_email    ;
+        // var reserv_updatedate    ;
+        // var reserv_pay_limited   ;
     </script>
 
 

@@ -106,7 +106,7 @@ public class SpaceDTO extends BranchOfficeDTO {
                 ", space_name='" + space_name + '\'' +
                 ", space_description='" + space_description + '\'' +
                 ", space_regdate='" + space_regdate + '\'' +
-                ", Tr_code='" + getTr_code() + '\'' +
+                ", tr_code='" + getTr_code() + '\'' +
                 ", Branchoffice_no='" + getBranchoffice_no() + '\'' +
                 '}';
     }

@@ -119,10 +119,10 @@ public class ReservationController {
      "qna_Content" :  "Method Post TEST Content"
      }
      **********************/
-    @PostMapping(value = "/BOOK")
+    @PostMapping(value = "/book")
     public String ReservationBook(@RequestBody ReservationDTO reservationDTO) {
 
-        logger.info(reservationDTO.getSpace_no());
+        logger.info(reservationDTO);
         String result = reservationLogic.ReservationBook(reservationDTO);
 
         logger.info("  CUD 동작 결과 구분   ====  > " + reservationDTO.getResult());

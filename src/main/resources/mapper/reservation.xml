@@ -56,8 +56,6 @@
             ,#{reserv_date, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
             ,#{reserv_start_time, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
             ,#{reserv_end_time, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
-            ,#{reserv_host_mobile, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
-            ,#{reserv_host_email, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
             ,#{reserv_paystatement, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
             ,#{reserv_hostname, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
             ,#{reserv_space, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}

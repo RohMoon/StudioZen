@@ -1,12 +1,12 @@
-function RegisterAction() {
-
-    console.log('RegisterAction');
-
-    console.log('UpdatingReservAction');
-    tr_code = 'insert';
-    let registerData  = $("input.needs-validation").serialize();
-
-    console.log(registerData);
+// function RegisterAction() {
+//
+//     console.log('RegisterAction');
+//
+//     console.log('UpdatingReservAction');
+//     tr_code = 'insert';
+//     let registerData  = $("input.needs-validation").serialize();
+//
+//     console.log(registerData);
 
 /*    /!*  ajax POST 방식으로 값 전송*!/
     $.ajax({
@@ -38,4 +38,4 @@ function RegisterAction() {
         },
     });*/
 
-}
+// }

@@ -170,6 +170,7 @@ public class BracnchOfficeController {
 
         logger.info("< ==== BracnchOffice 'Detatil' Select ==== > ");
         logger.info("Space DTO=============>"+spaceDTO.getBranchoffice_no());
+        logger.info("Space DTO=============>\n"+spaceDTO);
 
         List<SpaceDTO> spaceSelectList = bracnchOfficeLogic.BracnchOfficeDetailSelect(spaceDTO);
 

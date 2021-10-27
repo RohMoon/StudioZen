@@ -38,7 +38,7 @@ function ClientModalCloseAction() {
 function ClientQnaBoardWrite() {
     'use strict'
     console.log("ClientQnaBoardWrite()");
-    let tr_code = 'insert';
+    tr_code = 'insert';
     let qna_title = document.getElementById('clientQnaBoardWriteModalTitleArea').value;
     let qna_content = document.getElementById('clientQnaBoardWriteModalTextArea').value;
     let qna_no = '00000';

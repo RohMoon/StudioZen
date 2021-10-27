@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="/css/comm.css">
+    <link rel="stylesheet" type="text/css" href="/css/calender.css">
     <link href="/css/bootStrap/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/bootStrap/bootstrap.css">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
@@ -24,7 +25,7 @@
     <script type="text/javascript" src="/js/IndexPage.js"></script>
     <script type="text/javascript" src="/js/login.js"></script>
     <script type="text/javascript" src="/js/Management.js"></script>
-    <script type="text/javascript" src="/js/ManagementMenu.js"></script>
+
 
 </head>
 <body>
@@ -69,4 +70,59 @@
 
 
 </body>
+<script>
+
+    let tr_code;
+    let poolBase ;
+    let p_sid ;
+    let sid   ;
+
+    let member_name;
+
+    let reserv_no;
+    let reserv_date;
+    let reserv_hostcode;
+    let reserv_start_time;
+    let reserv_end_time;
+    let reserv_host_mobile;
+    let reserv_paystatement;
+    let reserv_regdate;
+    let reserv_host_email;
+    let reserv_updatedate;
+    let reserv_pay_limited;
+
+    let qna_no;
+    let qna_recomment_no;
+    let qna_recomment_writer;
+    let qna_recomment_content;
+
+    let branchoffice_no;
+    let branchoffice_name;
+    let branchoffice_local;
+    let branchoffice_address;
+    let branchoffice_mobile;
+
+    let space_no;
+    let space_name;
+    let space_description   ;
+    let space_capacity      ;
+    let space_maxpeople     ;
+    let space_basicprice    ;
+    let spaceUpdateButton   ;
+    let spaceUpdateSubmitButton  ;
+    let spaceUpdateAbortButton   ;
+    let spaceAddSubmitButton     ;
+    let spaceDeleteButton        ;
+    let spaceBookButton   ;
+    let spaceBookSubmitButton   ;
+    let spaceBookAbortButton   ;
+
+    let imgFile                 ;
+    let stored_file_name        ;
+    let DownloadQnaFileFormData ;
+    let image                   ;
+    let reader                  ;
+    let img                     ;
+
+</script>
 </html>

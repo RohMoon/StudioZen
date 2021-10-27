@@ -1,50 +1,6 @@
-let tr_code;
-let poolBase ;
-let p_sid ;
-let sid   ;
 
-let member_name;
 
-let reserv_no;
-let reserv_date;
-let reserv_hostcode;
-let reserv_start_time;
-let reserv_end_time;
-let reserv_host_mobile;
-let reserv_paystatement;
-let reserv_regdate;
-let reserv_host_email;
-let reserv_updatedate;
-let reserv_pay_limited;
 
-let qna_no;
-let qna_recomment_no;
-let qna_recomment_writer;
-let qna_recomment_content;
-
-let branchoffice_no;
-let branchoffice_name;
-let branchoffice_local;
-let branchoffice_address;
-let branchoffice_mobile;
-
-let space_no;
-let space_name;
-let space_description   ;
-let space_capacity      ;
-let space_maxpeople     ;
-let space_basicprice    ;
-let spaceUpdateButton   ;
-let spaceUpdateSubmitButton   ;
-let spaceUpdateAbortButton   ;
-let spaceAddSubmitButton   ;
-
-let imgFile                 ;
-let stored_file_name        ;
-let DownloadQnaFileFormData ;
-let image                   ;
-let reader                  ;
-let img                     ;
 
 /*  대시보드에서 Q&A 이미지영역 눌렀을 때*/
 function qnaListBoardAction() {
@@ -277,7 +233,7 @@ function reservationListBoardAction(e) {
     // $('#mainPanel').children().remove();
     // $rkv('#mainPanel').load(("/qna/select/MEM282108 #qnaListBoard"));
 
-}
+};
 
 
 /* 슬라이드 메뉴에서 대쉬보드 버튼을 눌렀을 때*/
@@ -291,7 +247,7 @@ function goDashBoardPageAction() {
     $('#mainPanel').children().remove();
 
     $('#mainPanel').load("/Management/dash.do/" + sid + " #managementDashBoard");
-}
+};
 
 
 /* 대쉬보드에서 예약현황 삭제버튼 눌렀을 때 */
@@ -789,11 +745,11 @@ function newBranchOfficeInsert(e) {
     console.log('===>>   ' + newBranchOfficeFormData.getAll('imgFile'));
 
     newBranchOfficeFormData.append('tr_code', tr_code);
-    newBranchOfficeFormData.append('branchoffice_name', branchOffice_name);
-    newBranchOfficeFormData.append('branchoffice_local', branchOffice_local);
-    newBranchOfficeFormData.append('branchoffice_mobile', branchOffice_mobile);
-    newBranchOfficeFormData.append('branchoffice_address', branchOffice_address);
-    newBranchOfficeFormData.append('branchoffice_no', branchOffice_no);
+    newBranchOfficeFormData.append('branchoffice_name', branchoffice_name);
+    newBranchOfficeFormData.append('branchoffice_local', branchoffice_local);
+    newBranchOfficeFormData.append('branchoffice_mobile', branchoffice_mobile);
+    newBranchOfficeFormData.append('branchoffice_address', branchoffice_address);
+    newBranchOfficeFormData.append('branchoffice_no', branchoffice_no);
 
     // FormData의 key 확인
     for (let newBranchOfficeDatakey of newBranchOfficeFormData.keys()) {
@@ -825,9 +781,7 @@ function newBranchOfficeInsert(e) {
         },
     });
 }
-                      let image
-                      let reader
-                      let img
+
 function readURL(input) {
     if (input.files && input.files[0]) {
         for (image of event.target.files) {
@@ -876,17 +830,17 @@ function goBranchOfficeDetailBoard(){
 
     branchoffice_no      = parent.getElementsByClassName("branchOffice_no").item(0).textContent;
     branchoffice_name    = parent.getElementsByClassName("branchOffice_name").item(0).textContent;
-    branchOffice_local   = parent.getElementsByClassName("branchOffice_local").item(0).textContent;
-    branchOffice_address = parent.getElementsByClassName("branchOffice_address").item(0).textContent;
-    branchOffice_mobile  = parent.getElementsByClassName("branchOffice_mobile").item(0).textContent;
+    branchoffice_local   = parent.getElementsByClassName("branchOffice_local").item(0).textContent;
+    branchoffice_address = parent.getElementsByClassName("branchOffice_address").item(0).textContent;
+    branchoffice_mobile  = parent.getElementsByClassName("branchOffice_mobile").item(0).textContent;
 
     console.log(JSON.stringify(({branchoffice_no})));
 
     sessionStorage.setItem("branchoffice_name", branchoffice_name);
     sessionStorage.setItem("branchoffice_no", branchoffice_no);
-    sessionStorage.setItem("branchOffice_local", branchOffice_local);
-    sessionStorage.setItem("branchOffice_address", branchOffice_address);
-    sessionStorage.setItem("branchOffice_mobile", branchOffice_mobile);
+    sessionStorage.setItem("branchOffice_local", branchoffice_local);
+    sessionStorage.setItem("branchOffice_address", branchoffice_address);
+    sessionStorage.setItem("branchOffice_mobile", branchoffice_mobile);
 
     // document.getElementById("branchOfficeBoardDetailTableTbody").
     // document.getElementById().parentNode.parentNode.parentNode.firstElementChild.firstElementChild.
@@ -930,7 +884,7 @@ function goBranchOfficeDetailBoard(){
             modal.classList.toggle('show');
             /* 대여 공간 디테일창을 관리자가 봤을 때*/
 
-            if (modal.classList.contains('show')) {
+                if (modal.classList.contains('show')) {
                 body.style.overflow = 'hidden';
 
             };
@@ -939,9 +893,12 @@ function goBranchOfficeDetailBoard(){
                 console.log("관리자 확인.");
                 document.getElementById("spaceAddButton").setAttribute("style","display:block;");
                 document.getElementById("spaceAddButton").setAttribute("style","font-size:1.5rem;");
+
+
             }
 
         }
 
     });
 }
+

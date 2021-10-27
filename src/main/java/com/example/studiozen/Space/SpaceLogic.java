@@ -1,20 +1,25 @@
 package com.example.studiozen.Space;
 
 
+import com.example.studiozen.BranchOffice.BracnchOfficeDAO;
 import com.example.studiozen.DTO.SpaceDTO;
-import com.example.studiozen.Mail.MailSend;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class SpaceLogic {
     private static Logger logger = LogManager.getLogger(SpaceLogic.class);
 
     private final SpaceDAO spaceDAO;
+    private final BracnchOfficeDAO bracnchOfficeDAO;
 
-    public SpaceLogic(SpaceDAO spaceDAO) {
+    public SpaceLogic(SpaceDAO spaceDAO, BracnchOfficeDAO bracnchOfficeDAO) {
         this.spaceDAO = spaceDAO;
+
+        this.bracnchOfficeDAO = bracnchOfficeDAO;
     }
 
 
@@ -62,17 +67,19 @@ public class SpaceLogic {
 
     }
 
-    public String SpaceDelete(SpaceDTO spaceDTO) {
+    public List<SpaceDTO> SpaceDelete(SpaceDTO spaceDTO) {
         String result = null;
+        List<SpaceDTO> spaceSelectList = null;
         try {
             spaceDAO.Space_CUD(spaceDTO);
+            spaceSelectList = bracnchOfficeDAO.BracnchOfficeDetailSelect(spaceDTO);
             result = "Nice";
         } catch (Exception e) {
             result = "bad";
             logger.info(e.getStackTrace());
         }
         logger.info(spaceDTO.getResult());
-        return result;
+        return spaceSelectList;
 
     }
 

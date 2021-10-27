@@ -28,6 +28,7 @@
             SPACE_REGDATE
         FROM SPACE_TB
         WHERE BRANCHOFFICE_NO = #{branchoffice_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            AND SPACE_DELSIGN = 'N'
     </select>
 
 </mapper>
