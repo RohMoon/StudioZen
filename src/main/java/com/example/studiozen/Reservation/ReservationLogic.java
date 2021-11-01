@@ -31,6 +31,18 @@ public class ReservationLogic {
 
     }
 
+    /* 대상 공간의 대여된 시간 조회*/
+    public List<ReservationDTO> Reservation_BookedTimeSelect(ReservationDTO reservationDTO) {
+        List<ReservationDTO> reservation_BookedTimeSelectList = null;
+        try {
+            reservation_BookedTimeSelectList = reservationDAO.Reservation_BookedTimeSelect(reservationDTO);
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+        }
+        return reservation_BookedTimeSelectList;
+
+    }
+
     /* 대여 예약 상세 조회 */
     public List<ReservationDTO> ReservationDetail(ReservationDTO reservationDTO) {
         List<ReservationDTO> reservationDetailList = null;

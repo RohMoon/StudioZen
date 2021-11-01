@@ -678,3 +678,12 @@ tr.timeTableTrTd td{
     transition-timing-function: ease-out;
     transition-duration: 1s;
 }
+
+.timeCell-disabled{
+    background-color: #6c757d;
+    animation-delay: 3s;
+    color: white;
+    transition-timing-function: ease-out;
+    transition-duration: 1s;
+
+}

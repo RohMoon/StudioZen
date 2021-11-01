@@ -15,15 +15,15 @@
     <% List<ReservationDTO> reserv_detailList = (List<ReservationDTO>) request.getAttribute("reservationDetailList");%>
     <% ReservationDTO reserv_detailInfo = (reserv_detailList.get(0)); %>
     <script type="text/javascript">
-        let p_reserv_no;
-        let p_space_no;
-        let p_reserv_hostcode;
-        let p_reserv_date;
-        let p_reserv_start_time;
-        let p_reserv_end_time;
-        let p_reserv_host_mobile;
-        let p_reserv_paystatement;
-        let p_reserv_host_email;
+        // let p_reserv_no;
+        // let p_space_no;
+        // let p_reserv_hostcode;
+        // let p_reserv_date;
+        // let p_reserv_start_time;
+        // let p_reserv_end_time;
+        // let p_reserv_host_mobile;
+        // let p_reserv_paystatement;
+        // let p_reserv_host_email;
 
 
 

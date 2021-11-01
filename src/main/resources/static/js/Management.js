@@ -193,7 +193,9 @@ function goDeletingQNARecommentAction(sid, qna_no, indexNo, recoNo) {
 
 /*  대쉬보드에서 예약현황 셀 클릭시 눌렀을 때*/
 function reservationListBoardAction(e) {
+    event.stopPropagation();
     console.log('예약번호' + e.childNodes[0].innerText);
+    // document.getElementsByTagName('tr')[1].childNodes[0].innerText
     console.log('reservationListBoardAction');
 
     reserv_no = e.childNodes[1].innerText;
@@ -234,6 +236,8 @@ function reservationListBoardAction(e) {
     // $rkv('#mainPanel').load(("/qna/select/MEM282108 #qnaListBoard"));
 
 };
+
+
 
 
 /* 슬라이드 메뉴에서 대쉬보드 버튼을 눌렀을 때*/
@@ -813,7 +817,7 @@ function readURL(input) {
     } else {
         document.getElementById('image_container').src = "";
     }
-}
+};
 
 
 /* 지점관리페이지에서 지점상세 버튼 버튼 클릭시 */
@@ -901,4 +905,83 @@ function goBranchOfficeDetailBoard(){
 
     });
 }
+
+/////////////////////
+
+var IMP = window.IMP; // 생략 가능
+IMP.init("imp43709408"); // 예: imp00000000
+
+document.querySelectorAll('.doPay').forEach(function (doPays) {
+    doPays.addEventListener('click',function (e) {
+        event.stopPropagation();
+        alert('결제하기 버튼 작동');
+        console.log(e.target.closest('tr').childNodes[1]);
+        reserv_no = e.target.closest('tr').childNodes[1].innerText;
+        name = e.target.closest('tr').childNodes[3].innerText +'  '+ e.target.closest('tr').childNodes[5].innerText+'시간';//대여장소
+        buyer_name = e.target.closest('tr').childNodes[2].innerText;
+
+        requestPay(e);
+
+    },false);
+});
+
+
+
+
+function requestPay(e) {
+    // IMP.request_pay(param, callback) 결제창 호출
+    IMP.request_pay({ // param
+        pg: "html5_inicis",
+        pay_method: "card",
+        merchant_uid: reserv_no,
+        name: name,
+        amount: 500,
+        buyer_email: "rs.moony@gmail.com",
+        buyer_name: " ",
+        buyer_tel: "010-4242-4242",
+        // buyer_addr: "서울특별시 강남구 신사동",
+        // buyer_postcode: "01181"
+    }, function (rsp) { // callback
+        if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+            // jQuery로 HTTP 요청
+            jQuery.ajax({
+                url: "/payroll/register", // 가맹점 서버
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                data: JSON.stringify({
+                        TR_CODE:'INSERT',
+                        P_PAYROLL_HIST_NO:'any',
+                        P_RESERV_NO:reserv_no,
+                        P_PAYROLL_HIST_PRICE:amount ,
+                        P_PAYROLL_HIST_METHOD:pay_method
+                    })
+                    // imp_uid: rsp.imp_uid,
+                    // merchant_uid: rsp.merchant_uid
+                    //기타 필요한 데이터가 있으면 추가 전달
+
+            }).done(function (data) {
+                alert(e.target);
+                alert('결제완료 ');
+                // 가맹점 서버 결제 API 성공시 로직
+                // var xhr = new XMLHttpRequest;
+                // xhr.onreadystatechange = function () {
+                //     if (this.readyState == 4 && this.status == 200) {}
+                //     alert('결제 완료 되었습니다. ');
+                // } //End of onreadystatechange
+                // xhr.open('post','/payroll/register', true);
+                // xhr.setRequestHeader('Content-type','application/json');
+                // xhr.send(JSON.stringify({
+                //     TR_CODE:'INSERT',
+                //     P_PAYROLL_HIST_NO:'any',
+                //     P_RESERV_NO:reserv_no,
+                //     P_PAYROLL_HIST_PRICE:amount ,
+                //     P_PAYROLL_HIST_METHOD:pay_method
+                // }));
+            });
+        } else {
+            alert("결제에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
+        }
+    });
+}
+
 

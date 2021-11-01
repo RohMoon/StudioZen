@@ -2,6 +2,7 @@ package com.example.studiozen.Reservation;
 
 
 import com.example.studiozen.DTO.ReservationDTO;
+import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
@@ -64,6 +65,34 @@ public class ReservationController {
 
     }// End of Select Method   // End of Select Method  // End of Select Method
 
+    /*********대상공간의 예약된 시간 조회********/
+    @PostMapping(value = "/bookedTimeCheck")
+    public String Reservation_BookedTimeSelect(HttpServletRequest request,@RequestBody ReservationDTO reservationDTO ) {
+
+        logger.info(" ========== > bookedTimeCheck <=========");
+        logger.info(reservationDTO);
+        List<ReservationDTO> reservation_BookedTimeSelectList =
+
+                reservationLogic.Reservation_BookedTimeSelect(reservationDTO);
+
+
+        request.setAttribute("reservation_BookedTimeSelectList",reservation_BookedTimeSelectList);
+
+        Gson gson = new Gson();
+
+        if (reservation_BookedTimeSelectList.size() == 0){
+            logger.info("nonono");
+            return gson.toJson(reservation_BookedTimeSelectList);
+        }
+        else {
+            return gson.toJson(reservation_BookedTimeSelectList);
+        }
+
+    }// End of Select Method   // End of Select Method  // End of Select Method
+
+
+
+
     /*********대여 예약현황 상세 조회********
      http://localhost:8080/qna/write
      {
@@ -103,6 +132,9 @@ public class ReservationController {
         }
 
     }// End of Select Method   // End of Select Method  // End of Select Method
+
+
+
 
 
 

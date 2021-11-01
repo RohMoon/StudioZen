@@ -110,7 +110,7 @@
 
 
     <%-- 일정표 html  --%>
-     <div id="spaceBookModalbd" class="spaceBookModal_body" style="display: none">
+    <div id="spaceBookModalbd" class="spaceBookModal_body" style="display: none">
         <div class="container">
             <div class="my-calendar clearfix">
                 <div class="clicked-date">
@@ -148,15 +148,15 @@
             <table id="timeTable">
                 <tbody id="timeTableTbody">
                 <tr class="timeTableTrTd">
-                    <td id="timeTableTd1" class="timeTableTd">1 </td>
-                    <td id="timeTableTd2" class="timeTableTd">2 </td>
-                    <td id="timeTableTd3" class="timeTableTd">3 </td>
-                    <td id="timeTableTd4" class="timeTableTd">4 </td>
-                    <td id="timeTableTd5" class="timeTableTd">5 </td>
-                    <td id="timeTableTd6" class="timeTableTd">6 </td>
-                    <td id="timeTableTd7" class="timeTableTd">7 </td>
-                    <td id="timeTableTd8" class="timeTableTd">8 </td>
-                    <td id="timeTableTd9" class="timeTableTd">9 </td>
+                    <td id="timeTableTd1" class="timeTableTd">1</td>
+                    <td id="timeTableTd2" class="timeTableTd">2</td>
+                    <td id="timeTableTd3" class="timeTableTd">3</td>
+                    <td id="timeTableTd4" class="timeTableTd">4</td>
+                    <td id="timeTableTd5" class="timeTableTd">5</td>
+                    <td id="timeTableTd6" class="timeTableTd">6</td>
+                    <td id="timeTableTd7" class="timeTableTd">7</td>
+                    <td id="timeTableTd8" class="timeTableTd">8</td>
+                    <td id="timeTableTd9" class="timeTableTd">9</td>
                     <td id="timeTableTd10" class="timeTableTd">10</td>
                     <td id="timeTableTd11" class="timeTableTd">11</td>
                     <td id="timeTableTd12" class="timeTableTd">12</td>
@@ -176,31 +176,36 @@
                 </tbody>
             </table>
         </div>
-         <%-- 확인 버튼--%>
-         <div id="bookButtonControlArea">
-             <button id="bookSubmitButton" class="btn btn-warning" style="margin-top: 3vw; font-family: fantasy; font-size: 2vw " >
-                 확인
-             </button>
-         </div>
+        <%-- 확인 버튼--%>
+        <div id="bookButtonControlArea">
+            <button id="bookSubmitButton" class="btn btn-warning"
+                    style="margin-top: 1vw; font-family: fantasy; font-size: 2vw ">
+                확인
+            </button>
+        </div>
     </div>
 
 </div>
 
 <%-- 타임 테이블 스크립트 --%>
 <script>
-    var timeTableTd =document.getElementsByClassName('timeTableTd');
+    var timeTableTd = document.getElementsByClassName('timeTableTd');
     reserv_start_time;
     reserv_end_time;
     for (let i = 0; i < timeTableTd.length; i++) {
         timeTableTd.item(i).addEventListener('click', function () {
+            event.stopPropagation();
             // const text = $(this).text();
             var activeTimeCell_length = document.getElementsByClassName('timeCell-active').length;
-            if(activeTimeCell_length==0){
+            if (activeTimeCell_length == 0) {
                 // $(this).addClass('timeCell-active');
+                if (!event.target.classList.contains('timeCell-disabled')){
                 event.target.classList.add('timeCell-active');
                 // tmp = $(this).text();
                 tmp = this.innerHTML;
-
+                }else{
+                    alert('사용 불가능한 시간이 포함 선택되었습니다.');
+                }
                 // console.log(' $(this)   ===>'+tmp)
 
                 // tmp2 = document.querySelector(this).textContent;
@@ -208,125 +213,197 @@
 
                 // console.log('===>'+tmp2);
                 // tmp = document.querySelector(this).text();
-            }else{
-                var first=0;
-                var second=0;
+            } else {
+                var first = 0;
+                var second = 0;
                 var selectedNum = Number(this.innerHTML);
                 // var selectedNum =Number($(this).text());
 
-                if(tmp>selectedNum){ // tmp =  10, selectedNum = 12 false
-                    first=selectedNum;
-                    second=tmp;
-                }else{
-                    first=tmp; //first =tmp = 10 ,
-                    second=selectedNum; // second = selectedNum 12
+                if (tmp > selectedNum) { // tmp =  23, selectedNum = 24 false
+                    first = selectedNum;
+                    second = tmp;
+                } else {
+                    first = tmp; //first =tmp = 23 ,
+                    second = selectedNum; // second = selectedNum 24
                 }
-                tmp = selectedNum; // tmp = 12
+                tmp = selectedNum; // tmp = 23
                 // $('.spring-babo').removeClass('skyblue');
-                for (let i = 0; i <timeTableTd.length; i++) { // 모두 색 제거
-                       timeTableTd.item(i).classList.remove('timeCell-active');
-                } // i = fisrt =10 , 10<=12  (second = 12) // 10에서 1씩 증가
-                for(var i=first; i<=second; i++){
-                    // $('.timeTableTd:nth-child('+i+')').addClass('timeCell-active');
-                    document.getElementsByClassName('timeTableTd').item(i-1).classList.add('timeCell-active');
+                for (let i = 0; i < timeTableTd.length; i++) { // 모두 색 제거
+                    timeTableTd.item(i).classList.remove('timeCell-active');
+                } //end of 모든 칸 색 제거 for문
+                if (document.getElementsByClassName('timeTableTd').item(first-1).classList.contains('timeCell-disabled')||document.getElementsByClassName('timeTableTd').item(second-1).classList.contains('timeCell-disabled')) {
+                    alert('사용 불가능한 시간이 포함 선택되었습니다.');
                 }
+                // (!document.getElementsByClassName('timeTableTd').item(first).classList.contains('timeCell-disabled')&&
+                //     (document.getElementsByClassName('timeTableTd').item(first)<document.getElementsByClassName('timeTableTd').item(second))
+                else {
+                    for (var i = first; i <= second; i++) { //i =23 , 23<=24(범위2)  23 ++
+                        // $('.timeTableTd:nth-child('+i+')').addClass('timeCell-active');
+                        if (!document.getElementsByClassName('timeTableTd').item(i).classList.contains('timeCell-disabled')) {
+                            document.getElementsByClassName('timeTableTd').item(i - 1).classList.add('timeCell-active');
+                            //23-1 22번에 색칠. //24-1 23번에 색칠
+                        }//End of if
+                    } // End of Else
+                } //End of 색칠 for 문
+
+
+                // document.getElementsByClassName('timeTableTd').FILTER(FUNTOIN(IDX, ITEM){RETURN IDX < 19 || IDX >= 20})
             }
             reserv_start_time = first;
             reserv_end_time = second;
         });
-    };
+    }
+    ;
 
     /* 예약 창에서 시간 고른 후 확인 버튼 */
-    document.getElementById('bookSubmitButton').addEventListener('click',function () {
+    document.getElementById('bookSubmitButton').addEventListener('click', function () {
+        event.stopPropagation();
         console.log('예약확인버튼');
-        if ((reserv_end_time-reserv_start_time) >= 1){
+        // if(document.querySelector('span.cal-month').textContent==null){
+        //     alert('날짜를 선택해주세요.');
+        // }
+        // else{
+        tr_code = 'insert';
+        reserv_no = 'any';
+        space_no = space_no;
+        reserv_hostcode = sessionStorage.sid.split('=')[1];
+        // reserv_date = new Date().getFullYear() + '-' + document.querySelector('span.cal-month').innerText + '-' + document.querySelector("td.day.today.day-active").innerText;
+        reserv_date = new Date().getFullYear() + '-' + document.getElementsByClassName('cal-month')[0].innerText + '-' + document.getElementsByClassName('day-active')[0].innerText;
+            console.log(reserv_date);
+        reserv_start_time;
+        reserv_end_time;
+        reserv_paystatement = 'ready';
         let xhr = new XMLHttpRequest();
-            tr_code               = 'insert';
-         reserv_no           = 'any';
-         space_no            = space_no;
-         reserv_hostcode     = sessionStorage.sid.split('=')[1];
-         reserv_date         = new Date().getFullYear()+'-'+new Date().getMonth()+'-'+new Date().getDate();
-         reserv_start_time;
-         reserv_end_time;
-         reserv_paystatement = 'ready';
 
-        xhr.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                alert('예약이 완료되었습니다.');
-            } // End of if-  xhr.onreadystatechange function if.
-            else{
-                alert('에러가 발생했습니다. 나중에 다시 시도해주세요.')
-            }//End of Else - xhr.onreadystatechange function if Else;
-        }// End of function - xhr.onreadystatechange function.
-            xhr.open('Post','/reservation/book');
-            xhr.setRequestHeader('Content-Type','application/json');
-            xhr.send(JSON.stringify({tr_code,
+        if ((reserv_end_time - reserv_start_time) >= 1) { // 한시간 이상 예약인 경우
+
+            // tr_code               = 'insert';
+            // reserv_no           = 'any';
+            // space_no            = space_no;
+            // reserv_hostcode     = sessionStorage.sid.split('=')[1];
+            // reserv_date         = new Date().getFullYear()+'-'+document.querySelector('span.cal-month').textContent+'-'+document.querySelector("td.day.day-active").textContent;
+            // reserv_start_time;
+            // reserv_end_time;
+            // reserv_paystatement = 'ready';
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    alert('예약이 완료되었습니다.');
+                    BranchOfficeDetailModalAction();
+
+
+                } // End of if-  xhr.onreadystatechange function if.
+
+                // else {
+                //     alert('에러가 발생했습니다. 나중에 다시 시도해주세요.');
+                // }//End of Else - xhr.onreadystatechange function if Else;
+
+            }// End of function - xhr.onreadystatechange function.
+
+            xhr.open('Post', '/reservation/book');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({
+                tr_code,
                 reserv_no,
                 space_no,
                 reserv_hostcode,
                 reserv_date,
                 reserv_start_time,
                 reserv_end_time,
-                reserv_paystatement}));
-        }else {
-            alert('시간을 최소 한시간 이상 선택 해주세요.');
+                reserv_paystatement
+            }));
+
+        } else if ((reserv_end_time - reserv_start_time) == 0) { //선택된 시간이 아예 없는 경우
+
+            alert('최소 한시간 이상 시간 지정을 해주세요 .');
+
+        } //End of Else if
+
+        else { //한시간 예약 선택한 경우
+            reserv_end_time = reserv_start_time; // 한시간 선택한 경우 사용 마감 시간 = 시작 시간
+
+            xhr.onreadystatechange = function () {
+
+                if (this.readyState == 4 && this.status == 200) {
+
+                    alert(reserv_start_time + '~' + reserv_end_time + '예약이 완료되었습니다.');
+
+                } // End of if-  xhr.onreadystatechange function if.
+
+                else { //성공 못할 경우
+
+                    alert('에러가 발생했습니다. 나중에 다시 시도해주세요.');
+
+                }//End of Else - xhr.onreadystatechange function if Else;
+            }//End of xhr.onreadystatechange = function
+
+            xhr.open('Post', '/reservation/book');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({
+                tr_code,
+                reserv_no,
+                space_no,
+                reserv_hostcode,
+                reserv_date,
+                reserv_start_time,
+                reserv_end_time,
+                reserv_paystatement
+            })) // End of xhr.Send;
+        // }  //End of Else
         }
     });// End of bookSubmitButton EventListener.
 
+    /*
 
-
-
-
-/*
-
-            let node = this;
-            if (node.getAttribute("class") != "on") {
-                if (node.getAttribute("class") != "nv_disable") {
-                    $(node).toggleClass("on");
+                let node = this;
+                if (node.getAttribute("class") != "on") {
+                    if (node.getAttribute("class") != "nv_disable") {
+                        $(node).toggleClass("on");
+                    }
+                    let selectedBlockList = $("#blockList").find(".on");
+                    if (selectedBlockList.length >= 2) {
+                        let firstNode = selectedBlockList[0];
+                        let lastNode = selectedBlockList[selectedBlockList.length - 1];
+                        nodeClickOn(firstNode, lastNode, node);
+                    }
+                } else {
+                    nodeClickOff(node);
                 }
-                let selectedBlockList = $("#blockList").find(".on");
-                if (selectedBlockList.length >= 2) {
-                    let firstNode = selectedBlockList[0];
-                    let lastNode = selectedBlockList[selectedBlockList.length - 1];
-                    nodeClickOn(firstNode, lastNode, node);
-                }
-            } else {
-                nodeClickOff(node);
-            }
-        });
-    }
+            });
+        }
 
-*/
+    */
 
 
-            /*
-                        if (timeTableTd.item(i).classList.contains('timeCell-active')){
+    /*
+                if (timeTableTd.item(i).classList.contains('timeCell-active')){
+                    timeTableTd.item(i).classList.remove('timeCell-active');
+                }else {
+                    if (document.getElementsByClassName('timeCell-active').length ==1){
+                    timeTableTd.item(i).classList.add('timeCell-active');
+                        lastClickedTime = timeTableTd.item(i).textContent;
+                    }
+                    else if(document.getElementsByClassName('timeCell-active').length <1){
+                        timeTableTd.item(i).classList.add('timeCell-active');
+                        firstClickedTime = timeTableTd.item(i).textContent;
+                    }
+                    else if(document.getElementsByClassName('timeCell-active').length >=2){
+                        for (let i = 0; i <timeTableTd.length ; i++) {
                             timeTableTd.item(i).classList.remove('timeCell-active');
-                        }else {
-                            if (document.getElementsByClassName('timeCell-active').length ==1){
-                            timeTableTd.item(i).classList.add('timeCell-active');
-                                lastClickedTime = timeTableTd.item(i).textContent;
-                            }
-                            else if(document.getElementsByClassName('timeCell-active').length <1){
-                                timeTableTd.item(i).classList.add('timeCell-active');
-                                firstClickedTime = timeTableTd.item(i).textContent;
-                            }
-                            else if(document.getElementsByClassName('timeCell-active').length >=2){
-                                for (let i = 0; i <timeTableTd.length ; i++) {
-                                    timeTableTd.item(i).classList.remove('timeCell-active');
-                                }
-                            }
-                            else {
-                                timeTableTd.item(i).classList.add('timeCell-active');
-                            }
-                        };
-
-                        for (let i = 0; i < ; i++) {
-
                         }
+                    }
+                    else {
+                        timeTableTd.item(i).classList.add('timeCell-active');
+                    }
+                };
+
+                for (let i = 0; i < ; i++) {
+
+                }
 
 
-                    });*/
+            });*/
     // };
 
 </script>
@@ -334,12 +411,15 @@
 
 <%-- 일정표 스크립트 --%>
 <script>
+function drawingCalendar() {
 
+    event.stopPropagation();
     // ================================
     // START YOUR APP HERE
     // ================================
     var init = {
-        monList: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        // monList: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        monList: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
         dayList: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
         today: new Date(),
         monForChange: new Date().getMonth(),
@@ -347,6 +427,7 @@
         getFirstDay: (yy, mm) => new Date(yy, mm, 1),
         getLastDay: (yy, mm) => new Date(yy, mm + 1, 0),
         nextMonth: function () {
+            event.stopPropagation();
             let d = new Date();
             d.setDate(1);
             d.setMonth(++this.monForChange);
@@ -354,6 +435,7 @@
             return d;
         },
         prevMonth: function () {
+            event.stopPropagation();
             let d = new Date();
             d.setDate(1);
             d.setMonth(--this.monForChange);
@@ -363,6 +445,7 @@
         addZero: (num) => (num < 10) ? '0' + num : num,
         activeDTag: null,
         getIndex: function (node) {
+            event.stopPropagation();
             let index = 0;
             while (node = node.previousElementSibling) {
                 index++;
@@ -380,6 +463,7 @@
      * @param {number} dayIn
      */
     function loadDate(date, dayIn) {
+        event.stopPropagation();
         document.querySelector('.cal-date').textContent = date;
         document.querySelector('.cal-day').textContent = init.dayList[dayIn];
     }
@@ -388,6 +472,7 @@
      * @param {date} fullDate
      */
     function loadYYMM(fullDate) {
+        event.stopPropagation();
         var yy = fullDate.getFullYear();
         var mm = fullDate.getMonth();
         var firstDay = init.getFirstDay(yy, mm);
@@ -433,6 +518,7 @@
      * @param {string} val
      */
     function createNewList(val) {
+        event.stopPropagation();
         var id = new Date().getTime() + '';
         var yy = init.activeDate.getFullYear();
         var mm = init.activeDate.getMonth() + 1;
@@ -466,10 +552,10 @@
             e.target.classList.add('day-active');
             init.activeDTag = e.target;
             init.activeDate.setDate(day);
-            reloadTodo();
+            // reloadTodo();
         }
     });
-
+}
 </script>
 
 
@@ -595,13 +681,13 @@
 //              out.print("document.getElementById(\"branchOfficeBoardDetailTableTbody\").lastElementChild.className=\""+index.getBranchoffice_no()+"_SpaceList\";");
 
                 /* branchOfficeBoardDetailTableTbody ID를 가진 엘리먼트 요소의 마지막 자식 엘리먼트 요소에 클래스네임 부여 */
-                out.print("document.getElementById(\"branchOfficeBoardDetailTableTbody\").lastElementChild.className=\"spaceList\";\n");
+                out.print("document.getElementById(\"branchOfficeBoardDetailTableTbody\").lastElementChild.className=\"spaceList\"; \n");
                 /* branchOfficeBoardDetailTableTbody ID를 가진 엘리먼트 요소의 마지막 자식 엘리먼트 요소의 자식 요소 중 마지막 요소 안에 td 태그 생성 후 추가  */
                 out.print("document.getElementById(\"branchOfficeBoardDetailTableTbody\").lastElementChild.appendChild(document.createElement(\"td\"));\n");
                 /* 대여 공간 이름을 제외한 것들의 정보를 쏟아 놓기 위한 div */
                 out.print("document.getElementById(\"branchOfficeBoardDetailTableTbody\").lastElementChild.appendChild(document.createElement(\"div\"));\n");
                 /* 대여공간 정보가 담기는 div 태그에 클래스명 부여 */
-                out.print("document.getElementById(\"branchOfficeBoardDetailTableTbody\").lastElementChild.getElementsByTagName(\"div\").item(0).className=\"spaceInfo\";\n");
+                out.print("document.getElementById(\"branchOfficeBoardDetailTableTbody\").lastElementChild.getElementsByTagName(\"div\").item(0).className=\"spaceInfo\" \n");
                 /* branchOfficeBoardDetailTableTbody ID를 가진 엘리먼트 요소의 마지막 자식 엘리먼트 요소의 중에 태그이름이 td 인 요소의 첫번째 인덱스에 대여공간 이름 추가 */
                 out.print("document.getElementById(\"branchOfficeBoardDetailTableTbody\").lastElementChild.getElementsByTagName(\"td\").item(0).appendChild(document.createTextNode(\""+index.getSpace_name()+"\"));\n");
 
@@ -623,9 +709,7 @@
     }
      %>
 
-    /*  spaceList라는 클래스 네임을 가진 요소 변수 지정 */
-    var spaceList = document.getElementsByClassName("spaceList");
-    var spaceInfo = document.getElementsByClassName("spaceInfo");
+
 
     /*
     /!* 지점의 대여공간 목록 (className="spaceList"인 항목들에 마우스 오버가 아닐시 상세 정보를 보여주게 하는 이벤트 리스너 *!/
@@ -642,6 +726,11 @@
 </script>
 
 <script>
+
+    /*  spaceList라는 클래스 네임을 가진 요소 변수 지정 */
+    var spaceList = document.getElementsByClassName("spaceList");
+    var spaceInfo = document.getElementsByClassName("spaceInfo");
+
     /* 추가버튼 생성 */
     spaceAddSubmitButton = document.createElement("button");
     spaceAddSubmitButton.setAttribute("id", "spaceAddSubmitButton");
@@ -871,8 +960,10 @@
     document.getElementById("spaceAddButton").addEventListener('click', function () {
         console.log("aa");
         event.stopPropagation(); // 이벤트 전파 방지
+        document.getElementById("extraModalBd").classList.add("show");
 
         /* 수정 폼을 재활용위한 input태그 내부 값 초기화 */
+        // document.getElementById("extraModalBd").style.display = "block";
         document.getElementById("extraBranchOfficeBoardDetailModalForm").reset();
 
         /* 업데이트 예약 삭제 버튼은 사용X */
@@ -939,7 +1030,6 @@
                     document.getElementById("spaceUpdateSubmitButton").style.display = "none";
                     document.getElementById("spaceUpdateAbortButton").style.display = "none";
                     document.getElementById("spaceAddSubmitButton").style.display = "none";
-
                 }
 
                 if (event.target === modal) {
@@ -1013,11 +1103,43 @@
 
     /* 예약 버튼 이벤트 리스너  */
     document.getElementById("spaceBookButton").addEventListener('click', function () {
-
+        event.stopImmediatePropagation();
         console.log("예약하기 버튼");
 
-
         document.getElementById("spaceBookModalbd").style.display = "block";
+
+        let xhr = new XMLHttpRequest;
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                drawingCalendar();
+                var booKedTimeList = JSON.parse(xhr.response);
+                console.log(booKedTimeList[0]);
+                for (let i = 0; i < booKedTimeList.length; i++) {
+                    var startTime = booKedTimeList[i].reserv_start_time;
+                    var endTime = booKedTimeList[i].reserv_end_time;
+                    var j = Number(startTime);
+                    for (let i = 0; i < endTime - startTime; i++) {//12 ;  12<= (4=(16-12)); 12++
+                        console.log('반복횟수 ===>' + i);
+                        document.getElementById('timeTableTd' + j).classList.add('timeCell-disabled');
+                        // document.getElementById('timeTableTd'+j).classList.remove('timeTableTd');
+                        ++j;
+                        console.log('닫는 번호 ===>' + j);
+                    }
+
+                    console.log(booKedTimeList[i].reserv_start_time);
+                    console.log(booKedTimeList[i].reserv_end_time);
+                }
+            }
+            // else {
+            //     setTimeout(function () {
+            //         alert('오류가 발생했습니다. 나중에 다시 시도해주세요.');
+            //     }, 3000);
+            //     ;
+            // }
+        }
+        xhr.open('POST', '/reservation/bookedTimeCheck');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({space_no}));
         // "<div id=\"spaceBookModal\" class=\"spaceBookModal\" onclick=\"SpaceBookModalAction()\" style='z-index: 7777'>"+
 
         ;

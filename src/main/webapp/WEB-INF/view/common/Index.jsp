@@ -25,7 +25,12 @@
     <script type="text/javascript" src="/js/IndexPage.js"></script>
     <script type="text/javascript" src="/js/login.js"></script>
     <script type="text/javascript" src="/js/Management.js"></script>
-
+    <script type="text/javascript" src="/js/ClientDashBoard.js"></script>
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+    <!-- 아래 제이쿼리는 1.0이상이면 원하는 버전을 사용하셔도 무방합니다. -->
+    <!-- jQuery -->
+     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 
 </head>
 <body>
@@ -90,6 +95,7 @@
     let reserv_host_email;
     let reserv_updatedate;
     let reserv_pay_limited;
+    let reserv_space;
 
     let qna_no;
     let qna_recomment_no;
@@ -123,6 +129,17 @@
     let image                   ;
     let reader                  ;
     let img                     ;
+
+    let pg;
+    let pay_method;
+    let merchant_uid;
+    let name;
+    let amount;
+    let buyer_email;
+    let buyer_name;
+    let buyer_tel;
+
+    ////////////
 
 </script>
 </html>

@@ -23,6 +23,14 @@ public class ReservationDAO {
         return reservationSelectList;
     }
 
+
+    public List<ReservationDTO> Reservation_BookedTimeSelect(ReservationDTO reservationDTO) throws SqlSessionException {
+
+        List<ReservationDTO> reservation_BookedTimeSelectList =  sqlSessionTemplate.selectList("reservation_BookedTimeSelect",reservationDTO);
+
+        return reservation_BookedTimeSelectList;
+    }
+
     public void Reservation_CUD(ReservationDTO reservationDTO) throws SqlSessionException {
 
         sqlSessionTemplate.selectList("reservation_CUD",reservationDTO);

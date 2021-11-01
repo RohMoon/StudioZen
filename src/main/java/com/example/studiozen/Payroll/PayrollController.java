@@ -36,7 +36,7 @@ public class PayrollController {
     @PostMapping(value = "/register")
     public String PayrollRegister(@RequestBody Payroll_HistoryDTO payroll_historyDTO) {
 
-        logger.info(payroll_historyDTO.getBranchoffice_no());
+        logger.info(payroll_historyDTO);
         String result = payrollLogic.PayrollRegister(payroll_historyDTO);
 
         logger.info("  CUD 동작 결과 구분   ====  > " + payroll_historyDTO.getResult());

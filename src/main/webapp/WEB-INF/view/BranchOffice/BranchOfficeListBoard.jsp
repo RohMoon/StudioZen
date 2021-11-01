@@ -62,7 +62,7 @@
                 for (int y = 0; y < branchOfficeImgSelectList.size(); y++) {
 //            if(branchOfficeImgSelectList.get(i).getBranchoffice_img_code()!=null){
                     if (branchOfficeSelectList.get(i).getBranchoffice_no().equals(branchOfficeImgSelectList.get(y).getBranchoffice_no())) {
-                        out.print("<div id=\"mySlides-fade"+i+y+"\" class=\"mySlides fade\">");//
+                        out.print("<div id=\"mySlides-fade"+i+y+"\" class=\"mySlides fade\">");//document.querySelector("td.day.day-active").textContent
                         out.print("<Script>");
                         out.print("var imgVar" + i + y + " =\"" + branchOfficeImgSelectList.get(y).getBranchoffice_img_code() + "\";");
                         out.print("</Script>");
