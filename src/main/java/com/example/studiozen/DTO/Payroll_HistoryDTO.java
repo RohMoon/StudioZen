@@ -7,6 +7,8 @@ public class Payroll_HistoryDTO extends ReservationDTO {
    private int    payroll_hist_price    ;
    private String payroll_hist_method   ;
 
+
+
     public String getPayroll_hist_no() {
         return payroll_hist_no;
     }

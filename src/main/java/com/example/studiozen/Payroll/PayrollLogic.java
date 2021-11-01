@@ -36,10 +36,12 @@ public class PayrollLogic {
         );*/
         try {
             payrollDAO.Payroll_CUD(payroll_historyDTO);
+            result = "Nice";
 
         } catch (Exception e) {
             result = "bad";
             logger.info("Exception ==== >> "+e.getMessage());
+            e.printStackTrace();
         }
         logger.info("서비스 클래스에서의 동작 성공 결과 구분 ==== > " + payroll_historyDTO.getResult());
 

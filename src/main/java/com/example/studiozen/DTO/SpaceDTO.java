@@ -10,6 +10,8 @@ public class SpaceDTO extends BranchOfficeDTO {
    private String space_description   ;
    private String space_regdate       ;
 
+
+
     @Override
     public int getResult() {
         return super.getResult();

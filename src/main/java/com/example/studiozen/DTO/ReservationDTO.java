@@ -16,6 +16,7 @@ public class ReservationDTO extends SpaceDTO {
     private String reserv_hostname;
     private String reserv_space;
     private String reserv_pay_limited;
+    private String reserv_del_sign;
 
     @Override
     public int getResult() {
@@ -160,6 +161,14 @@ public class ReservationDTO extends SpaceDTO {
         this.reserv_regdate = reserv_regdate;
     }
 
+    public String getReserv_del_sign() {
+        return reserv_del_sign;
+    }
+
+    public void setReserv_del_sign(String reserv_del_sign) {
+        this.reserv_del_sign = reserv_del_sign;
+    }
+
     @Override
     public String toString() {
         return "\n tr_code ====>" + getTr_code() + "\n" +
@@ -176,7 +185,8 @@ public class ReservationDTO extends SpaceDTO {
                 "reserv_del_reason       === > " + reserv_del_reason + "\n" +
                 "reserv_hostname       === > " + reserv_hostname + "\n" +
                 "reserv_space       === > " + reserv_space + "\n" +
-                "paylimitedtime       === > " + reserv_pay_limited
+                "paylimitedtime       === > " + reserv_pay_limited + "\n" +
+                "reserv_del_sign    ==== > " + reserv_del_sign
                 ;
     }
 }

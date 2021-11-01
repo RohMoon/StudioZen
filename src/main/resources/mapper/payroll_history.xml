@@ -7,7 +7,7 @@
              #{tr_code, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
             ,#{payroll_hist_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
             ,#{reserv_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
-            ,#{payroll_hist_price, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+            ,#{payroll_hist_price, mode=IN, jdbcType=NUMERIC, javaType=java.lang.Integer}
             ,#{payroll_hist_method, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
             ,#{result, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer}
             )}

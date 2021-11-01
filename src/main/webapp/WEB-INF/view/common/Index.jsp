@@ -96,6 +96,7 @@
     let reserv_updatedate;
     let reserv_pay_limited;
     let reserv_space;
+    let reserv_del_sign;
 
     let qna_no;
     let qna_recomment_no;

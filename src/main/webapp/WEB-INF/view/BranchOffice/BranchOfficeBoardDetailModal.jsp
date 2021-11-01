@@ -648,7 +648,7 @@ function drawingCalendar() {
     document.querySelectorAll(".branchOfficeBoardDetailArea").forEach(function (e) {
         e.setAttribute("readonly", "readonly");
         e.setAttribute("border-width", "0");
-    })
+    });
 
     /* 생성시 테스트 코드 및 레거시 */
     // const extraTr = document.createElement("tr");
@@ -1117,10 +1117,13 @@ function drawingCalendar() {
                 for (let i = 0; i < booKedTimeList.length; i++) {
                     var startTime = booKedTimeList[i].reserv_start_time;
                     var endTime = booKedTimeList[i].reserv_end_time;
+                    var del_sign = booKedTimeList[i].reserv_del_sign;
+                    console.log(del_sign);
                     var j = Number(startTime);
                     for (let i = 0; i < endTime - startTime; i++) {//12 ;  12<= (4=(16-12)); 12++
                         console.log('반복횟수 ===>' + i);
-                        document.getElementById('timeTableTd' + j).classList.add('timeCell-disabled');
+                        if (del_sign == 'N'){
+                        document.getElementById('timeTableTd' + j).classList.add('timeCell-disabled');                        }
                         // document.getElementById('timeTableTd'+j).classList.remove('timeTableTd');
                         ++j;
                         console.log('닫는 번호 ===>' + j);

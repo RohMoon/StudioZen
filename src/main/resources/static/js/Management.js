@@ -264,6 +264,7 @@ function goDeleteReservAction(reserv_no,
                               reserv_host_mobile,
                               reserv_paystatement,
                               reserv_host_email) {
+    event.stopPropagation();
     console.log('reserv_no          ===> ' + reserv_no);
     console.log('space_no           ===> ' + space_no);
     console.log('reserv_hostcode    ===> ' + reserv_hostcode);
@@ -344,6 +345,7 @@ function goDeleteReservAction(reserv_no,
 }
 
 function goUpdatingReservAction() {
+    event.stopPropagation();
     $('[name="member_name"]').attr('readonly', false);
     $('[name="reserv_date"]').attr('readonly', false);
     $('[name="reserv_start_time"]').attr('readonly', false);
@@ -913,7 +915,6 @@ IMP.init("imp43709408"); // 예: imp00000000
 
 document.querySelectorAll('.doPay').forEach(function (doPays) {
     doPays.addEventListener('click',function (e) {
-        event.stopPropagation();
         alert('결제하기 버튼 작동');
         console.log(e.target.closest('tr').childNodes[1]);
         reserv_no = e.target.closest('tr').childNodes[1].innerText;
@@ -924,9 +925,6 @@ document.querySelectorAll('.doPay').forEach(function (doPays) {
 
     },false);
 });
-
-
-
 
 function requestPay(e) {
     // IMP.request_pay(param, callback) 결제창 호출
@@ -943,24 +941,25 @@ function requestPay(e) {
         // buyer_postcode: "01181"
     }, function (rsp) { // callback
         if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+            console.log('merchant_uid  ====>'+merchant_uid);
+            console.log('name  ====>'+name);
             // jQuery로 HTTP 요청
             jQuery.ajax({
                 url: "/payroll/register", // 가맹점 서버
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 data: JSON.stringify({
-                        TR_CODE:'INSERT',
-                        P_PAYROLL_HIST_NO:'any',
-                        P_RESERV_NO:reserv_no,
-                        P_PAYROLL_HIST_PRICE:amount ,
-                        P_PAYROLL_HIST_METHOD:pay_method
+                        tr_code:'INSERT',
+                        payroll_hist_no:'any',
+                        reserv_no:reserv_no,
+                        payroll_hist_price:amount ,
+                        payroll_hist_method:pay_method
                     })
                     // imp_uid: rsp.imp_uid,
                     // merchant_uid: rsp.merchant_uid
                     //기타 필요한 데이터가 있으면 추가 전달
 
             }).done(function (data) {
-                alert(e.target);
                 alert('결제완료 ');
                 // 가맹점 서버 결제 API 성공시 로직
                 // var xhr = new XMLHttpRequest;

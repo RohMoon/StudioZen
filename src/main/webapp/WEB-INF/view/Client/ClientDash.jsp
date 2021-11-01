@@ -31,7 +31,7 @@
             <h3> 예약하기</h3>
         </button>
 
-        <button id="doWriteQna" type="button" class="btn btn-warning" onclick="doWriteQnaAction(this)">
+        <button id="doWriteQna" type="button" class="btn btn-warning" onclick="doWriteQnaAction(this,{capture:false})">
             <h3>문의하기</h3>
         </button>
 
@@ -66,7 +66,7 @@
                     for (ReservationDTO index : reservationSelectList) {
                         end_time = Integer.parseInt(index.getReserv_end_time());
                         start_time = Integer.parseInt(index.getReserv_start_time());
-                        out.print("<tr class=\"btn-open-popup\" onclick=\"reservationListBoardAction(this)\",>");
+                        out.print("<tr class=\"btn-open-popup\" onclick=\"reservationListBoardAction(this,{capture:false})\">");
                         out.print("<td>");
                         out.print(index.getRow_num());
                         out.print("</td>");
@@ -92,11 +92,11 @@
                         out.print(index.getReserv_end_time());
                         out.print("</td>");
                         out.print("<td>");
-                        out.print(index.getReserv_paystatement());
+//                        out.print(index.getReserv_paystatement());
                         if (index.getReserv_paystatement().equals("READY")) {
                             out.print(
                                     "        <button type=\"button\" class=\"btn btn-warning doPay\">" +
-                                            "            <h3>결제하기</h3>" +
+                                            "            <h3>결제대기</h3>" +
                                             "        </button>");
                         }else{
                             out.print("결제완료");

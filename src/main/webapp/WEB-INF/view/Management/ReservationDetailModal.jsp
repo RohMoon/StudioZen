@@ -12,8 +12,8 @@
     <%@ page import="com.example.studiozen.DTO.ReservationDTO" %>
 
 
-    <% List<ReservationDTO> reserv_detailList = (List<ReservationDTO>) request.getAttribute("reservationDetailList");%>
-    <% ReservationDTO reserv_detailInfo = (reserv_detailList.get(0)); %>
+        <% List<ReservationDTO> reserv_detailList = (List<ReservationDTO>) request.getAttribute("reservationDetailList");%>
+        <% ReservationDTO reserv_detailInfo = (reserv_detailList.get(0)); %>
     <script type="text/javascript">
         // let p_reserv_no;
         // let p_space_no;
@@ -24,7 +24,6 @@
         // let p_reserv_host_mobile;
         // let p_reserv_paystatement;
         // let p_reserv_host_email;
-
 
 
         reserv_no = "<%=reserv_detailInfo.getReserv_no()          %>";
@@ -41,7 +40,7 @@
         reserv_host_email = "<%=reserv_detailInfo.getReserv_host_email()  %>";
         reserv_updatedate = "<%=reserv_detailInfo.getReserv_updatedate()  %>";
         reserv_pay_limited = "<%=reserv_detailInfo.getReserv_pay_limited() %>";
-
+        reserv_paystatement = "<%=reserv_detailInfo.getReserv_paystatement() %>";
         console.log(reserv_no);
         console.log(space_no);
         console.log(space_name);
@@ -63,13 +62,15 @@
         document.reserv_detail_page_form.reserv_host_email.value = reserv_host_email;
         document.reserv_detail_page_form.reserv_updatedate.value = reserv_updatedate;
         document.reserv_detail_page_form.reserv_pay_limited.value = reserv_pay_limited;
+        document.reserv_detail_page_form.reserv_paystatement.value = reserv_paystatement;
 
     </script>
     <div id="modalbd" class="modal_body">
         <div class="modal_contentArea">
             <%--  예약 상세 보기 --%>
             <%-- 예약 상세 폼--%>
-            <form name="reserv_detail_page_form" action="/reservation/delete" method="post" datatype="json" onkeyup="UpdatingReservAction()">
+            <form name="reserv_detail_page_form" action="/reservation/delete" method="post" datatype="json"
+                  onkeyup="UpdatingReservAction()">
                 <label>예약번호<input type="text" name="reserv_no" class="detatilModal" readonly/></label>
 
                 <label>대여공간번호<input type="text" name="space_no" class="detatilModal" readonly/></label>
@@ -101,11 +102,11 @@
                                      readonly/></label>
 
                 <label>결제 시한 <input type="text" name="reserv_pay_limited" class="detatilModal" readonly/></label>
-            </form>
-            </p>
-            <button id="goUpdatingReserv" type="button" class="btn btn-primary" onclick="goUpdatingReservAction()">수정
-            </button>
-            <button id="goDeleteReserv" type="button" class="btn btn-primary" onclick="goDeleteReservAction(
+                <div>
+                    <button id="goUpdatingReserv" type="button" class="btn btn-primary"
+                            onclick="goUpdatingReservAction()">수정
+                    </button>
+                    <button id="goDeleteReserv" type="button" class="btn btn-primary" onclick="goDeleteReservAction(
         reserv_no           ,
         space_no            ,
         reserv_hostcode     ,
@@ -116,7 +117,9 @@
         reserv_paystatement ,
         reserv_host_email   ,
          )">삭제
-            </button>
+                    </button>
+                </div>
+            </form>
+            </p>
         </div>
     </div>
-</div>
