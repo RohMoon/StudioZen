@@ -11,11 +11,14 @@
 <%@ page import="java.util.*" %>
 <%@ page import="com.example.studiozen.DTO.BranchOfficeDTO" %>
 <%
+    /*
     List<BranchOfficeDTO> branchOfficeSelectList = (List<BranchOfficeDTO>) request.getAttribute("branchOfficeSelectList");
     List<BranchOfficeDTO> branchOfficeImgSelectList = (List<BranchOfficeDTO>) request.getAttribute("branchOfficeImgSelectList");
     int size = 0;
 //    String imgTest =branchOfficeImgSelectList.get(0).getBranchoffice_img_code();
+    */
 %>
+
 <%--<script>
     &lt;%&ndash;let testVar = "<%=imgTest%>";&ndash;%&gt;
     document.getElementById('modalSpace').appendChild(document.createElement("img"));
@@ -23,6 +26,7 @@
     document.querySelector("img").setAttribute("width",450);
     document.querySelector("img").setAttribute("height",300);
 </script>--%>
+
 <div id="branchOfficeSelectList">
 
 <div id="modalSpace">
@@ -46,11 +50,11 @@
 </div>
 <%-- 관리자 번호를 갖고 있다면 메뉴를 보여주지않는다. --%>
 <div id="dropdown" class="dropdown">
+
 </div>
+<%--
 
 <%
-
-
 
     if (branchOfficeSelectList.size() > 0) {
         for (int i = 0; i < branchOfficeSelectList.size(); i++) {
@@ -75,8 +79,10 @@
                         out.print("\n");
                         out.print("<script>");
                         out.print("\n");
+//                        out.print("document.querySelector(\"div#slideshow-container"+i+" div#mySlides-fade"+i+y+"\").appendChild(document.createElement(\"img\"));");
                         out.print("document.querySelector(\"div#slideshow-container"+i+" div#mySlides-fade"+i+y+"\").appendChild(document.createElement(\"img\"));");
                         out.print("\n");
+//                        out.print("document.querySelector(\"div#slideshow-container"+i+" div#mySlides-fade"+i+y+" img\").setAttribute(\"src\",\"data:image/png;base64,\"" + "+imgVar" + i + y + ");");
                         out.print("document.querySelector(\"div#slideshow-container"+i+" div#mySlides-fade"+i+y+" img\").setAttribute(\"src\",\"data:image/png;base64,\"" + "+imgVar" + i + y + ");");
                         out.print("\n");
                         out.print("</script>");
@@ -100,20 +106,9 @@
                 out.print("</div>");//
 
             } else {
-//              out.print("<img id=\"branchOfficeImg\" class=\"card-img-top\" src=\"https://dummyimage.com/450x300/dee2e6/6c757d.jpg\">");
-//              out.print("document.getElementById(\"slideshow-container"+i+"\").appendChild(document.createElement(\"img\"));");
-//                out.print("\n");
-//              out.print("document.querySelector(\"div#slideshow-container"+i+" img\").setAttribute(\"src=https://dummyimage.com/450x300/dee2e6/6c757d.jpg\");");
                 out.print("\n");
 
             }
-//            out.print("<script>");
-//            out.print("branchoffice_no       =  \""+branchOfficeSelectList.get(i).getBranchoffice_no()+"\"");
-//            out.print("branchoffice_name     =  \""+branchOfficeSelectList.get(i).getBranchoffice_name()+"\"");
-//            out.print("branchOffice_local    =  \""+branchOfficeSelectList.get(i).getBranchoffice_local()+"\"");
-//            out.print("branchOffice_address  =  \""+branchOfficeSelectList.get(i).getBranchoffice_address()+"\"");
-//            out.print("branchOffice_mobile   =  \""+branchOfficeSelectList.get(i).getBranchoffice_mobile()+"\"");
-//            out.print("</script>");
             out.print("<section class=\"py-5\">" +"\n"+
                             "<div class=\"container px-4 px-lg-5 mt-5\">" +"\n"+
                             "<div class=\"row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center\">" +"\n"+
@@ -135,11 +130,6 @@
                             "<!-- Product actions-->" +"\n"+
                             "<div class=\"card-footer p-4 pt-0 border-top-0 bg-transparent\">" +"\n"+
                             "<div class=\"text-center\"><a id=\"goBranchOfficeDetailBoard"+i+"\" class=\"btn btn-outline-dark mt-auto\" onclick=\"goBranchOfficeDetailBoard("+
-                    //branchOfficeSelectList.get(i).getBranchoffice_no()+","+
-                    //branchOfficeSelectList.get(i).getBranchoffice_name()+","+
-                    //branchOfficeSelectList.get(i).getBranchoffice_local()+","+
-                    //branchOfficeSelectList.get(i).getBranchoffice_address()+","+
-                    //branchOfficeSelectList.get(i).getBranchoffice_mobile()+
                     ")\" >지점 상세</a></div>" +"\n"+
                             "</div>" +"\n"+
                             "</div>" +"\n"+
@@ -154,8 +144,7 @@
     }
 out.print("\n");
     %>
-
-
+--%>
 
 
 <%--
@@ -266,9 +255,10 @@ out.print("\n");
 
 </div>
 
+
+<%--
+
 <script>
-
-
 
     var slideIndex = 0; //slide index
 
@@ -277,12 +267,13 @@ out.print("\n");
         showSlides(slideIndex);
 
         // Auto Move Slide
-        var sec = 3000;
+        var sec = 10000000;
         setInterval(function(){
             slideIndex++;
             showSlides(slideIndex);
 
-        }, sec);
+        // }, sec);
+        } );
     }
 
 
@@ -321,4 +312,6 @@ out.print("\n");
         slides[n].style.display = "block";
         dots[n].className += " active";
     }
+
 </script>
+--%>

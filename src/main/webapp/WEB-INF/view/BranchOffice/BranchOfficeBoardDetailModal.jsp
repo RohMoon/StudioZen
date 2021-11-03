@@ -119,11 +119,11 @@
                 </div>
                 <div class="calendar-box">
                     <div class="ctr-box clearfix">
-                        <button type="button" title="prev" class="btn-cal prev">
+                        <button type="button" title="prev" class="btn-cal prev"><
                         </button>
                         <span class="cal-month"></span>
                         <span class="cal-year"></span>
-                        <button type="button" title="next" class="btn-cal next">
+                        <button type="button" title="next" class="btn-cal next">>
                         </button>
                     </div>
                     <table class="cal-table">
@@ -197,52 +197,53 @@
             event.stopPropagation();
             // const text = $(this).text();
             var activeTimeCell_length = document.getElementsByClassName('timeCell-active').length;
-            if (activeTimeCell_length == 0) {
+            if (activeTimeCell_length == 0) { // 선택된 시간의 길이가 0 일때 즉 아무것도 선택되지 않았을경우
                 // $(this).addClass('timeCell-active');
-                if (!event.target.classList.contains('timeCell-disabled')){
-                event.target.classList.add('timeCell-active');
-                // tmp = $(this).text();
-                tmp = this.innerHTML;
-                }else{
+                if (!event.target.classList.contains('timeCell-disabled')) { // 이벤트 대상에 클래스 네임 timeCell-disabled을 포함하지 않는다면
+                    event.target.classList.add('timeCell-active'); // 이벤트 대상의 클래스에 'timeCell-active' 를 추가한다.
+                    // tmp = $(this).text();
+                    tmp = event.target.textContent; //tmp 값에 클릭된 선택된 요소(선택된 시간값을 저장)
+                    // tmp = this.innerHTML; //tmp 값에 현재
+                } else { //위의 조건을 만족하지 않으면 사용 불가능한 시간이 포함 되었다는 문구 출력;
                     alert('사용 불가능한 시간이 포함 선택되었습니다.');
+                } //end of Else
+            } else { //' activeTimeCell'클래스 네임을 포함하는 요소가 한개 이상이라면
+                var first = 0; //first를 0
+                var second = 0; // second 0으로 초기화 한다. 각각 초기화한다.
+                var selectedNum = Number(this.innerHTML); // 현재 이벤트 타겟의 내용을 숫자형태로 selectedNum에 저장한다.
+                // var selectedNum =Number($(this).text());   // JQuery 사용시
+
+                if (tmp > selectedNum) { // tmp = 1, selectedNum = 24 false 이지만 true 라면
+                    first = selectedNum; // first 가 slectedNum이 된다. 숫자가 역전될 경우에만 적용
+                    second = tmp; //두번째 클릭이 tmp가 된다.
+                } else { // tmp 가 selectedNum 보다 작다면  ex)1 < 24
+                    first = tmp; //first =tmp   first가 1이 된다.
+                    second = selectedNum; // second = selectedNum 24가 된다.
                 }
-                // console.log(' $(this)   ===>'+tmp)
-
-                // tmp2 = document.querySelector(this).textContent;
-
-
-                // console.log('===>'+tmp2);
-                // tmp = document.querySelector(this).text();
-            } else {
-                var first = 0;
-                var second = 0;
-                var selectedNum = Number(this.innerHTML);
-                // var selectedNum =Number($(this).text());
-
-                if (tmp > selectedNum) { // tmp =  23, selectedNum = 24 false
-                    first = selectedNum;
-                    second = tmp;
-                } else {
-                    first = tmp; //first =tmp = 23 ,
-                    second = selectedNum; // second = selectedNum 24
-                }
-                tmp = selectedNum; // tmp = 23
+                tmp = selectedNum; // 세번째 누를 경우를 대비하여 tmp를 두번째 클릭 된 값으로 저장한다. first =1 , second =24, tmp 24
                 // $('.spring-babo').removeClass('skyblue');
                 for (let i = 0; i < timeTableTd.length; i++) { // 모두 색 제거
                     timeTableTd.item(i).classList.remove('timeCell-active');
-                } //end of 모든 칸 색 제거 for문
-                if (document.getElementsByClassName('timeTableTd').item(first-1).classList.contains('timeCell-disabled')||document.getElementsByClassName('timeTableTd').item(second-1).classList.contains('timeCell-disabled')) {
-                    alert('사용 불가능한 시간이 포함 선택되었습니다.');
+                } //end of 모든 칸 색 제거 for문   first =1 , second =24, tmp 24
+                if (document.getElementsByClassName('timeTableTd').item(first - 1).classList.contains('timeCell-disabled') || document.getElementsByClassName('timeTableTd').item(second - 1).classList.contains('timeCell-disabled')) {
+                    alert('사용 불가능한 시간이 선택되었습니다.-');
                 }
-                // (!document.getElementsByClassName('timeTableTd').item(first).classList.contains('timeCell-disabled')&&
+                    // (!document.getElementsByClassName('timeTableTd').item(first).classList.contains('timeCell-disabled')&&
                 //     (document.getElementsByClassName('timeTableTd').item(first)<document.getElementsByClassName('timeTableTd').item(second))
                 else {
                     for (var i = first; i <= second; i++) { //i =23 , 23<=24(범위2)  23 ++
                         // $('.timeTableTd:nth-child('+i+')').addClass('timeCell-active');
-                        if (!document.getElementsByClassName('timeTableTd').item(i).classList.contains('timeCell-disabled')) {
+                        if (!document.getElementsByClassName('timeTableTd').item(i - 1).classList.contains('timeCell-disabled')) {
                             document.getElementsByClassName('timeTableTd').item(i - 1).classList.add('timeCell-active');
                             //23-1 22번에 색칠. //24-1 23번에 색칠
                         }//End of if
+                        else { // 클래스 리스트에 timeCell-disabled를 포함하는 요소가 있다면 오류 처리를 한다.
+                            alert('사용 불가능한 예약 시간이 범위 내에 있습니다.');
+                            for (let i = 0; i < timeTableTd.length; i++) { // 모두 색 제거
+                                timeTableTd.item(i).classList.remove('timeCell-active');
+                            }// end of For 문
+                            break; // 포문이 여돌면서 에러창을 여러번 띄워주지 않아도 되므로 break.
+                        }// end of Else
                     } // End of Else
                 } //End of 색칠 for 문
 
@@ -256,7 +257,7 @@
     ;
 
     /* 예약 창에서 시간 고른 후 확인 버튼 */
-    document.getElementById('bookSubmitButton').addEventListener('click', function () {
+    document.getElementById('bookSubmitButton').addEventListener('click', async function () {
         event.stopPropagation();
         console.log('예약확인버튼');
         // if(document.querySelector('span.cal-month').textContent==null){
@@ -269,12 +270,12 @@
         reserv_hostcode = sessionStorage.sid.split('=')[1];
         // reserv_date = new Date().getFullYear() + '-' + document.querySelector('span.cal-month').innerText + '-' + document.querySelector("td.day.today.day-active").innerText;
         reserv_date = new Date().getFullYear() + '-' + document.getElementsByClassName('cal-month')[0].innerText + '-' + document.getElementsByClassName('day-active')[0].innerText;
-            console.log(reserv_date);
+        console.log(reserv_date);
         reserv_start_time;
         reserv_end_time;
         reserv_paystatement = 'ready';
         let xhr = new XMLHttpRequest();
-
+        loadingElement.setAttribute('style','display:block');
         if ((reserv_end_time - reserv_start_time) >= 1) { // 한시간 이상 예약인 경우
 
             // tr_code               = 'insert';
@@ -288,7 +289,7 @@
 
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-
+                    loadingElement.setAttribute('style','display:none');
                     alert('예약이 완료되었습니다.');
                     BranchOfficeDetailModalAction();
 
@@ -314,26 +315,34 @@
                 reserv_paystatement
             }));
 
-        } else if ((reserv_end_time - reserv_start_time) == 0) { //선택된 시간이 아예 없는 경우
+        } else if ((reserv_end_time - reserv_start_time) <= -1) { //선택된 시간이 아예 없는 경우
 
             alert('최소 한시간 이상 시간 지정을 해주세요 .');
+            BranchOfficeDetailModalAction();
 
         } //End of Else if
 
         else { //한시간 예약 선택한 경우
-            reserv_end_time = reserv_start_time; // 한시간 선택한 경우 사용 마감 시간 = 시작 시간
+            reserv_end_time = reserv_start_time = tmp; // 한시간 선택한 경우 사용 마감 시간 = 시작 시간
 
             xhr.onreadystatechange = function () {
 
                 if (this.readyState == 4 && this.status == 200) {
-
                     alert(reserv_start_time + '~' + reserv_end_time + '예약이 완료되었습니다.');
-
+                    loadingElement.setAttribute('style','display:none');
+                    BranchOfficeDetailModalAction();
                 } // End of if-  xhr.onreadystatechange function if.
 
-                else { //성공 못할 경우
+                else if(this.readyState == 3) { //
+                    /* 1. UNSENT (숫자 0) : XMLHttpRequest 객체가 생성됨.
 
-                    alert('에러가 발생했습니다. 나중에 다시 시도해주세요.');
+                    2. OPENED (숫자 1) : open() 메소드가 성공적으로 실행됨.
+
+                    3. HEADERS_RECEIVED (숫자 2) : 모든 요청에 대한 응답이 도착함.
+
+                    4. LOADING (숫자 3) : 요청한 데이터를 처리 중임.
+
+                    5. DONE (숫자 4) : 요청한 데이터의 처리가 완료되어 응답할 준비가 완료됨.*/
 
                 }//End of Else - xhr.onreadystatechange function if Else;
             }//End of xhr.onreadystatechange = function
@@ -350,7 +359,7 @@
                 reserv_end_time,
                 reserv_paystatement
             })) // End of xhr.Send;
-        // }  //End of Else
+            // }  //End of Else
         }
     });// End of bookSubmitButton EventListener.
 
@@ -411,119 +420,140 @@
 
 <%-- 일정표 스크립트 --%>
 <script>
-function drawingCalendar() {
 
-    event.stopPropagation();
-    // ================================
-    // START YOUR APP HERE
-    // ================================
-    var init = {
-        // monList: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        monList: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
-        dayList: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-        today: new Date(),
-        monForChange: new Date().getMonth(),
-        activeDate: new Date(),
-        getFirstDay: (yy, mm) => new Date(yy, mm, 1),
-        getLastDay: (yy, mm) => new Date(yy, mm + 1, 0),
-        nextMonth: function () {
-            event.stopPropagation();
-            let d = new Date();
-            d.setDate(1);
-            d.setMonth(++this.monForChange);
-            this.activeDate = d;
-            return d;
-        },
-        prevMonth: function () {
-            event.stopPropagation();
-            let d = new Date();
-            d.setDate(1);
-            d.setMonth(--this.monForChange);
-            this.activeDate = d;
-            return d;
-        },
-        addZero: (num) => (num < 10) ? '0' + num : num,
-        activeDTag: null,
-        getIndex: function (node) {
-            event.stopPropagation();
-            let index = 0;
-            while (node = node.previousElementSibling) {
-                index++;
+    function drawingCalendar() {
+
+        'use strict';
+        console.log('==== > drawingCalendar 실행 === >  ');
+        event.stopPropagation();
+        // ================================
+        // START YOUR APP HERE
+        // ================================
+        var init = {
+            // monList: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            monList: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],// 배열로 월을 담아둠.
+            dayList: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],//배열로 일을 담아둠.
+            today: new Date(), //오늘 날짜 ex)Mon Nov 01 2021 16:19:33 GMT+0900 (한국 표준시)
+            monForChange: new Date().getMonth(), //현재 월을 표시 getMonth는 0~11을 반환하기 때문에 현재 11월이면 10월 반환.
+            activeDate: new Date(), //활성화날짜 날짜 생성 new Date()  = ex)Mon Nov 01 2021 16:19:33 GMT+0900 (한국 표준시)
+
+            getFirstDay: (yy, mm) => new Date(yy, mm, 1), //yy년도 mm월에 해당하는 1일 반환
+            getLastDay: (yy, mm) => new Date(yy, mm + 1, 0), //yy년도 mm월에 해당하는 마지막일 반환
+            nextMonth: function () { // 다음달
+                event.stopPropagation();
+                let d = new Date(); // d = 날짜 객체 생성
+                d.setDate(1); // 생성된 날짜 객체d 의 일을 1일로 변경.
+                d.setMonth(++this.monForChange); // 생성된 날짜 객체 d의 월을 monForChange변경용으로 선언해둔 월에 1을 더한 값으로 변경.
+                this.activeDate = d; //
+                return d; // d를 반환;
+            },
+            prevMonth: function () { //이전달
+                event.stopPropagation();
+                let d = new Date(); //d = 날짜 객체 생성
+                d.setDate(1); // 생성된 날짜 객체d 의 일을 1일로 변경.
+                d.setMonth(--this.monForChange);//생성된 날짜 객체 d의 월을 monForChange변경용으로 선언해둔 월에 1을 뺀 값으로 변경.
+                this.activeDate = d; //activeDate 의 값이 d가 된다
+                return d; //d를 반환;
+            },
+            addZero: (num) => (num < 10) ? '0' + num : num, //addzero 로 들어온 num 이 10보다 작으면 num앞에0을 붙여서 반환하고, 아니라면 num을 그대로 반환한다.
+            activeDTag: null, // activeDTag
+            getIndex: function (node) { // getIndex 순서 찾기
+                event.stopPropagation();
+                let index = 0; // index 초기화
+                while (node = node.previousElementSibling) {  //node의 이전 형제 엘리먼트 요소가 node와 같을때까지
+                    index++;  //index1 씩증가
+                }
+                return index; // index 반환
             }
-            return index;
-        }
-    };
+        };
 
-    var $calBody = document.querySelector('.cal-body');
-    var $btnNext = document.querySelector('.btn-cal.next');
-    var $btnPrev = document.querySelector('.btn-cal.prev');
+        var $calBody = document.querySelector('.cal-body');
+        var $btnNext = document.querySelector('.btn-cal.next');
+        var $btnPrev = document.querySelector('.btn-cal.prev');
 
-    /**
-     * @param {number} date
-     * @param {number} dayIn
-     */
-    function loadDate(date, dayIn) {
-        event.stopPropagation();
-        document.querySelector('.cal-date').textContent = date;
-        document.querySelector('.cal-day').textContent = init.dayList[dayIn];
-    }
-
-    /**
-     * @param {date} fullDate
-     */
-    function loadYYMM(fullDate) {
-        event.stopPropagation();
-        var yy = fullDate.getFullYear();
-        var mm = fullDate.getMonth();
-        var firstDay = init.getFirstDay(yy, mm);
-        var lastDay = init.getLastDay(yy, mm);
-        var markToday;  // for marking today date
-
-        if (mm === init.today.getMonth() && yy === init.today.getFullYear()) {
-            markToday = init.today.getDate();
+        /**
+         * @param {number} date
+         * @param {number} dayIn
+         */
+        function loadDate(date, dayIn) {  //날짜불러오기
+            event.stopPropagation();
+            document.querySelector('.cal-date').textContent = date; //.cal-date 클래스(왼편 일, 요일 표시화면)에서 일의 텍스트 문구는 파라미터로 넘겨진 date이다.
+            document.querySelector('.cal-day').textContent = init.dayList[dayIn]; //.cal-date 클래스(왼편 일, 요일 표시화면)에서 요일의 텍스트 문구는 파라미터로 넘겨진 day로 init에서 찾아 적용한다.
         }
 
-        document.querySelector('.cal-month').textContent = init.monList[mm];
-        document.querySelector('.cal-year').textContent = yy;
+        /**
+         * @param {date} fullDate
+         */
+        function loadYYMM(fullDate) { // 년월 불러오기, 파라미터 현재날짜 (날짜객체)
+            event.stopPropagation();
+            var yy = fullDate.getFullYear(); //현재 년도가 yy
+            var mm = fullDate.getMonth(); //현재 월이 mm
+            var firstDay = init.getFirstDay(yy, mm); //(yy, mm) => new Date(yy, mm, 1)에 yy,mm자리에 넣고 반환받은 요일.
+            var lastDay = init.getLastDay(yy, mm);//(yy, mm) => new Date(yy, mm + 1, 0)에서 반환받은 요일.
+            var markToday;  // for marking today date // 오늘 현재 일 체크
 
-        var trtd = '';
-        var startCount;
-        var countDay = 0;
-        for (let i = 0; i < 6; i++) {
-            trtd += '<tr>';
-            for (let j = 0; j < 7; j++) {
-                if (i === 0 && !startCount && j === firstDay.getDay()) {
-                    startCount = 1;
-                }
-                if (!startCount) {
-                    trtd += '<td>'
-                } else {
-                    let fullDate = yy + '.' + init.addZero(mm + 1) + '.' + init.addZero(countDay + 1);
-                    trtd += '<td class="day';
-                    trtd += (markToday && markToday === countDay + 1) ? ' today" ' : '"';
-                    trtd += ` data-date="${countDay + 1}" data-fdate="${fullDate}">`;
-                }
-                trtd += (startCount) ? ++countDay : '';
-                if (countDay === lastDay.getDate()) {
-                    startCount = 0;
-                }
-                trtd += '</td>';
+            if (mm === init.today.getMonth() && yy === init.today.getFullYear()) { //현재 월이 init에 today.getmonth값과 같고,년도가 yy와 현재 오늘 yy 같다면
+                markToday = init.today.getDate(); // 오늘 날짜는 init에 들어있는 일자를 오늘날짜 체크하기로
             }
-            trtd += '</tr>';
-        }
-        $calBody.innerHTML = trtd;
-    }
 
-    /**
-     * @param {string} val
-     */
-    function createNewList(val) {
-        event.stopPropagation();
-        var id = new Date().getTime() + '';
-        var yy = init.activeDate.getFullYear();
-        var mm = init.activeDate.getMonth() + 1;
-        var dd = init.activeDate.getDate();
-        var $target = $calBody.querySelector(`.day[data-date="${dd}"]`);
+            document.querySelector('.cal-month').textContent = init.monList[mm]; //오른편 상단에 보여지는 년월에서 월은 mm이 파라미터로 들어가서 동일한 monList를 찾아 돌려준다.
+            document.querySelector('.cal-year').textContent = yy; // 우측 상단에 cal-year = 년도의 값은 yy이다.
+
+            var trtd = ''; //trtd 셀의 열과 줄
+            var startCount; //카운트 세는 초기값
+            var countDay = 0; // 일을 세우는 초기값
+            for (let i = 0; i < 6; i++) { //최대 6주
+                trtd += '<tr>'; //tr최대 6주 6줄 생성
+                for (let j = 0; j < 7; j++) { // 최대 7일
+                    // i가 0이고, 그리고 startCount가 아니고, (getDay는 0= 일요일~ 로 시작해서 숫자로 요일을 반환한다.) j와 요일을 반환하는 숫자가 같다면
+                    if (i === 0 && !startCount && j === firstDay.getDay()) {
+                        startCount = 1;//startCount(해당 달의 1일이다.)
+                    } //End of If
+                    if (!startCount) { //만약 startCount가 0이라면
+                        trtd += '<td>' //빈 셀만 만든다.
+                    } else { // 해당 달의 1일에 해당하는 조건에도 맞지않고, starCount가 1이나 0도 아니라면
+                        // let fullDate = yy + '.' + init.addZero(mm + 1) + '.' + init.addZero(countDay + 1);
+                        trtd += '<td class="day'; // 'day' 클래스네임을 갖는 셀을 tr td에 append 하고
+                        //markToday는 현재 일자와 비교되어 확인된 현재 일자이고, 현재 일자가 날짜를 세는 countDay의 값에 +1, 즉 첫번째 카운트 되는 수와 현재 일자가 같으면
+                        trtd += (markToday && markToday === countDay + 1) ? ' today" ' : '"'; //today class 를 갖게 된다. 아니라면 넘어간다.
+                        <%--trtd += ` data-date="${countDay + 1}" data-fdate="${fullDate}">`;--%>
+                        // trtd += `data-date="`+(countDay+1)+`">`; // data-date
+                        trtd += `>`;
+                    } //End of Else.
+
+                    trtd += (startCount) ? ++countDay : ''; // startCoutnt라면 countDay를 1 증가시킨다.
+                    if (countDay === lastDay.getDate()) { //CountDay 와 마지막 요일의 일자가 같다면
+                        startCount = 0; // startCount를 0으로 초기화한다.
+                    } // End of If
+                    trtd += '</td>'; // trtd에 </td> 추가
+                } //최대 7일 즉 한주 로우 반복문 끝
+                trtd += '</tr>'; //<tr> 추가
+            } //한달 포문 주 끝.
+            $calBody.innerHTML = trtd; // $calBody에 trtd html 문 추가
+        } // end of function loadYYMM(fullDate)
+
+        /*
+            /!**
+             * @param {string} val
+             *!/
+            function createNewList(val) {
+                event.stopPropagation();
+                var id = new Date().getTime() + '';
+                var yy = init.activeDate.getFullYear();
+                var mm = init.activeDate.getMonth() + 1;
+                var dd = init.activeDate.getDate();
+                var $target = $calBody.querySelector(`.day[data-date="
+
+
+
+
+
+
+
+
+
+
+        ${dd}"]`);
 
         var date = yy + '.' + init.addZero(mm) + '.' + init.addZero(dd);
 
@@ -535,27 +565,88 @@ function drawingCalendar() {
         init.event.push(eventData);
         $todoList.appendChild(createLi(id, val, date));
     }
+    */
 
-    loadYYMM(init.today);
-    loadDate(init.today.getDate(), init.today.getDay());
+        loadYYMM(init.today); // today: new Date() 날짜 객체 파라미터 넣어줌
+        loadDate(init.today.getDate(), init.today.getDay()); // 오늘 날짜 객체의 일자와 요일을 넣어서 출력 해주는 함수
 
-    $btnNext.addEventListener('click', () => loadYYMM(init.nextMonth()));
-    $btnPrev.addEventListener('click', () => loadYYMM(init.prevMonth()));
+        $btnNext.addEventListener('click', () => loadYYMM(init.nextMonth())); // next Btn에 클릭 이벤트로 LoadYYMM 함수호출 파라미터로 다음달 입력
+        $btnPrev.addEventListener('click', () => loadYYMM(init.prevMonth())); // prev Btn에 클릭 이벤트로 LoadYYMM 함수 호출 파라미터로 이전달 입력
 
-    $calBody.addEventListener('click', (e) => {
-        if (e.target.classList.contains('day')) {
-            if (init.activeDTag) {
-                init.activeDTag.classList.remove('day-active');
+        $calBody.addEventListener('click', (e) => {   // calBody  달력 본체에 클릭 이벤트와 해당 이벤트 요소 파람
+            if (e.target.classList.contains('day')) { // 이벤트 발생 요소에 클래스에 day가 포함되어 있다면
+                if (init.activeDTag) { //activeDtag 가 null아니면
+                    init.activeDTag.classList.remove('day-active'); //activeDtag의 class name중 'day-active'를 삭제한다.
+                } //end of if(init.activeDTag)
+                let day = Number(e.target.textContent); // let day 는 타겟이 갖고 있는 텍스트를 숫자로 변환한 값이다. 즉 몇일인지가 된다.
+                loadDate(day, e.target.cellIndex); //loadDate 함수에 파람으로 몇일인지와  발생요소가 무슨 요일인지 (cellIndex는 열을 반환한다. 현재 열이 일~토, 0~6을 나타내기 때문에 요일을 반환하는 getday와 비슷하다. ) 그러므로 파람에 몇 일인지와 요일을 넣는다.
+                e.target.classList.add('day-active'); // day가 포함되어 있고 dTag가 널이니까 dayActive를 클래스에 추가한다.
+                init.activeDTag = e.target; // activeDtag의 값을null이나 다른 값이 아닌 현재 요소로 변경해준다.
+                init.activeDate.setDate(day); // 활성화된 일을 setDate 일자 세팅에 day 클릭된 날짜를 넣어 주어 변경 한다.
+                // reloadTodo();
+                loadBookedReserv(e.target);
             }
-            let day = Number(e.target.textContent);
-            loadDate(day, e.target.cellIndex);
-            e.target.classList.add('day-active');
-            init.activeDTag = e.target;
-            init.activeDate.setDate(day);
-            // reloadTodo();
-        }
-    });
-}
+            ; // end of if (e.target.classList.contains('day'))
+
+        }); // end of $calBody.addEventListener
+
+
+        // document.querySelector('td.day.day-active').addEventListener('click',loadBookedReserv(e));
+        /* 선택된 날짜 예약현황 보기*/
+        function loadBookedReserv(e) {
+            for (let i = 0; i < document.getElementsByClassName('timeTableTd').length; i++) {
+
+                if (document.getElementsByClassName('timeTableTd').item(i).classList.contains('timeCell-disabled')) {
+                    document.getElementsByClassName('timeTableTd').item(i).classList.remove('timeCell-disabled');
+                }
+                ; // end of if contains('timeCell-disabled');
+            }//end of for
+
+
+            console.log('날짜별 예약 현황 보기')
+            var targetday = e.textContent;
+            var choosenday = (targetday) => (targetday < 10) ? '0' + targetday : targetday;
+            choosenDate = document.querySelector('.cal-year').textContent + '-' + document.querySelector('.cal-month').textContent + '-' + choosenday(targetday);
+            console.log(choosenDate);
+            let xhr = new XMLHttpRequest;
+            loadingElement.setAttribute('style','display:block');
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    loadingElement.setAttribute('style','display:none');
+                    var booKedTimeList = JSON.parse(xhr.response);
+
+                    console.log(booKedTimeList);
+
+                    for (let i = 0; i < booKedTimeList.length; i++) { // i = 0; 0<2 예약건수가 몇개인지 ex) 0,1 반복 2번;i가 1씩 증가
+                        var startTime = Number(booKedTimeList[i].reserv_start_time); // 예약 시작시간 List안에서 [i]번째의 시작시간
+                        var endTime = booKedTimeList[i].reserv_end_time; // 예약 종료 시간 List안에서 [i]번째의 종료시간
+                        var del_sign = booKedTimeList[i].reserv_del_sign; // 예약이 유효한지 플래그값 확인
+                        var j = Number(startTime); // 시작시간을 원시타입 변수로
+                        for (let i = 0; i < endTime - startTime + 1; i++) {//12 ; 12 <= (5=(16-12+1)); 12++
+                            console.log('반복횟수 ===>' + i);
+                            console.log(del_sign);
+                            if (del_sign == 'N') {
+                                document.getElementById('timeTableTd' + j).classList.add('timeCell-disabled');
+                            }
+
+                            // document.getElementById('timeTableTd'+j).classList.remove('timeTableTd');
+                            ++j;
+                            console.log('닫는 번호 ===>' + j);
+                        }
+
+                        console.log(booKedTimeList[i].reserv_start_time);
+                        console.log(booKedTimeList[i].reserv_end_time);
+                    }
+
+                }
+
+            }
+            xhr.open('POST', '/reservation/bookedTimeCheck');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({space_no, reserv_date: choosenDate}));
+        };
+    } // end of function drawingCalendar() ;
+
 </script>
 
 
@@ -791,6 +882,7 @@ function drawingCalendar() {
         document.getElementById("spaceUpdateSubmitButton").addEventListener("click", function () {
             event.stopImmediatePropagation();
             let xhr = new XMLHttpRequest();
+            loadingElement.setAttribute('style','display:block');
             // let newBranchOfficeUpdateFormData = document.getElementById("extraBranchOfficeBoardDetailModalForm");
 
             var p_space_no = document.getElementById("space_no").value;
@@ -817,8 +909,9 @@ function drawingCalendar() {
             }
 
             xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200){
                 alert(xhr.responseText);
-
+                loadingElement.setAttribute('style','display:none');
                 /* 수정 버튼이 눌렀을 때 수정 버튼 나타냄. */
                 document.getElementById("spaceUpdateButton").style.display = "block";
                 /* 수정 버튼이 눌렸을 때 확인 버튼 숨김. */
@@ -828,7 +921,7 @@ function drawingCalendar() {
                 /* 삭제 버튼 나타냄 */
                 document.getElementById("spaceDeleteButton").style.display = "block";
 
-
+                }
             };
             // AJAX는 반대로 제출 버튼을 누르면 기본 폼 동작은 e.preventDefault()로 멈추고, 페이지 전환 없이 데이터를 전송합니다.
             xhr.open('post', '/space/update', true);
@@ -1004,6 +1097,7 @@ function drawingCalendar() {
         event.stopImmediatePropagation();
 
         let xhr = new XMLHttpRequest();
+        loadingElement.setAttribute('style','display:block');
         tr_code = "insert";
         space_no = document.getElementById("space_no").value;
         space_name = document.getElementById("space_name").value;
@@ -1016,6 +1110,7 @@ function drawingCalendar() {
 
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
+                loadingElement.setAttribute('style','display:none');
                 // 추가 버튼 누르면 모달 창 닫힘.
                 var body = document.querySelector('body');
                 var modal = document.querySelector('.modal');
@@ -1065,6 +1160,7 @@ function drawingCalendar() {
         document.getElementById("spaceDeleteButton").addEventListener('click', function () {
             event.stopImmediatePropagation();
             let xhr = new XMLHttpRequest();
+            loadingElement.setAttribute('style','display:block');
             tr_code = "DELETE";
             space_no = document.getElementById("space_no").value;
             space_name = document.getElementById("space_name").value;
@@ -1076,6 +1172,7 @@ function drawingCalendar() {
 
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
+                    loadingElement.setAttribute('style','display:none');
                     BranchOfficeDetailModalAction();
                     document.getElementById('modalSpace').innerHTML = "";
                 }
@@ -1107,46 +1204,7 @@ function drawingCalendar() {
         console.log("예약하기 버튼");
 
         document.getElementById("spaceBookModalbd").style.display = "block";
-
-        let xhr = new XMLHttpRequest;
-        xhr.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                drawingCalendar();
-                var booKedTimeList = JSON.parse(xhr.response);
-                console.log(booKedTimeList[0]);
-                for (let i = 0; i < booKedTimeList.length; i++) {
-                    var startTime = booKedTimeList[i].reserv_start_time;
-                    var endTime = booKedTimeList[i].reserv_end_time;
-                    var del_sign = booKedTimeList[i].reserv_del_sign;
-                    console.log(del_sign);
-                    var j = Number(startTime);
-                    for (let i = 0; i < endTime - startTime; i++) {//12 ;  12<= (4=(16-12)); 12++
-                        console.log('반복횟수 ===>' + i);
-                        if (del_sign == 'N'){
-                        document.getElementById('timeTableTd' + j).classList.add('timeCell-disabled');                        }
-                        // document.getElementById('timeTableTd'+j).classList.remove('timeTableTd');
-                        ++j;
-                        console.log('닫는 번호 ===>' + j);
-                    }
-
-                    console.log(booKedTimeList[i].reserv_start_time);
-                    console.log(booKedTimeList[i].reserv_end_time);
-                }
-            }
-            // else {
-            //     setTimeout(function () {
-            //         alert('오류가 발생했습니다. 나중에 다시 시도해주세요.');
-            //     }, 3000);
-            //     ;
-            // }
-        }
-        xhr.open('POST', '/reservation/bookedTimeCheck');
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({space_no}));
-        // "<div id=\"spaceBookModal\" class=\"spaceBookModal\" onclick=\"SpaceBookModalAction()\" style='z-index: 7777'>"+
-
-        ;
-
+        drawingCalendar();
 
     });
 

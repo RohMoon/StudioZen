@@ -13,8 +13,11 @@ import java.util.List;
 @Repository
 public class ReservationDAO {
     private static Logger logger = LogManager.getLogger(ReservationDAO.class);
-    @Autowired
-    private SqlSessionTemplate sqlSessionTemplate;
+    private final SqlSessionTemplate sqlSessionTemplate;
+
+    public ReservationDAO(SqlSessionTemplate sqlSessionTemplate) {
+        this.sqlSessionTemplate = sqlSessionTemplate;
+    }
 
     public List<ReservationDTO> ReservationSelect(ReservationDTO reservationDTO) throws SqlSessionException {
 

@@ -7,6 +7,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +21,8 @@ public class BracnchOfficeLogic {
 
     private final BracnchOfficeDAO bracnchOfficeDAO;
 
+    private final String branchOfficeImgPath = "C:\\dev\\file\\images\\branchoffice\\";
+
     public BracnchOfficeLogic(BracnchOfficeDAO bracnchOfficeDAO) {
         this.bracnchOfficeDAO = bracnchOfficeDAO;
     }
@@ -24,12 +31,20 @@ public class BracnchOfficeLogic {
     public Map<String, List<BranchOfficeDTO>> BracnchOfficeSelect(BranchOfficeDTO branchOfficeDTO) {
         Map<String, List<BranchOfficeDTO>> bracnchOfficeSelectMap = null;
 
+        String imgCode;
         try {
             bracnchOfficeSelectMap = bracnchOfficeDAO.BracnchOfficeSelect(branchOfficeDTO);
+
         } catch (Exception e) {
             logger.info(e.getStackTrace());
             logger.info("e.getMessage()====== > " + e.getMessage());
         } // end of Catch
+        for (int i = 0; i < bracnchOfficeSelectMap.get("branchOfficeImgSelectList").size(); i++) {
+            /// Transfer
+             imgCode = ImgToTransfer(bracnchOfficeSelectMap.get("branchOfficeImgSelectList").get(i).getStored_file_name());
+            bracnchOfficeSelectMap.get("branchOfficeImgSelectList").get(i).setBranchoffice_img_code(imgCode);
+        }
+
         return bracnchOfficeSelectMap;
 
     } //end of BracnchOfficeSelect Method
@@ -124,6 +139,64 @@ public class BracnchOfficeLogic {
         return spaceSelectList;
 
     } //end of BracnchOfficeSelect Method
+
+
+    public String ImgToTransfer(String targetFileStoredName){
+        String imgOut = null;
+        try {
+            //요기서 DB에서 받아온 경로 파일이름 다잡아줘서 파람으로 넣어주고
+            byte[] imgBytes = fileDown(targetFileStoredName);
+            byte[] baseIncodingBytes = encodingBase64(imgBytes);
+            imgOut = new String(baseIncodingBytes);
+
+//                httpServletRequest.setAttribute("brImgCode"+i,bracnchOfficeSelectMap.get("branchOfficeImgSelectList").get(i).getBranchoffice_img_code());
+            logger.info("imgString=============>imgString=========>imgString=====>" + imgOut);
+        } catch (Exception e) {
+            logger.info("e.getMessage() ==========================>" + e.getMessage());
+            logger.error("e.toString() ==========================>" + e.toString());
+        }
+        return imgOut;
+    }
+
+    //여기서 받아서 파람으로 받아서 !
+    public byte[] fileDown(String storedName) throws IOException {
+
+        File file = new File(branchOfficeImgPath + storedName);
+        logger.info("\nroot ==>" + branchOfficeImgPath + storedName);
+        FileInputStream fis = null;
+        byte[] fileArray = null;
+        ByteArrayOutputStream byteArrayOutputStream = new  ByteArrayOutputStream();
+        int len=0;
+        try {
+
+            if (file.exists() && file.isFile()) {//여기서 if문을 안타니까 바로 터진거
+
+                byte[] buf = new byte[1024];
+                fis = new FileInputStream(file); // 아 얘네
+                while ((len=fis.read(buf))!=-1){
+                    byteArrayOutputStream.write(buf,0,len);
+                }
+                logger.info("FileDownLoad Loading");
+                fileArray = byteArrayOutputStream.toByteArray();
+
+            } else {
+                logger.info("Has not File");
+            }
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+        } finally {
+            if (fis != null) {
+                fis.close();
+            }
+        }
+        return fileArray;
+    }
+
+    public static byte[] encodingBase64(byte[] targetBytes){
+        Base64.Encoder encoder = Base64.getEncoder();
+        return encoder.encode(targetBytes);
+    }
+
 
 
 }

@@ -75,10 +75,10 @@ public class ReservationController {
 
                 reservationLogic.Reservation_BookedTimeSelect(reservationDTO);
 
-
         request.setAttribute("reservation_BookedTimeSelectList",reservation_BookedTimeSelectList);
 
         Gson gson = new Gson();
+        logger.info(gson.toJson(reservation_BookedTimeSelectList));
 
         if (reservation_BookedTimeSelectList.size() == 0){
             logger.info("nonono");

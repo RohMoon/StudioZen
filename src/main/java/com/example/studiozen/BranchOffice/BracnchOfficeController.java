@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
@@ -94,10 +95,30 @@ public class BracnchOfficeController {
      "session_no" : "mem282108"
      }
      **********************/
-    @RequestMapping(value = "/select")
-    public ModelAndView BracnchOfficeSelect(HttpServletRequest httpServletRequest,
-                                            BranchOfficeDTO branchOfficeDTO) {
 
+
+    @RequestMapping(value =  "/selectPage")
+    public ModelAndView BracnchOfficeSelectPage(HttpServletRequest httpServletRequest,
+                                        BranchOfficeDTO branchOfficeDTO) {
+        //게시판 CUD 중 작성 성공 / 실패에 대한 결과값을 int result로 반환
+        ModelAndView mav = new ModelAndView();
+        if (branchOfficeDTO.getResult() == 1) {
+            logger.info("성공페이지 연결");
+
+            mav.setViewName("BranchOffice/BranchOfficeListBoard");
+//            logger.info("modelAndView====>" + gson.toJson(modelAndView));
+            return mav;
+
+        } else {
+            mav.setViewName("BranchOffice/BranchOfficeListBoard");
+//            logger.info("modelAndView====>" + gson.toJson(modelAndView));
+            return mav;
+        }
+    }
+
+
+    @RequestMapping(value = "/select")
+    public String BracnchOfficeSelect(BranchOfficeDTO branchOfficeDTO) {
         //@ResponseBody을 설정하시면
         //반환되는 view객체에서 랜더링메소드을 타서 아웃풋을 내보내는게 아니라
         //메세지컨버터에서 response.out에 직접 처리됩니다
@@ -115,49 +136,34 @@ public class BracnchOfficeController {
                 bracnchOfficeLogic.BracnchOfficeSelect(branchOfficeDTO);
 
         logger.info("branchOfficeSelectList =====>\n" + bracnchOfficeSelectMap.get("branchOfficeSelectList"));
+
+//        ModelAndView modelAndView = new ModelAndView();
+//        httpServletRequest.setAttribute("branchOfficeSelectList", bracnchOfficeSelectMap.get("branchOfficeSelectList"));
+//        httpServletRequest.setAttribute("branchOfficeImgSelectList", bracnchOfficeSelectMap.get("branchOfficeImgSelectList"));
+//        modelAndView.addObject("branchOfficeSelectList",branchOfficeSelectList);
+
         logger.info("branchOfficeSelectList JSON =====>\n" + gson.toJson(bracnchOfficeSelectMap));
 
-        for (int i = 0; i < bracnchOfficeSelectMap.get("branchOfficeImgSelectList").size(); i++) {
-
-            logger.info("Get =====> GET"+i+ "===?"+ bracnchOfficeSelectMap.get("branchOfficeImgSelectList").get(i));
-            try {
-                //요기서 DB에서 받아온 경로 파일이름 다잡아줘서 파람으로 넣어주고
-                byte[] imgBytes = fileDown(bracnchOfficeSelectMap.get("branchOfficeImgSelectList").get(i).getStored_file_name());
-                byte[] baseIncodingBytes = encodingBase64(imgBytes);
-                String imgOut = new String( baseIncodingBytes);
-                bracnchOfficeSelectMap.get("branchOfficeImgSelectList").get(i).setBranchoffice_img_code(imgOut);
-//                httpServletRequest.setAttribute("brImgCode"+i,bracnchOfficeSelectMap.get("branchOfficeImgSelectList").get(i).getBranchoffice_img_code());
-
-                logger.info("imgString=============>imgString=========>imgString=====>"+imgOut);
-            } catch (Exception e) {
-                logger.info("e.getMessage() ==========================>" + e.getMessage());
-                logger.error("e.toString() ==========================>" + e.toString());
-            }
-        }
-
-        ModelAndView modelAndView = new ModelAndView();
-        httpServletRequest.setAttribute("branchOfficeSelectList", bracnchOfficeSelectMap.get("branchOfficeSelectList"));
-        httpServletRequest.setAttribute("branchOfficeImgSelectList", bracnchOfficeSelectMap.get("branchOfficeImgSelectList"));
-//        modelAndView.addObject("branchOfficeSelectList",branchOfficeSelectList);
         //게시판 CUD 중 작성 성공 / 실패에 대한 결과값을 int result로 반환
         if (branchOfficeDTO.getResult() == 1) {
             logger.info("성공페이지 연결");
-            modelAndView.setViewName("BranchOffice/BranchOfficeListBoard");
-            logger.info("modelAndView====>" + gson.toJson(modelAndView));
-            return modelAndView;
+
+//            modelAndView.setViewName("BranchOffice/BranchOfficeListBoard");
+//            logger.info("modelAndView====>" + gson.toJson(modelAndView));
+            return gson.toJson(bracnchOfficeSelectMap);
 
         } else {
-            modelAndView.setViewName("BranchOffice/BranchOfficeListBoard");
-            logger.info("modelAndView====>" + gson.toJson(modelAndView));
-            return modelAndView;
+//            modelAndView.setViewName("BranchOffice/BranchOfficeListBoard");
+//            logger.info("modelAndView====>" + gson.toJson(modelAndView));
+            return gson.toJson(bracnchOfficeSelectMap);
 
         }
 
     }// End of SelectAll Method   // End of SelectAll Method  // End of SelectAll Method
 
 
-    /*
-     */
+
+
 /********* 지점 상세 조회********
  http://localhost:8080/BracnchOffice/select
  {

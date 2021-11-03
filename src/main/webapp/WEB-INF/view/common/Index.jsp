@@ -130,6 +130,7 @@
     let image                   ;
     let reader                  ;
     let img                     ;
+    let choosenDate;
 
     let pg;
     let pay_method;
@@ -139,8 +140,32 @@
     let buyer_email;
     let buyer_name;
     let buyer_tel;
-
+    // let loading_img;
+    // let loadingElement;
+    // let loading = document.body.append(loadingElement);
+    let loading_img
+    let loadingElement
+    let loading
     ////////////
+    document.addEventListener('DOMContentLoaded',function () {
+        loading_img = document.createElement('img');
+        loading_img.setAttribute('id','loading_img');
+        loading_img.setAttribute('alt','loading');
+        loading_img.setAttribute('src','/images/loading/ajax-loader.gif');
+
+        loadingElement = document.createElement('div');
+        loadingElement.setAttribute('id','loading');
+        loadingElement.setAttribute('style','display:none;');
+        loadingElement.classList.add('loading');
+        loadingElement.appendChild(loading_img);
+        loading = document.body.append(loadingElement);
+
+       $(window).ajaxStart(function () {
+           loadingElement.setAttribute('style','display:block');
+       }).ajaxStop(function () {
+           loadingElement.setAttribute('style','display:none');
+       });
+    });
 
 </script>
 </html>

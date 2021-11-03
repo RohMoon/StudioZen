@@ -15,8 +15,8 @@
     <% QNABoardDTO detailInfo = (detailList.get(0));
         String sid = ((String) session.getAttribute("sessionNO")).substring(10);
     %>
-    <script> var qna_no = '<%=detailInfo.getQna_no()%>';
-    var sid = '<%= sid%>';
+    <script> qna_no = '<%=detailInfo.getQna_no()%>';
+    sid = '<%= sid%>';
 
     console.log(sid);
     console.log(qna_no);

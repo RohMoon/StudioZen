@@ -38,6 +38,7 @@ public class ReservationLogic {
             reservation_BookedTimeSelectList = reservationDAO.Reservation_BookedTimeSelect(reservationDTO);
         } catch (Exception e) {
             e.printStackTrace(System.err);
+            logger.info(e.getMessage());
         }
         return reservation_BookedTimeSelectList;
 

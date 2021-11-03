@@ -1,7 +1,3 @@
-
-
-
-
 /*  대시보드에서 Q&A 이미지영역 눌렀을 때*/
 function qnaListBoardAction() {
     console.log("checkListBoardAction");
@@ -159,10 +155,10 @@ function goDeletingQNARecommentAction(sid, qna_no, indexNo, recoNo) {
     console.log(sid);
     console.log(qna_no);
     console.log(indexNo);
-   tr_code = 'delete';
-   qna_recomment_writer = sid;
-   qna_recomment_content = ($("input[name=qna_recomment_content]").serialize()).substr(22);
-   qna_recomment_no = recoNo;
+    tr_code = 'delete';
+    qna_recomment_writer = sid;
+    qna_recomment_content = ($("input[name=qna_recomment_content]").serialize()).substr(22);
+    qna_recomment_no = recoNo;
 
     console.log(tr_code);
     console.log('qna_recomment_writer' + qna_recomment_writer);
@@ -236,8 +232,6 @@ function reservationListBoardAction(e) {
     // $rkv('#mainPanel').load(("/qna/select/MEM282108 #qnaListBoard"));
 
 };
-
-
 
 
 /* 슬라이드 메뉴에서 대쉬보드 버튼을 눌렀을 때*/
@@ -424,9 +418,10 @@ function goDownloadQnaFileAction(p_stored_file_name) {
     DownloadQnaFileFormData.append('qna_no', qna_no);
 // ---------------------------------->
     let xhr = new XMLHttpRequest();
+    loadingElement.setAttribute('style', 'display:block');
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-
+            loadingElement.setAttribute('style', 'display:none');
             let fileName = getFileName(xhr.getResponseHeader('content-disposition'));
             fileName = decodeURI(fileName);
 
@@ -543,21 +538,105 @@ function getFileName(contentDisposition) {
 /* 대쉬보드에서 지점관리 버튼, 혹은 슬라이드 메뉴에서 지점 관리 버튼 클릭시 */
 function goBranchOfficeListBoardAction() {
     console.log("goBranchOfficeListBoardAction");
-    $('#mainPanel').children().remove();
-    $('#mainPanel').load("/BracnchOffice/select", function () {
 
-        console.log(sessionStorage.getItem('sid'));
+    for (let i = 0; i < document.getElementById('mainPanel').children.length; i++) {
+        document.getElementById('mainPanel').children.item(i).remove();
+    }
 
-        if (sessionStorage.getItem('sid') === 'member_no=MEM282108') {
-            let bracnchOfficeManageMenu = document.getElementById("dropdown");
-            bracnchOfficeManageMenu.innerHTML = "<button onclick='dp_menu()' class='branchoffice_button btn btn-primary'>지점 관리</button>" +
-                "<div style='display: none;' id='drop-content'>" +
-                "<button id='createBranchOffice' class='btn btn-primary' onclick='doRegisterBranchOfficeAction()'>신규 지점</button>" +
-                "<button id='updateBranchOffice' class='btn btn-primary' >지점 수정</button>" +
-                "<button id='deleteBranchOffice' class='btn btn-primary'> 지점 삭제</button>" +
-                "</div>";
-        }
-    });
+    // let slideShow_container = document.createElement('div');
+    // slideShow_container.classList.add('slideshow-container');
+
+    // let mySlides_fade = document.createElement()
+
+    // document.getElementById('mainPanel').append();
+
+    var xhr = new XMLHttpRequest(); //working here
+    loadingElement.setAttribute('style', 'display:block');
+
+    xhr.open('GET', '/BracnchOffice/selectPage',true);
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.send('');
+
+    xhr.onreadystatechange = function () {
+        if (xhr.status == 200 && xhr.readyState == 4) {
+
+            console.log('통신성공');
+
+            document.getElementById('mainPanel').innerHTML = xhr.response;
+
+            console.log('====+++> xhr1' + xhr.response);
+
+            if (sessionStorage.getItem('sid') === 'member_no=MEM282108') {
+                let bracnchOfficeManageMenu = document.getElementById("dropdown");
+
+                bracnchOfficeManageMenu.innerHTML =
+
+                    "<button onclick='dp_menu()' class='branchoffice_button btn btn-primary'>지점 관리</button>" +
+                    "<div style='display: none;' id='drop-content'>" +
+                    "<button id='createBranchOffice' class='btn btn-primary' onclick='doRegisterBranchOfficeAction()'>신규 지점</button>" +
+                    "<button id='updateBranchOffice' class='btn btn-primary' >지점 수정</button>" +
+                    "<button id='deleteBranchOffice' class='btn btn-primary'> 지점 삭제</button>" +
+                    "</div>";
+
+            } // end of if  (sessionStorage.getItem('sid') === 'member_no=MEM282108')
+
+            var xhr2 = new XMLHttpRequest();
+            xhr2.onreadystatechange = function () {
+                if (this.status == 200 && this.readyState == 4) {
+                    console.log('2nd XML');
+                    console.log('====++> xhr2' + xhr2.response);
+                    let bracnchOfficeSelectMap = JSON.parse(xhr2.response);
+                    loadingElement.setAttribute('style', 'display:none');
+                    // console.log(bracnchOfficeSelectMap.branchOfficeImgSelectList);
+                    console.log(bracnchOfficeSelectMap.branchOfficeSelectList);
+                    console.log(bracnchOfficeSelectMap.branchOfficeSelectList.length);
+
+                    let branchOfficeSelectList = bracnchOfficeSelectMap.branchOfficeSelectList;
+                    let branchOfficeImgSelectList = bracnchOfficeSelectMap.branchOfficeImgSelectList;
+
+                    for (let i = 0; i < branchOfficeSelectList.length; i++) {
+                        var slideShow_container = document.createElement('div');
+                        slideShow_container.setAttribute('id','slideshow-container'+i);
+                        slideShow_container.classList.add('slideshow-container');
+
+                        branchOfficeImgSelectList.length
+
+
+
+                    }
+
+
+
+
+                }
+            }
+
+            xhr2.open('GET', '/BracnchOffice/select',true);
+            xhr2.setRequestHeader('Content-type', 'application/json');
+            xhr2.send('');
+        } // end of  if (this.status==200 && this.readyState==4)
+    }// end of xhr.onreadystatechange = function
+
+
+    /*
+        $('#mainpanel').children().remove();
+        $('#mainPanel').load("/BracnchOffice/select", function () {
+
+            console.log(sessionStorage.getItem('sid'));
+
+            if (sessionStorage.getItem('sid') === 'member_no=MEM282108') {
+                let bracnchOfficeManageMenu = document.getElementById("dropdown");
+                bracnchOfficeManageMenu.innerHTML = "<button onclick='dp_menu()' class='branchoffice_button btn btn-primary'>지점 관리</button>" +
+                    "<div style='display: none;' id='drop-content'>" +
+                    "<button id='createBranchOffice' class='btn btn-primary' onclick='doRegisterBranchOfficeAction()'>신규 지점</button>" +
+                    "<button id='updateBranchOffice' class='btn btn-primary' >지점 수정</button>" +
+                    "<button id='deleteBranchOffice' class='btn btn-primary'> 지점 삭제</button>" +
+                    "</div>";
+            }
+        });
+    */
+
+
     /*
 
         // ---------------------------------->
@@ -791,7 +870,7 @@ function newBranchOfficeInsert(e) {
 function readURL(input) {
     if (input.files && input.files[0]) {
         for (image of event.target.files) {
-             reader = new FileReader();
+            reader = new FileReader();
             reader.onload = function (e) {
                 img = document.createElement("img");
                 // document.getElementById('preview').src = e.target.result;
@@ -823,22 +902,22 @@ function readURL(input) {
 
 
 /* 지점관리페이지에서 지점상세 버튼 버튼 클릭시 */
-function goBranchOfficeDetailBoard(){
-                                   //p_branchoffice_no,
-                                   //p_branchoffice_name,
-                                   //p_branchOffice_local,
-                                   //p_branchOffice_address,
-                                   //p_branchOffice_mobile
+function goBranchOfficeDetailBoard() {
+    //p_branchoffice_no,
+    //p_branchoffice_name,
+    //p_branchOffice_local,
+    //p_branchOffice_address,
+    //p_branchOffice_mobile
 // ) {
     console.log("goBranchOfficeDetailBoard");
 
     let parent = event.target.closest(".card");
 
-    branchoffice_no      = parent.getElementsByClassName("branchOffice_no").item(0).textContent;
-    branchoffice_name    = parent.getElementsByClassName("branchOffice_name").item(0).textContent;
-    branchoffice_local   = parent.getElementsByClassName("branchOffice_local").item(0).textContent;
+    branchoffice_no = parent.getElementsByClassName("branchOffice_no").item(0).textContent;
+    branchoffice_name = parent.getElementsByClassName("branchOffice_name").item(0).textContent;
+    branchoffice_local = parent.getElementsByClassName("branchOffice_local").item(0).textContent;
     branchoffice_address = parent.getElementsByClassName("branchOffice_address").item(0).textContent;
-    branchoffice_mobile  = parent.getElementsByClassName("branchOffice_mobile").item(0).textContent;
+    branchoffice_mobile = parent.getElementsByClassName("branchOffice_mobile").item(0).textContent;
 
     console.log(JSON.stringify(({branchoffice_no})));
 
@@ -890,15 +969,16 @@ function goBranchOfficeDetailBoard(){
             modal.classList.toggle('show');
             /* 대여 공간 디테일창을 관리자가 봤을 때*/
 
-                if (modal.classList.contains('show')) {
+            if (modal.classList.contains('show')) {
                 body.style.overflow = 'hidden';
 
-            };
+            }
+            ;
 
-            if ((sessionStorage.getItem("sid").split("=")[1])=='MEM282108'){
+            if ((sessionStorage.getItem("sid").split("=")[1]) == 'MEM282108') {
                 console.log("관리자 확인.");
-                document.getElementById("spaceAddButton").setAttribute("style","display:block;");
-                document.getElementById("spaceAddButton").setAttribute("style","font-size:1.5rem;");
+                document.getElementById("spaceAddButton").setAttribute("style", "display:block;");
+                document.getElementById("spaceAddButton").setAttribute("style", "font-size:1.5rem;");
 
 
             }
@@ -914,16 +994,16 @@ var IMP = window.IMP; // 생략 가능
 IMP.init("imp43709408"); // 예: imp00000000
 
 document.querySelectorAll('.doPay').forEach(function (doPays) {
-    doPays.addEventListener('click',function (e) {
+    doPays.addEventListener('click', function (e) {
         alert('결제하기 버튼 작동');
         console.log(e.target.closest('tr').childNodes[1]);
         reserv_no = e.target.closest('tr').childNodes[1].innerText;
-        name = e.target.closest('tr').childNodes[3].innerText +'  '+ e.target.closest('tr').childNodes[5].innerText+'시간';//대여장소
+        name = e.target.closest('tr').childNodes[3].innerText + '  ' + e.target.closest('tr').childNodes[5].innerText + '시간';//대여장소
         buyer_name = e.target.closest('tr').childNodes[2].innerText;
 
         requestPay(e);
 
-    },false);
+    }, false);
 });
 
 function requestPay(e) {
@@ -941,23 +1021,23 @@ function requestPay(e) {
         // buyer_postcode: "01181"
     }, function (rsp) { // callback
         if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
-            console.log('merchant_uid  ====>'+merchant_uid);
-            console.log('name  ====>'+name);
+            console.log('merchant_uid  ====>' + merchant_uid);
+            console.log('name  ====>' + name);
             // jQuery로 HTTP 요청
             jQuery.ajax({
                 url: "/payroll/register", // 가맹점 서버
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {"Content-Type": "application/json"},
                 data: JSON.stringify({
-                        tr_code:'INSERT',
-                        payroll_hist_no:'any',
-                        reserv_no:reserv_no,
-                        payroll_hist_price:amount ,
-                        payroll_hist_method:pay_method
-                    })
-                    // imp_uid: rsp.imp_uid,
-                    // merchant_uid: rsp.merchant_uid
-                    //기타 필요한 데이터가 있으면 추가 전달
+                    tr_code: 'INSERT',
+                    payroll_hist_no: 'any',
+                    reserv_no: reserv_no,
+                    payroll_hist_price: amount,
+                    payroll_hist_method: pay_method
+                })
+                // imp_uid: rsp.imp_uid,
+                // merchant_uid: rsp.merchant_uid
+                //기타 필요한 데이터가 있으면 추가 전달
 
             }).done(function (data) {
                 alert('결제완료 ');
@@ -978,9 +1058,7 @@ function requestPay(e) {
                 // }));
             });
         } else {
-            alert("결제에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
+            alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
         }
     });
 }
-
-

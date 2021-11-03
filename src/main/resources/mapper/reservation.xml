@@ -21,10 +21,10 @@
         SELECT
             RESERV_START_TIME,
             RESERV_END_TIME,
-            RESERV_DEL_SIGN,
-            RESERV_DATE
+            RESERV_DEL_SIGN
         FROM RESERVATION_MANAGE_TB
         WHERE SPACE_NO = #{space_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+        AND RESERV_DATE = #{reserv_date, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
     </select>
     <select id="reservation_Select" parameterType="com.example.studiozen.DTO.ReservationDTO" resultType="com.example.studiozen.DTO.ReservationDTO" statementType="PREPARED">
         SELECT
