@@ -6,12 +6,14 @@ import com.example.studiozen.DTO.SpaceDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -50,11 +52,45 @@ public class BracnchOfficeLogic {
     } //end of BracnchOfficeSelect Method
 
 
-    public String BracnchOfficeRegister(BranchOfficeDTO branchOfficeDTO) {
+    public String BracnchOfficeRegister(MultipartFile[] multi, BranchOfficeDTO branchOfficeDTO) {
 
         String result = null;
 
         try {
+            if (multi != null) {
+                branchOfficeDTO.setBranchoffice_haspic("Y");
+                for (int i = 0; i < multi.length; i++) {
+                    try {
+                        logger.info("=>=>=>=>=>=>=>=>=>Request has files ");
+                        String uploadpath = branchOfficeImgPath;
+                        String originFilename = multi[i].getOriginalFilename();
+                        String extName = originFilename.substring(originFilename.lastIndexOf("."), originFilename.length());
+                        long size = multi[i].getSize();
+                        String saveFileName = genSaveFileName(extName);
+
+                        logger.info("uploadpath : " + uploadpath);
+
+                        logger.info("originFilename : " + originFilename);
+                        logger.info("extensionName : " + extName);
+                        logger.info("size : " + size);
+                        logger.info("saveFileName : " + saveFileName);
+
+                        branchOfficeDTO.setOriginal_file_name(originFilename);
+                        branchOfficeDTO.setFile_size(size);
+                        branchOfficeDTO.setStored_file_name(saveFileName);
+
+                        String fileInsertResult = BracnchOfficeFileInsert(branchOfficeDTO);
+                        logger.info(fileInsertResult);
+                        if (!multi[i].isEmpty()) {
+                            File file = new File(uploadpath, saveFileName);
+                            multi[i].transferTo(file);
+                        }
+                    } catch (IOException e) {
+                        logger.info(e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            }
 
             bracnchOfficeDAO.BracnchOffice_CUD(branchOfficeDTO);
 
@@ -197,6 +233,22 @@ public class BracnchOfficeLogic {
         return encoder.encode(targetBytes);
     }
 
+    // 현재 시간을 기준으로 파일 이름 생성
+    private String genSaveFileName(String extName) {
+        String fileName = "";
+
+        Calendar calendar = Calendar.getInstance();
+        fileName += calendar.get(Calendar.YEAR);
+        fileName += calendar.get(Calendar.MONTH);
+        fileName += calendar.get(Calendar.DATE);
+        fileName += calendar.get(Calendar.HOUR);
+        fileName += calendar.get(Calendar.MINUTE);
+        fileName += calendar.get(Calendar.SECOND);
+        fileName += calendar.get(Calendar.MILLISECOND);
+        fileName += extName;
+
+        return fileName;
+    }
 
 
 }

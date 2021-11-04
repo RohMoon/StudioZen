@@ -221,41 +221,9 @@ public class BracnchOfficeController {
         logger.info("branchOfficeDTO ====== > \n" + branchOfficeDTO);
 
 
-        String result = bracnchOfficeLogic.BracnchOfficeRegister(branchOfficeDTO);
+        String result = bracnchOfficeLogic.BracnchOfficeRegister(multi,branchOfficeDTO);
 
-        if (multi != null) {
-            for (int i = 0; i < multi.length; i++) {
-                try {
-                    logger.info("=>=>=>=>=>=>=>=>=>Request has files ");
-                    String uploadpath = branchOfficeImgPath;
-                    String originFilename = multi[i].getOriginalFilename();
-                    String extName = originFilename.substring(originFilename.lastIndexOf("."), originFilename.length());
-                    long size = multi[i].getSize();
-                    String saveFileName = genSaveFileName(extName);
 
-                    logger.info("uploadpath : " + uploadpath);
-
-                    logger.info("originFilename : " + originFilename);
-                    logger.info("extensionName : " + extName);
-                    logger.info("size : " + size);
-                    logger.info("saveFileName : " + saveFileName);
-
-                    branchOfficeDTO.setOriginal_file_name(originFilename);
-                    branchOfficeDTO.setFile_size(size);
-                    branchOfficeDTO.setStored_file_name(saveFileName);
-
-                    String fileInsertResult = bracnchOfficeLogic.BracnchOfficeFileInsert(branchOfficeDTO);
-                    logger.info(fileInsertResult);
-                    if (!multi[i].isEmpty()) {
-                        File file = new File(uploadpath, saveFileName);
-                        multi[i].transferTo(file);
-                    }
-                } catch (IOException e) {
-                    logger.info(e.getMessage());
-                    e.printStackTrace();
-                }
-            }
-        }
 
 
         logger.info("  CUD 동작 결과 구분   ====  > " + branchOfficeDTO.getResult());

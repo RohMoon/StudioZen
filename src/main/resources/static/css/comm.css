@@ -29,8 +29,8 @@ tfoot{
 
 /* Body 위 베이스 페널 역할을 하는 영역 */
 #baseContainer {
-    height: 100vw;
-    width: 100vw;
+    /*height: 100vw;*/
+    /*width: 100vw;*/
 
 }
 /* 테이블 위치 */
@@ -51,12 +51,16 @@ table {
 }
 
 /* 페이지가 갈아 끼워지는 메인 영역*/
+/*
+
 com-mainPanel {
     position: static;
     height: 80vw;
     width: 100vw;
     overflow: auto;
 }
+*/
+
 #mainPanel{
     overflow: auto;
 }
@@ -113,7 +117,7 @@ footer {
     position: fixed;
     top: 5vw;
     left: -25vw;
-    overflow: auto;
+    /*overflow: auto;*/
     z-index: 400;
     background-color: white;
     width: 25vw;
@@ -201,7 +205,7 @@ footer {
     top: 35%;
     left: 50%;
     margin-top: 8vw;
-    overflow: inherit;
+    overflow: auto;
     width: 400px;
     /*height: 600px;*/
     height: 540px;
@@ -282,39 +286,39 @@ footer {
 }*/
 
 #branchOfficeSelectList{
-    overflow: auto;
+    /*overflow: auto;*/
 }
 
-/*
 
-!*        ***슬라이드쇼 ***         *!
-!*
+/*        ***슬라이드쇼 ***         */
+/*
 
 * {
     margin: 0;
     padding: 0;
     box-sizing:border-box;
 }
-*!
+*/
 
-!* Slideshow container *!
+/* Slideshow container */
 .slideshow-container {
-    max-width: 1200px;
-    max-height: 750px;
+    /*max-width: 60vw;*/
+    /*max-height: 60vw;*/
     position: relative;
     margin: auto;
 }
 .slideshow-container .mySlides img {
-    height: 400px;
-    margin-left: 20%;
+    height: 14vw;
+    /*height: 400px;*/
+    /*margin-left: 20%;*/
 }
 
-!* Hide the images by default *!
+/* Hide the images by default */
 .mySlides {
     display: none;
 }
 
-!* Next & previous buttons *!
+/* Next & previous buttons */
 .prev, .next {
     cursor: pointer;
     position: absolute;
@@ -330,18 +334,18 @@ footer {
     user-select: none;
 }
 
-!* Position the "next button" to the right *!
+/* Position the "next button" to the right */
 .next {
     right: 0;
     border-radius: 3px 0 0 3px;
 }
 
-!* On hover, add a black background color with a little bit see-through *!
+/* On hover, add a black background color with a little bit see-through */
 .prev:hover, .next:hover {
     background-color: rgba(0,0,0,0.8);
 }
 
-!* Caption text *!
+/* Caption text */
 .text {
     color: #f2f2f2;
     font-size: 15px;
@@ -352,7 +356,7 @@ footer {
     text-align: center;
 }
 
-!* Number text (1/3 etc) *!
+/* Number text (1/3 etc) */
 .numbertext {
     color: #f2f2f2;
     font-size: 12px;
@@ -361,12 +365,12 @@ footer {
     top: 0;
 }
 
-!* The dots/bullets/indicators *!
+/* The dots/bullets/indicators */
 .dot {
     cursor: pointer;
     height: 15px;
     width: 15px;
-    margin: 0 2px;
+    margin: 5px;
     background-color: #bbb;
     border-radius: 50%;
     display: inline-block;
@@ -377,7 +381,7 @@ footer {
     background-color: #717171;
 }
 
-!* Fading animation *!
+/* Fading animation */
 
 .fade {
     -webkit-animation-name: fade;
@@ -396,7 +400,6 @@ footer {
     to {opacity: 1}
 }
 
-*/
 
 /* https://myhappyman.tistory.com/13 << 슬라이드쇼 */
 

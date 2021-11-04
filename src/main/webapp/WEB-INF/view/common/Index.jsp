@@ -140,6 +140,15 @@
     let buyer_email;
     let buyer_name;
     let buyer_tel;
+
+    let bracnchOfficeSelectMap;
+    let branchOfficeSelectList;
+    let branchOfficeImgSelectList;
+
+   /* let slides;
+    let dots;
+    let size;
+*/
     // let loading_img;
     // let loadingElement;
     // let loading = document.body.append(loadingElement);

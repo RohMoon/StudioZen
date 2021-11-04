@@ -550,10 +550,10 @@ function goBranchOfficeListBoardAction() {
 
     // document.getElementById('mainPanel').append();
 
-    var xhr = new XMLHttpRequest(); //working here
+    var xhr = new XMLHttpRequest();
     loadingElement.setAttribute('style', 'display:block');
 
-    xhr.open('GET', '/BracnchOffice/selectPage',true);
+    xhr.open('GET', '/BracnchOffice/selectPage', true);
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.send('');
 
@@ -588,30 +588,247 @@ function goBranchOfficeListBoardAction() {
                     let bracnchOfficeSelectMap = JSON.parse(xhr2.response);
                     loadingElement.setAttribute('style', 'display:none');
                     // console.log(bracnchOfficeSelectMap.branchOfficeImgSelectList);
-                    console.log(bracnchOfficeSelectMap.branchOfficeSelectList);
-                    console.log(bracnchOfficeSelectMap.branchOfficeSelectList.length);
 
                     let branchOfficeSelectList = bracnchOfficeSelectMap.branchOfficeSelectList;
                     let branchOfficeImgSelectList = bracnchOfficeSelectMap.branchOfficeImgSelectList;
-
                     for (let i = 0; i < branchOfficeSelectList.length; i++) {
+
                         var slideShow_container = document.createElement('div');
-                        slideShow_container.setAttribute('id','slideshow-container'+i);
+                        slideShow_container.setAttribute('id', 'slideshow-container' + i);
                         slideShow_container.classList.add('slideshow-container');
+                        document.getElementById('branchOfficeSelectList').append(slideShow_container);
 
-                        branchOfficeImgSelectList.length
+                        // console.log(branchOfficeImgSelectList[i].getBranchoffice_img_code);
+
+                        if (branchOfficeSelectList[i].branchoffice_haspic == 'Y') {
+
+                            var countNumForHowManyThisBranchOfficeHasImage = Number(0);
+
+                            for (let k = 0; k < branchOfficeImgSelectList.length; k++) {
+                                if (branchOfficeSelectList[i].branchoffice_no == branchOfficeImgSelectList[k].branchoffice_no) {
+                                    countNumForHowManyThisBranchOfficeHasImage++;
+                                }
+                            }
+                            for (let j = 0; j < branchOfficeImgSelectList.length; j++) {
 
 
+                                if (branchOfficeSelectList[i].branchoffice_no == branchOfficeImgSelectList[j].branchoffice_no) {
 
+                                    var mySlides_fade = document.createElement('div');
+                                    mySlides_fade.classList.add('mySlides');
+
+                                    mySlides_fade.classList.add('fade');
+                                    slideShow_container.append(mySlides_fade);
+
+                                    var numbertext = document.createElement('numbertext');
+
+                                    numbertext.classList.add('numbertext');
+
+                                    numbertext.innerText = (j + 1) + ' / ' + countNumForHowManyThisBranchOfficeHasImage;
+                                    mySlides_fade.append(numbertext);
+                                    var img_src = document.createElement('img');//working here
+
+                                    img_src.setAttribute('src', 'data:image/png; base64,' + branchOfficeImgSelectList[j].branchoffice_img_code);
+                                    img_src.setAttribute('style', 'width:60%; height:40%; margin-left:20%');
+                                    mySlides_fade.append(img_src);
+
+
+                                } //End of if (branchOfficeSelectList[i].branchoffice_no == branchOfficeImgSelectList[j].branchoffice_no)
+                            } //End of for (let j = 0; j < branchOfficeImgSelectList.length; j++) {
+
+                            var dots_circles = document.createElement('div');
+                            dots_circles.setAttribute('style', 'text-align:center');
+                            slideShow_container.append(dots_circles);
+                            for (let j = 0; j < countNumForHowManyThisBranchOfficeHasImage; j++) {
+                                var dot = document.createElement('span');
+                                dot.classList.add('dot'+i);
+                                dot.setAttribute()
+                                // dot.addEventListener('click',currentSlide(j));
+
+                                dots_circles.append(dot);
+
+                            }// end of For (let j = 0; j < countNumForHowManyThisBranchOfficeHasImage;
+                            var slides = document.getElementsByClassName("mySlides");
+                            var dots = document.getElementsByClassName('dot'+i); //sss
+                            var size = slides.length;
+
+                        } // end of if (branchOfficeSelectList[i].branchoffice_haspic == 'Y')
+
+                        var section = document.createElement('section');//rrr
+                        section.classList.add('py-5');
+                        document.getElementById('slideshow-container'+i).append(section);
+
+                        var container = document.createElement('div');
+                        container.classList.add('container');
+                        container.classList.add('px-4');
+                        container.classList.add('px-lg-5');
+                        // container.classList.add('mt-5');
+                        section.append(container);
+
+                        var row = document.createElement('div');
+                        row.classList.add('row');
+                        row.classList.add('gx-4');
+                        row.classList.add('gx-lg-5');
+                        row.classList.add('row-cols-md-3');
+                        row.classList.add('row-cols-xl-4');
+                        row.classList.add('justify-content-center');
+                        container.append(row);
+
+                        var col = document.createElement('div');
+                        col.classList.add('col');
+                        col.classList.add('mb-5');
+                        row.append(col);
+
+                        var card = document.createElement('div');
+                        card.classList.add('card');
+                        card.classList.add('h-100');
+                        col.append(card);
+
+                        <!-- BranchOffice details-->
+
+                        var cardBody = document.createElement('div');
+                        cardBody.classList.add('card-body');
+                        cardBody.classList.add('p-4');
+                        card.append(cardBody);
+
+                        var textBox = document.createElement('div');
+                        textBox.classList.add('text-center');
+                        cardBody.append(textBox);
+
+                        var detailBox = document.createElement('div');
+                        detailBox.setAttribute('style','display:none;')
+                        detailBox.classList.add('text-center');
+                        cardBody.append(detailBox);
+
+                        <!-- BranchOffice No-->
+                        var branchNo = document.createElement('h9');
+                        branchNo.classList.add('branchOffice_no');
+                        branchNo.classList.add('fw-bolder');
+                        branchNo.setAttribute('id', 'branchOffice_no' + i);
+                        // branchInfo.setAttribute('style','display:none');
+                        branchNo.innerText = branchOfficeSelectList[i].branchoffice_no;
+                        textBox.append(branchNo);
+
+                        <!-- BranchOffice name-->
+                        var branchName = document.createElement('h5');
+                        branchName.classList.add('branchOffice_name');
+                        branchName.classList.add('fw-bolder');
+                        branchName.setAttribute('id', 'branchOffice_name' + i);
+                        branchName.innerText = branchOfficeSelectList[i].branchoffice_name;
+                        textBox.append(branchName);
+
+                        <!-- BranchOffice local-->
+                        var branchLocal = document.createElement('h8');
+                        branchLocal.classList.add('branchOffice_local');
+                        branchLocal.setAttribute('id', 'branchOffice_local' + i);
+                        branchLocal.innerText = branchOfficeSelectList[i].branchoffice_local;
+                        detailBox.append(branchLocal);
+
+                        <!-- BranchOffice address-->
+                        var branchAddress = document.createElement('h8');
+                        branchAddress.classList.add('branchOffice_address');
+                        branchAddress.setAttribute('id', 'branchOffice_address' + i);
+                        branchAddress.innerText = branchOfficeSelectList[i].branchoffice_address;
+                        detailBox.append(branchAddress);
+
+                        <!-- BranchOffice mobile-->
+                        var branchMobile = document.createElement('h8');
+                        branchMobile.classList.add('branchOffice_mobile');
+                        branchMobile.setAttribute('id', 'branchOffice_mobile' + i);
+                        branchMobile.innerText = branchOfficeSelectList[i].branchoffice_mobile;
+                        detailBox.append(branchMobile);
+
+                    var cardFooter = document.createElement('div');
+                    cardFooter.classList.add('card-footer');
+                    cardFooter.classList.add('p-4');
+                    cardFooter.classList.add('pt-0');
+                    cardFooter.classList.add('border-top-0');
+                    cardFooter.classList.add('bg-transparent');
+                    card.append(cardFooter);
+
+                    var branchButton = document.createElement('div');
+                    branchButton.classList.add('text-center');
+                    card.append(branchButton);
+
+                        var goBranchOfficeDetailBoardBtn = document.createElement('a');
+                        goBranchOfficeDetailBoardBtn.setAttribute('id','goBranchOfficeDetailBoard'+i);
+                        goBranchOfficeDetailBoardBtn.classList.add('btn');
+                        goBranchOfficeDetailBoardBtn.classList.add('btn-outline-dark');
+                        goBranchOfficeDetailBoardBtn.classList.add('mt-auto');
+                        goBranchOfficeDetailBoardBtn.innerText = '지점상세';
+
+                        card.append(goBranchOfficeDetailBoardBtn);
+                        document.getElementById('goBranchOfficeDetailBoard'+i).addEventListener('click', goBranchOfficeDetailBoard);
+
+                    } //End of for ==>지점이 몇개인지 반복<== (let i = 0; i < branchOfficeSelectList.length; i++) {
+                    var slideIndex = 0; //slide index
+                    for (let p = 0; p < dots.length; p++) {
+
+                        var slide_num = Number(p);
+
+                        dots.item(p).addEventListener('click', currentSlide(slide_num));
+                        // dots.item(p).addEventListener('click',function (slide_num) {
+                        //     console.log('currentSlide===> 동작');
+                        //     slideIndex = slide_num;
+                        //     console.log('slideIndex====>'+slideIndex);
+                        //     showSlides(slideIndex);
+                        //
+                        // });
+                    }
+
+// HTML 로드가 끝난 후 동작
+//                     window.onload=function(){
+
+                    showSlides(slideIndex);
+
+                    // Auto Move Slide
+                    var sec = 3000;
+                    setInterval(function () {
+                        slideIndex++;
+                        console.log('slideIndex=====>' + slideIndex);
+                        showSlides(slideIndex);
+
+                    }, sec);
+
+// Next/previous controls
+                    function moveSlides(n) {
+                        slideIndex = slideIndex + n
+                        showSlides(slideIndex);
+                    }
+
+// Thumbnail image controls
+                    function currentSlide(n) {
+                        console.log('currentSlide===> 동작');
+                        slideIndex = n;
+                        showSlides(slideIndex);
                     }
 
 
+                    function showSlides(n) {
 
+                        if ((n + 1) > size) {
+                            slideIndex = 0;
+                            n = 0;
+                        } else if (n < 0) {
+                            slideIndex = (size - 1);
+                            n = (size - 1);
+                        }
 
-                }
+                        for (i = 0; i < slides.length; i++) {
+                            slides[i].style.display = "none";
+                        }
+                        for (i = 0; i < dots.length; i++) {
+                            dots[i].className = dots[i].className.replace(" active", "");
+                        }
+
+                        slides[n].style.display = "block";
+                        dots[n].className += " active";
+                    }
+
+                }//End of xhr2   if (this.status == 200 && this.readyState == 4) {
             }
 
-            xhr2.open('GET', '/BracnchOffice/select',true);
+            xhr2.open('GET', '/BracnchOffice/select', true);
             xhr2.setRequestHeader('Content-type', 'application/json');
             xhr2.send('');
         } // end of  if (this.status==200 && this.readyState==4)
@@ -684,6 +901,11 @@ function goBranchOfficeListBoardAction() {
 
 }
 
+
+/////////////
+
+
+/////////////////////
 //----------------
 
 /*    //---------
@@ -891,7 +1113,7 @@ function readURL(input) {
 
             };
 
-            document.getElementById("SpaceList_Head").setAttribute('cur', 'default')
+            // document.getElementById("SpaceList_Head").setAttribute('cur', 'default')
             // reader.readAsDataURL(input.files[0]);
             reader.readAsDataURL(image);
         }
