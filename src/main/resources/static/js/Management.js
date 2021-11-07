@@ -581,7 +581,7 @@ function goBranchOfficeListBoardAction() {
             } // end of if  (sessionStorage.getItem('sid') === 'member_no=MEM282108')
 
             var xhr2 = new XMLHttpRequest();
-            xhr2.onreadystatechange = function () {
+            xhr2.onreadystatechange = async function () {
                 if (this.status == 200 && this.readyState == 4) {
                     console.log('2nd XML');
                     console.log('====++> xhr2' + xhr2.response);
@@ -591,6 +591,18 @@ function goBranchOfficeListBoardAction() {
 
                     let branchOfficeSelectList = bracnchOfficeSelectMap.branchOfficeSelectList;
                     let branchOfficeImgSelectList = bracnchOfficeSelectMap.branchOfficeImgSelectList;
+
+                    // let slideArrayData = {
+                    //     slides: [],
+                    //     dots: [],
+                    //     size: [],
+                    //     slideIndex: [],
+                    //     slideLength: [],
+                    //     dotsLength: []
+                    // };
+
+                    // let slideIndex = 0;
+
                     for (let i = 0; i < branchOfficeSelectList.length; i++) {
 
                         var slideShow_container = document.createElement('div');
@@ -614,7 +626,11 @@ function goBranchOfficeListBoardAction() {
 
                                 if (branchOfficeSelectList[i].branchoffice_no == branchOfficeImgSelectList[j].branchoffice_no) {
 
+                                    console.log(' j  ============>'+j);
+                                    var currentImageNum = 1;
+                                    let branchOfficeImgSelectList = bracnchOfficeSelectMap.branchOfficeImgSelectList;
                                     var mySlides_fade = document.createElement('div');
+                                    mySlides_fade.classList.add('mySlides' + i); //sss
                                     mySlides_fade.classList.add('mySlides');
 
                                     mySlides_fade.classList.add('fade');
@@ -624,7 +640,8 @@ function goBranchOfficeListBoardAction() {
 
                                     numbertext.classList.add('numbertext');
 
-                                    numbertext.innerText = (j + 1) + ' / ' + countNumForHowManyThisBranchOfficeHasImage;
+                                    // numbertext.innerText = (j + 1) + ' / ' + countNumForHowManyThisBranchOfficeHasImage;
+                                    numbertext.innerText = currentImageNum + ' / ' + countNumForHowManyThisBranchOfficeHasImage;
                                     mySlides_fade.append(numbertext);
                                     var img_src = document.createElement('img');//working here
 
@@ -632,7 +649,7 @@ function goBranchOfficeListBoardAction() {
                                     img_src.setAttribute('style', 'width:60%; height:40%; margin-left:20%');
                                     mySlides_fade.append(img_src);
 
-
+                                    currentImageNum++;
                                 } //End of if (branchOfficeSelectList[i].branchoffice_no == branchOfficeImgSelectList[j].branchoffice_no)
                             } //End of for (let j = 0; j < branchOfficeImgSelectList.length; j++) {
 
@@ -641,22 +658,152 @@ function goBranchOfficeListBoardAction() {
                             slideShow_container.append(dots_circles);
                             for (let j = 0; j < countNumForHowManyThisBranchOfficeHasImage; j++) {
                                 var dot = document.createElement('span');
-                                dot.classList.add('dot'+i);
-                                dot.setAttribute()
+                                dot.classList.add('dot');
+                                dot.classList.add('dotP' + i);
+                                // dot.setAttribute('style','cursor: pointer;\n' +
+                                //     '    height: 15px;\n' +
+                                //     '    width: 15px;\n' +
+                                //     '    margin: 5px;\n' +
+                                //     '    background-color: #bbb;\n' +
+                                //     '    border-radius: 50%;\n' +
+                                //     '    display: inline-block;\n' +
+                                //     '    transition: background-color 0.6s ease;')
                                 // dot.addEventListener('click',currentSlide(j));
 
                                 dots_circles.append(dot);
 
                             }// end of For (let j = 0; j < countNumForHowManyThisBranchOfficeHasImage;
-                            var slides = document.getElementsByClassName("mySlides");
-                            var dots = document.getElementsByClassName('dot'+i); //sss
-                            var size = slides.length;
+                            // var slides = document.getElementsByClassName("mySlides");
+                            // var slides = document.getElementsByClassName("mySlides" + i);
+
+
+                            slideArrayData.slides.push(document.getElementsByClassName("mySlides" + i));
+
+                            // eval("var slides"+i+"=document.getElementsByClassName(\"mySlides\" + i);")
+                            // var dots = document.getElementsByClassName('dot'); //sss
+                            // var dotPs = document.getElementsByClassName('dotP' + i);
+
+                            slideArrayData.dots.push(document.getElementsByClassName("dotP" + i));
+                            // eval("var dotPs"+i+"=document.getElementsByClassName(\"dotP\" + i);");
+                            // var dots = document.getElementsByClassName('dot');
+                            // var size = slides.length;
+
+                            slideArrayData.size.push(Number(document.getElementsByClassName("mySlides" + i).length));
+                            // eval("var size"+i+"=slides"+i+".length;");
+
+                            slideArrayData.slideIndex.push(Number(0));
+                            // eval('var slideIndex'+i+'=0');
+
+                            slideArrayData.slideLength.push(Number(document.getElementsByClassName("mySlides" + i).length));
+                            slideArrayData.dotsLength.push(Number(document.getElementsByClassName("dotP" + i).length));
+
+                            var sec = 4000;
+                            setInterval(function () { //시간마다 반복함
+                                // slideIndex++;
+                                // eval('slideIndex'+i+'++;');
+
+
+                                // slideArrayData.slideIndex.splice(i,1,slideArrayData.slideIndex++);
+
+                                console.log('setInterval에서의 slideArrayData.slideIndex[i] =====>>>>>'+slideArrayData.slideIndex[i]);
+                                console.log('setInterval에서의 slideArrayData.slideIndex[i] 타입 =====>>>>>'+typeof slideArrayData.slideIndex[i]);
+
+                                showSlides(slideArrayData.slideIndex[i]); // i가 인이입되서 진행
+                                console.log('=============After showSlides');
+                                slideArrayData.slideIndex[i] = slideArrayData.slideIndex[i]+Number(1); // i++ 증가
+                            }, sec); //시간마다
+
+                            // showSlides(eval('slideIndex'+i));
+
+                            function showSlides(n) { // 0 이라면
+
+
+                                console.log('최초 인입된 n === > ' +n); // 5이상 들어와도
+                                console.log('최초 인입된 n === > ' +typeof n);
+                                console.log('slideArrayData.size[i]=====>'+slideArrayData.size[i]);
+                                console.log('slideArrayData.size[i] TYPE=== > ' +typeof slideArrayData.size[i]);
+
+                                // if ((n + 1) > eval('size'+i)) { // 0+1 > slides = 15ea // 넘버가 슬라이드 갯수보다 크다면 초기화
+                                if ((n + 1) > slideArrayData.size[i]) { // 0+1 > slides = 15ea // 넘버가 슬라이드 갯수보다 크다면 초기화                                   eval('slideIndex'+i+'=0;')  // 0
+                                    console.log('-----if--(n + 1) > slideArrayData.size[i]------'+(n + 1)+'(-n+1-)'+slideArrayData.size[i]);
+                                    n = 0; // 0
+                                    slideArrayData.slideIndex[i] = 0;
+                                    console.log('After  N=====>' + n);
+                                    // console.log('if ((n + 1) > size) ====> n === >'+n+'\n ===> size '+size);
+                                } else if (n < 0) {  // 0<0  N이 0보다 작다면 // -? 탈일은 없는데
+                                    // slideIndex = (size - 1); // 인덱스는 15-1
+                                    // eval('slideIndex'+i+'=(size'+i+'-1);');
+                                    console.log('----else-if-------------------');
+                                    slideArrayData.slideIndex[i] = slideArrayData.size[i] - 1;
+                                    console.log('slideArrayData.slideIndex[i] = slideArrayData.size[i] - 1;===> '+slideArrayData.slideIndex[i]);
+
+                                    // n = (size - 1); // n = 15 -1
+                                    // n = (eval('size'+i) - 1); // n = 15 -1
+                                    n = slideArrayData.size[i] - 1;
+                                    console.log('After Else if ======>'+ n);
+
+                                    // console.log('if ((n + 1) > size) ====> n === >'+n+'\n ===> size '+size+'\n ===> slideIndex '+slideIndex  );
+                                }else {
+                                    console.log('-----------------else------------------------------');
+                                }
+                                console.log('NNNNNNNNNNNNNNNNNNNN ==========> ++++++++====>'+n);
+                                console.log('slideArrayData.slideLength[i]----------------->'+slideArrayData.slideLength[i]);
+                                console.log('slideArrayData.slideLength[i]----------------->'+typeof slideArrayData.slideLength[i]);
+                                // for (let o = 0; o < eval('slides'+i).length; o++) { // i = 0; 0 <15 ; 0++
+
+                                for (let o = 0; o < slideArrayData.slideLength[i]; o++) { // i = 0; 0 <15 ; 0++
+
+                                    // console.log('========> slides.length' + slides.length +'\n'+ '======>i ==>'+i);
+                                    // eval('slides'+i+'[o].style.display = "none";'); //15인덱스 마다 모두 화면 없애준다.
+                                    console.log(' -----------> FOR o ------->FOR o');
+                                    console.log('========i>>>>'+i);
+                                    console.log('========o>>>>'+o);
+                                    // slideArrayData.slides[i][o].style.display = "none;";
+                                    slideArrayData.slides[i][o].setAttribute("style","display:none;");
+                                }
+                                // for (let p = 0; p < eval('dotPs'+i).length; p++) { //i =0 ; 0 < 15; 0++
+
+                                for (let p = 0; p < slideArrayData.dotsLength[i]; p++) { //i =0 ; 0 < 15; 0++
+
+                                    // console.log('========> dotPs.length' + dotPs.length +'\n'+ '======>i ==>'+i);
+                                    // eval('dotPs'+i)[p].className = eval('dotPs'+i)[p].className.replace(" active", ""); // 번갈아가면 해당 번호 active 들어가있는 객체에서 active 모두 빼준다.
+                                    // dots[i].className = dots[i].className.replace(" active", ""); // 번갈아가면 해당 번호 active 들어가있는 객체에서 active 모두 빼준다.
+                                    // console.log('=============== > ============> =========== > '+slideArrayData.dots[i][p].className);
+                                    // console.log(slideArrayData.dots[i][p].className.replace(" active", ""));
+
+                                     slideArrayData.dots[i][p].className = slideArrayData.dots[i][p].className.replace(" active", "");
+                                    // slideArrayData.dots[i][p].classList.replace(" active", "");
+
+                                    // if (slideArrayData.dots[i][p].classList.contains("active")){
+                                    // slideArrayData.dots[i][p].classList.remove("active");
+                                    // }
+                                }
+
+                                console.log('n=========>' + n + '\n' + 'i----------->' + i);
+
+
+                                // eval('slides'+i)[n].style.display = "block"; // n번 슬라이드 켜주기
+                                slideArrayData.slides[i][n].style.display = "block";
+                                // eval('dotPs'+i)[n].className += " active"; // n번 active 구슬 켜주기
+                                slideArrayData.dots[i][n].className += " active";
+                            }  //End of  function showSlides(n)
+
+                            // Thumbnail image controls
+                            function currentSlide(n) {
+                                console.log('currentSlide===> 동작');
+                                // slideIndex = n;
+                                //  eval('slideIndex'+i+'=n;');
+                                slideArrayData.slideIndex[i] = n;
+
+                                // showSlides( eval('slideIndex'+i));
+                                showSlides(slideArrayData.slideIndex[i]);
+                            }
 
                         } // end of if (branchOfficeSelectList[i].branchoffice_haspic == 'Y')
 
                         var section = document.createElement('section');//rrr
                         section.classList.add('py-5');
-                        document.getElementById('slideshow-container'+i).append(section);
+                        document.getElementById('slideshow-container' + i).append(section);
 
                         var container = document.createElement('div');
                         container.classList.add('container');
@@ -696,7 +843,7 @@ function goBranchOfficeListBoardAction() {
                         cardBody.append(textBox);
 
                         var detailBox = document.createElement('div');
-                        detailBox.setAttribute('style','display:none;')
+                        detailBox.setAttribute('style', 'display:none;')
                         detailBox.classList.add('text-center');
                         cardBody.append(detailBox);
 
@@ -738,92 +885,67 @@ function goBranchOfficeListBoardAction() {
                         branchMobile.innerText = branchOfficeSelectList[i].branchoffice_mobile;
                         detailBox.append(branchMobile);
 
-                    var cardFooter = document.createElement('div');
-                    cardFooter.classList.add('card-footer');
-                    cardFooter.classList.add('p-4');
-                    cardFooter.classList.add('pt-0');
-                    cardFooter.classList.add('border-top-0');
-                    cardFooter.classList.add('bg-transparent');
-                    card.append(cardFooter);
+                        var cardFooter = document.createElement('div');
+                        cardFooter.classList.add('card-footer');
+                        cardFooter.classList.add('p-4');
+                        cardFooter.classList.add('pt-0');
+                        cardFooter.classList.add('border-top-0');
+                        cardFooter.classList.add('bg-transparent');
+                        card.append(cardFooter);
 
-                    var branchButton = document.createElement('div');
-                    branchButton.classList.add('text-center');
-                    card.append(branchButton);
+                        var branchButton = document.createElement('div');
+                        branchButton.classList.add('text-center');
+                        card.append(branchButton);
 
                         var goBranchOfficeDetailBoardBtn = document.createElement('a');
-                        goBranchOfficeDetailBoardBtn.setAttribute('id','goBranchOfficeDetailBoard'+i);
+                        goBranchOfficeDetailBoardBtn.setAttribute('id', 'goBranchOfficeDetailBoard' + i);
                         goBranchOfficeDetailBoardBtn.classList.add('btn');
                         goBranchOfficeDetailBoardBtn.classList.add('btn-outline-dark');
                         goBranchOfficeDetailBoardBtn.classList.add('mt-auto');
                         goBranchOfficeDetailBoardBtn.innerText = '지점상세';
 
                         card.append(goBranchOfficeDetailBoardBtn);
-                        document.getElementById('goBranchOfficeDetailBoard'+i).addEventListener('click', goBranchOfficeDetailBoard);
+                        document.getElementById('goBranchOfficeDetailBoard' + i).addEventListener('click', goBranchOfficeDetailBoard);
+                        // eval("let slideIndex"+i+"=0");
+                        // var slideIndex = 0; //slide index //sss
+
+                        // showSlides(slideIndex);
+
+                        /*
+                                                for (let p = 0; p < dots.length; p++) {
+
+                                                    var slide_num = Number(p);
+
+                                                    dots.item(p).addEventListener('click', currentSlide(slide_num));
+                                                    // dots.item(p).addEventListener('click',function (slide_num) {
+                                                    //     console.log('currentSlide===> 동작');
+                                                    //     slideIndex = slide_num;
+                                                    //     console.log('slideIndex====>'+slideIndex);
+                                                    //     showSlides(slideIndex);
+                                                    //
+                                                    // });
+                                                }
+                                                */
 
                     } //End of for ==>지점이 몇개인지 반복<== (let i = 0; i < branchOfficeSelectList.length; i++) {
-                    var slideIndex = 0; //slide index
-                    for (let p = 0; p < dots.length; p++) {
+                    // var slideIndex = 0; //slide index //sss
 
-                        var slide_num = Number(p);
+                    // Auto Move Slide
 
-                        dots.item(p).addEventListener('click', currentSlide(slide_num));
-                        // dots.item(p).addEventListener('click',function (slide_num) {
-                        //     console.log('currentSlide===> 동작');
-                        //     slideIndex = slide_num;
-                        //     console.log('slideIndex====>'+slideIndex);
-                        //     showSlides(slideIndex);
-                        //
-                        // });
-                    }
 
 // HTML 로드가 끝난 후 동작
 //                     window.onload=function(){
 
-                    showSlides(slideIndex);
 
-                    // Auto Move Slide
-                    var sec = 3000;
-                    setInterval(function () {
-                        slideIndex++;
-                        console.log('slideIndex=====>' + slideIndex);
-                        showSlides(slideIndex);
+                    /*
 
-                    }, sec);
+                    // Next/previous controls
+                                        function moveSlides(n) {
+                                            slideIndex = slideIndex + n
+                                            showSlides(slideIndex);
+                                        }
+                    */
 
-// Next/previous controls
-                    function moveSlides(n) {
-                        slideIndex = slideIndex + n
-                        showSlides(slideIndex);
-                    }
-
-// Thumbnail image controls
-                    function currentSlide(n) {
-                        console.log('currentSlide===> 동작');
-                        slideIndex = n;
-                        showSlides(slideIndex);
-                    }
-
-
-                    function showSlides(n) {
-
-                        if ((n + 1) > size) {
-                            slideIndex = 0;
-                            n = 0;
-                        } else if (n < 0) {
-                            slideIndex = (size - 1);
-                            n = (size - 1);
-                        }
-
-                        for (i = 0; i < slides.length; i++) {
-                            slides[i].style.display = "none";
-                        }
-                        for (i = 0; i < dots.length; i++) {
-                            dots[i].className = dots[i].className.replace(" active", "");
-                        }
-
-                        slides[n].style.display = "block";
-                        dots[n].className += " active";
-                    }
 
                 }//End of xhr2   if (this.status == 200 && this.readyState == 4) {
             }

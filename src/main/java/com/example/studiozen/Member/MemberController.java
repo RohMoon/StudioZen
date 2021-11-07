@@ -114,6 +114,7 @@ public class MemberController {
             httpSession.setAttribute("sessionNO",memberDTO.getSession_no());
 
             String sessionParam = (memberDTO.getSession_no()).split("=")[1];
+
             if(memberDTO.getMember_no().equals("member_no=MEM282108")){
                  logger.info("관리자 세션 ===> http Session ====>" +sessionParam);
                 return "forward:/Management/dash.do/"+sessionParam;

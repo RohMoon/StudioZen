@@ -26,7 +26,7 @@ public class BracnchOfficeDAO {
     public void BracnchOffice_CUD(BranchOfficeDTO branchOfficeDTO) throws SqlSessionException {
 
         sqlSessionTemplate.selectList("BranchOffice_CUD",branchOfficeDTO);
-
+            logger.info("=========> branchOfficeDTO =====> after\n branchOfficeDTO \n "+ branchOfficeDTO);
     }
 
     /* 파일 삽입에 Insert */

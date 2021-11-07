@@ -54,7 +54,12 @@ public class BracnchOfficeLogic {
 
     public String BracnchOfficeRegister(MultipartFile[] multi, BranchOfficeDTO branchOfficeDTO) {
 
+            if (multi != null) {
+                branchOfficeDTO.setBranchoffice_haspic("Y");
+            }
         String result = null;
+
+        bracnchOfficeDAO.BracnchOffice_CUD(branchOfficeDTO);
 
         try {
             if (multi != null) {
@@ -92,7 +97,7 @@ public class BracnchOfficeLogic {
                 }
             }
 
-            bracnchOfficeDAO.BracnchOffice_CUD(branchOfficeDTO);
+
 
 //                try {
 //                    //파일 인서트 DAO 메소드로 연결

@@ -17,8 +17,8 @@
     <link href="/css/bootStrap/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/bootStrap/bootstrap.css">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
-    <link href="css/styles.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="/js/bootStrap/bootstrap.js"></script>
@@ -30,7 +30,7 @@
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     <!-- 아래 제이쿼리는 1.0이상이면 원하는 버전을 사용하셔도 무방합니다. -->
     <!-- jQuery -->
-     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 </head>
 <body>
@@ -41,8 +41,8 @@
         <button class="btn-leftMenuIn">
             <i name class="clear_menu_icon"></i>
         </button>
-<%--            <%session = request.getSession();%>
-            <%out.print("session == > "+session.getAttribute("SessionNO"));%>--%>
+        <%--            <%session = request.getSession();%>
+                    <%out.print("session == > "+session.getAttribute("SessionNO"));%>--%>
         <%--  메인 문구  --%>
         <span id="title"><b>MANAGEMENT PROGRAM</b></span>
     </nav>
@@ -78,9 +78,9 @@
 <script>
 
     let tr_code;
-    let poolBase ;
-    let p_sid ;
-    let sid   ;
+    let poolBase;
+    let p_sid;
+    let sid;
 
     let member_name;
 
@@ -109,27 +109,28 @@
     let branchoffice_address;
     let branchoffice_mobile;
 
+
     let space_no;
     let space_name;
-    let space_description   ;
-    let space_capacity      ;
-    let space_maxpeople     ;
-    let space_basicprice    ;
-    let spaceUpdateButton   ;
-    let spaceUpdateSubmitButton  ;
-    let spaceUpdateAbortButton   ;
-    let spaceAddSubmitButton     ;
-    let spaceDeleteButton        ;
-    let spaceBookButton   ;
-    let spaceBookSubmitButton   ;
-    let spaceBookAbortButton   ;
+    let space_description;
+    let space_capacity;
+    let space_maxpeople;
+    let space_basicprice;
+    let spaceUpdateButton;
+    let spaceUpdateSubmitButton;
+    let spaceUpdateAbortButton;
+    let spaceAddSubmitButton;
+    let spaceDeleteButton;
+    let spaceBookButton;
+    let spaceBookSubmitButton;
+    let spaceBookAbortButton;
 
-    let imgFile                 ;
-    let stored_file_name        ;
-    let DownloadQnaFileFormData ;
-    let image                   ;
-    let reader                  ;
-    let img                     ;
+    let imgFile;
+    let stored_file_name;
+    let DownloadQnaFileFormData;
+    let image;
+    let reader;
+    let img;
     let choosenDate;
 
     let pg;
@@ -141,14 +142,21 @@
     let buyer_name;
     let buyer_tel;
 
-    let bracnchOfficeSelectMap;
-    let branchOfficeSelectList;
-    let branchOfficeImgSelectList;
+    let slideArrayData = {
+        slides: [],
+        dots: [],
+        size: [],
+        slideIndex: [],
+        slideLength: [],
+        dotsLength: []
+    };
 
-   /* let slides;
-    let dots;
-    let size;
-*/
+
+
+    /* let slides;
+     let dots;
+     let size;
+ */
     // let loading_img;
     // let loadingElement;
     // let loading = document.body.append(loadingElement);
@@ -156,24 +164,24 @@
     let loadingElement
     let loading
     ////////////
-    document.addEventListener('DOMContentLoaded',function () {
+    document.addEventListener('DOMContentLoaded', function () {
         loading_img = document.createElement('img');
-        loading_img.setAttribute('id','loading_img');
-        loading_img.setAttribute('alt','loading');
-        loading_img.setAttribute('src','/images/loading/ajax-loader.gif');
+        loading_img.setAttribute('id', 'loading_img');
+        loading_img.setAttribute('alt', 'loading');
+        loading_img.setAttribute('src', '/images/loading/ajax-loader.gif');
 
         loadingElement = document.createElement('div');
-        loadingElement.setAttribute('id','loading');
-        loadingElement.setAttribute('style','display:none;');
+        loadingElement.setAttribute('id', 'loading');
+        loadingElement.setAttribute('style', 'display:none;');
         loadingElement.classList.add('loading');
         loadingElement.appendChild(loading_img);
         loading = document.body.append(loadingElement);
 
-       $(window).ajaxStart(function () {
-           loadingElement.setAttribute('style','display:block');
-       }).ajaxStop(function () {
-           loadingElement.setAttribute('style','display:none');
-       });
+        $(window).ajaxStart(function () {
+            loadingElement.setAttribute('style', 'display:block');
+        }).ajaxStop(function () {
+            loadingElement.setAttribute('style', 'display:none');
+        });
     });
 
 </script>
