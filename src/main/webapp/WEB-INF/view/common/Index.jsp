@@ -77,71 +77,71 @@
 </body>
 <script>
 
-    let tr_code;
-    let poolBase;
-    let p_sid;
-    let sid;
+    let tr_code                 = '' ;
+    let poolBase                =  0;
+    let p_sid                   =  '';
+    let sid                     =  '';
 
-    let member_name;
+    let member_name             =  '';
 
-    let reserv_no;
-    let reserv_date;
-    let reserv_hostcode;
-    let reserv_start_time;
-    let reserv_end_time;
-    let reserv_host_mobile;
-    let reserv_paystatement;
-    let reserv_regdate;
-    let reserv_host_email;
-    let reserv_updatedate;
-    let reserv_pay_limited;
-    let reserv_space;
-    let reserv_del_sign;
+    let reserv_no               =  '';
+    let reserv_date             =  '';
+    let reserv_hostcode         =  '';
+    let reserv_start_time       =  '';
+    let reserv_end_time         =  '';
+    let reserv_host_mobile      =  '';
+    let reserv_paystatement     =  '';
+    let reserv_regdate          =  '';
+    let reserv_host_email       =  '';
+    let reserv_updatedate       =  '';
+    let reserv_pay_limited      =  '';
+    let reserv_space            =  '';
+    let reserv_del_sign         =  '';
 
-    let qna_no;
-    let qna_recomment_no;
-    let qna_recomment_writer;
-    let qna_recomment_content;
+    let qna_no                  =  '';
+    let qna_recomment_no        =  '';
+    let qna_recomment_writer    =  '';
+    let qna_recomment_content   =  '';
 
-    let branchoffice_no;
-    let branchoffice_name;
-    let branchoffice_local;
-    let branchoffice_address;
-    let branchoffice_mobile;
+    let branchoffice_no         =  '';
+    let branchoffice_name       =  '';
+    let branchoffice_local      =  '';
+    let branchoffice_address    =  '';
+    let branchoffice_mobile     =  0;
 
 
-    let space_no;
-    let space_name;
-    let space_description;
-    let space_capacity;
-    let space_maxpeople;
-    let space_basicprice;
-    let spaceUpdateButton;
-    let spaceUpdateSubmitButton;
-    let spaceUpdateAbortButton;
-    let spaceAddSubmitButton;
-    let spaceDeleteButton;
-    let spaceBookButton;
-    let spaceBookSubmitButton;
-    let spaceBookAbortButton;
+    let space_no                =  '';
+    let space_name              =  '';
+    let space_description       =  '';
+    let space_capacity          =  0;
+    let space_maxpeople         =  0;
+    let space_basicprice        =  0;
+    let spaceUpdateButton       =  '';
+    let spaceUpdateSubmitButton =  '';
+    let spaceUpdateAbortButton  =  '';
+    let spaceAddSubmitButton    =  '';
+    let spaceDeleteButton       =  '';
+    let spaceBookButton         =  '';
+    let spaceBookSubmitButton   =  '';
+    let spaceBookAbortButton    =  '';
 
-    let imgFile;
-    let stored_file_name;
-    let DownloadQnaFileFormData;
-    let image;
-    let reader;
-    let img;
-    let choosenDate;
+    let imgFile                 =  '';
+    let stored_file_name        =  '';
+    let DownloadQnaFileFormData = '' ;
+    let image                   = '' ;
+    let reader                  = '' ;
+    let img                     = '' ;
+    let choosenDate             =  '';
 
-    let pg;
-    let pay_method;
-    let merchant_uid;
-    let name;
-    let amount;
-    let buyer_email;
-    let buyer_name;
-    let buyer_tel;
-
+    let pg                      =  '';
+    let pay_method              = '' ;
+    let merchant_uid            = '' ;
+    let name                    = '' ;
+    let amount                  =  0;
+    let buyer_email             =  '';
+    let buyer_name              =  '';
+    let buyer_tel               =  '';
+    let branchOfficeImgSlideShow = '';
     let slideArrayData = {
         slides: [],
         dots: [],
@@ -149,7 +149,7 @@
         slideIndex: [],
         slideLength: [],
         dotsLength: []
-    };
+    } 
 
 
 

@@ -27,7 +27,7 @@
     document.querySelector("img").setAttribute("height",300);
 </script>--%>
 
-<div id="branchOfficeSelectList">
+<div id="branchOfficeSelectList" style="overflow: auto">
 
 <div id="modalSpace">
 

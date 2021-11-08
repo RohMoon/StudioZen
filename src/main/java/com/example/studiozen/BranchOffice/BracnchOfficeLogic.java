@@ -54,9 +54,6 @@ public class BracnchOfficeLogic {
 
     public String BracnchOfficeRegister(MultipartFile[] multi, BranchOfficeDTO branchOfficeDTO) {
 
-            if (multi != null) {
-                branchOfficeDTO.setBranchoffice_haspic("Y");
-            }
         String result = null;
 
         bracnchOfficeDAO.BracnchOffice_CUD(branchOfficeDTO);

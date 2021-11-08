@@ -41,7 +41,13 @@ public class ClientController {
         reservationDTO.setReserv_hostcode(sessionNo);
         List<ReservationDTO> reservationSelectList =
                 reservationLogic.ReservationSelect(reservationDTO);
-        logger.info(reservationSelectList);
+
+//        logger.info(reservationSelectList);
+
+        for (int i = 0; i < reservationSelectList.size(); i++) {
+            logger.info(reservationSelectList.get(i).getSpace_basicprice());
+        }
+
         request.setAttribute("reservationSelectList", reservationSelectList);
         mv.setViewName("Client/ClientDash");
         return mv;

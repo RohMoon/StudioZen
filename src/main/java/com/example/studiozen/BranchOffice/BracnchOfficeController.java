@@ -223,9 +223,6 @@ public class BracnchOfficeController {
 
         String result = bracnchOfficeLogic.BracnchOfficeRegister(multi,branchOfficeDTO);
 
-
-
-
         logger.info("  CUD 동작 결과 구분   ====  > " + branchOfficeDTO.getResult());
         logger.info("  CUD 동작 결과 최종 구분 === > " + result);
 
@@ -291,21 +288,24 @@ public class BracnchOfficeController {
      }
      **********************/
     @PostMapping(value = "/delete")
-    public String BracnchOfficeDelete(@RequestBody BranchOfficeDTO branchOfficeDTO) {
+    public ModelAndView BracnchOfficeDelete(@RequestBody BranchOfficeDTO branchOfficeDTO) {
 
         String result = bracnchOfficeLogic.BracnchOfficeDelete(branchOfficeDTO);
 
         logger.info(branchOfficeDTO.getResult());
         logger.info(result);
 
+        ModelAndView mav = new ModelAndView();
+
         //게시판 CUD 중 수정 성공 / 실패에 대한 결과값을 int result로 반환
         if (branchOfficeDTO.getResult() == 1) {
             logger.info("성공페이지 연결");
-            return "index";
+            mav.setViewName("BranchOffice/BranchOfficeListBoard");
+            return mav;
 
         } else {
-
-            return "fail";
+            mav.setViewName("BranchOffice/BranchOfficeListBoard");
+            return mav;
 
         }
 

@@ -84,6 +84,7 @@
                 <th>대여시간</th>
                 <th>시작시간</th>
                 <th>종료시간</th>
+                <th>결제금액</th>
                 <th>예약상태</th>
             </tr>
             </thead>
@@ -118,6 +119,9 @@
                     out.print("</td>");
                     out.print("<td>");
                     out.print(index.getReserv_end_time());
+                    out.print("</td>");
+                    out.print("<td>");
+                    out.print(index.getSpace_basicprice()*((Integer.parseInt(index.getReserv_end_time())-Integer.parseInt(index.getReserv_start_time()))));
                     out.print("</td>");
                     out.print("<td>");
                     out.print(index.getReserv_paystatement());

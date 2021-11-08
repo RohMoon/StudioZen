@@ -33,6 +33,7 @@ public class BracnchOfficeDAO {
     public void BracnchOffice_FileInsert(BranchOfficeDTO branchOfficeDTO) throws SqlSessionException {
 
         sqlSessionTemplate.selectList("BracnchOffice_FileInsert",branchOfficeDTO);
+        sqlSessionTemplate.update("BracnchOffice_itHasFile",branchOfficeDTO);
 
     }
 

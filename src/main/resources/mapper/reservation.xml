@@ -32,6 +32,7 @@
             RS.RESERV_NO,
             RS.SPACE_NO,
             sp.SPACE_NAME,
+            sp.SPACE_BASICPRICE,
             RS.RESERV_HOSTCODE,
             RS.RESERV_DATE,
             RS.RESERV_START_TIME,

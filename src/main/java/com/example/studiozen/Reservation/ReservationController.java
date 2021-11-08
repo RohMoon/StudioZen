@@ -47,10 +47,15 @@ public class ReservationController {
 
         request.setAttribute("reservationSelectList",reservationSelectList);
 
-        logger.info("\n" +
-                reservationDTO + "\n"
-                +reservationSelectList
-        );
+//        logger.info("\n" +
+//                reservationDTO + "\n"
+//                +reservationSelectList+
+//                reservationSelectList.get(0)
+//        );
+
+        for (int i = 0; i < reservationSelectList.size(); i++) {
+            logger.info(reservationSelectList.get(i).getSpace_basicprice());
+        }
 
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/Management/ManagementDash");

@@ -189,6 +189,7 @@ function goDeletingQNARecommentAction(sid, qna_no, indexNo, recoNo) {
 
 /*  대쉬보드에서 예약현황 셀 클릭시 눌렀을 때*/
 function reservationListBoardAction(e) {
+
     event.stopPropagation();
     console.log('예약번호' + e.childNodes[0].innerText);
     // document.getElementsByTagName('tr')[1].childNodes[0].innerText
@@ -237,7 +238,8 @@ function reservationListBoardAction(e) {
 /* 슬라이드 메뉴에서 대쉬보드 버튼을 눌렀을 때*/
 function goDashBoardPageAction() {
     console.log("goManagementDashBoardPageAction");
-
+    varInitial();
+    stopInterval();
     slideIn();
     p_sid = (sessionStorage.getItem('sid')).split('=');
     sid = p_sid[1];
@@ -350,7 +352,7 @@ function goUpdatingReservAction() {
 }
 
 
-/* 예약 상세 조회에서 수정 입력란에 변경후 엔터키 조작시 업데이트 진행*/
+/*   예약 상세 조회에서 수정 입력란에 변경후 엔터키 조작시 업데이트 진행  */
 function UpdatingReservAction() {
     if (window.event.keyCode == 13) {
         console.log('UpdatingReservAction');
@@ -537,7 +539,10 @@ function getFileName(contentDisposition) {
 
 /* 대쉬보드에서 지점관리 버튼, 혹은 슬라이드 메뉴에서 지점 관리 버튼 클릭시 */
 function goBranchOfficeListBoardAction() {
+
     console.log("goBranchOfficeListBoardAction");
+    stopInterval();
+    varInitial();
 
     for (let i = 0; i < document.getElementById('mainPanel').children.length; i++) {
         document.getElementById('mainPanel').children.item(i).remove();
@@ -574,8 +579,8 @@ function goBranchOfficeListBoardAction() {
                     "<button onclick='dp_menu()' class='branchoffice_button btn btn-primary'>지점 관리</button>" +
                     "<div style='display: none;' id='drop-content'>" +
                     "<button id='createBranchOffice' class='btn btn-primary' onclick='doRegisterBranchOfficeAction()'>신규 지점</button>" +
-                    "<button id='updateBranchOffice' class='btn btn-primary' >지점 수정</button>" +
-                    "<button id='deleteBranchOffice' class='btn btn-primary'> 지점 삭제</button>" +
+                    // "<button id='updateBranchOffice' class='btn btn-primary' onclick='doUpdateBranchOffice()' >지점 수정</button>" +
+                    // "<button id='deleteBranchOffice' class='btn btn-primary'> 지점 삭제</button>" +
                     "</div>";
 
             } // end of if  (sessionStorage.getItem('sid') === 'member_no=MEM282108')
@@ -604,79 +609,100 @@ function goBranchOfficeListBoardAction() {
                     // let slideIndex = 0;
 
                     for (let i = 0; i < branchOfficeSelectList.length; i++) {
+                        console.log(branchOfficeSelectList);
 
-                        var slideShow_container = document.createElement('div');
-                        slideShow_container.setAttribute('id', 'slideshow-container' + i);
-                        slideShow_container.classList.add('slideshow-container');
-                        document.getElementById('branchOfficeSelectList').append(slideShow_container);
+                            var imageCounter = Number(0);
 
-                        // console.log(branchOfficeImgSelectList[i].getBranchoffice_img_code);
+                            var slideShow_container = document.createElement('div');
+                            slideShow_container.setAttribute('id', 'slideshow-container' + i);
+                            slideShow_container.classList.add('slideshow-container');
+                            document.getElementById('branchOfficeSelectList').append(slideShow_container);
 
-                        if (branchOfficeSelectList[i].branchoffice_haspic == 'Y') {
+                            // console.log(branchOfficeImgSelectList[i].getBranchoffice_img_code);
 
-                            var countNumForHowManyThisBranchOfficeHasImage = Number(0);
+                            if (branchOfficeSelectList[i].branchoffice_haspic == 'Y') {
 
-                            for (let k = 0; k < branchOfficeImgSelectList.length; k++) {
-                                if (branchOfficeSelectList[i].branchoffice_no == branchOfficeImgSelectList[k].branchoffice_no) {
-                                    countNumForHowManyThisBranchOfficeHasImage++;
+                                var countNumForHowManyThisBranchOfficeHasImage = Number(0);
+
+                                for (let k = 0; k < branchOfficeImgSelectList.length; k++) {
+                                    if (branchOfficeSelectList[i].branchoffice_no == branchOfficeImgSelectList[k].branchoffice_no) {
+                                        countNumForHowManyThisBranchOfficeHasImage++;
+                                    }
                                 }
-                            }
-                            for (let j = 0; j < branchOfficeImgSelectList.length; j++) {
+                                for (let j = 0; j < branchOfficeImgSelectList.length; j++) {
 
 
-                                if (branchOfficeSelectList[i].branchoffice_no == branchOfficeImgSelectList[j].branchoffice_no) {
+                                    if (branchOfficeSelectList[i].branchoffice_no == branchOfficeImgSelectList[j].branchoffice_no) {
 
-                                    console.log(' j  ============>'+j);
-                                    var currentImageNum = 1;
-                                    let branchOfficeImgSelectList = bracnchOfficeSelectMap.branchOfficeImgSelectList;
-                                    var mySlides_fade = document.createElement('div');
-                                    mySlides_fade.classList.add('mySlides' + i); //sss
-                                    mySlides_fade.classList.add('mySlides');
+                                        console.log(' j  ============>' + j);
+                                        var currentImageNum = 1;
+                                        let branchOfficeImgSelectList = bracnchOfficeSelectMap.branchOfficeImgSelectList;
+                                        var mySlides_fade = document.createElement('div');
+                                        mySlides_fade.classList.add('mySlides' + i); //sss
+                                        mySlides_fade.classList.add('mySlides');
 
-                                    mySlides_fade.classList.add('fade');
-                                    slideShow_container.append(mySlides_fade);
+                                        mySlides_fade.classList.add('fade');
+                                        slideShow_container.append(mySlides_fade);
 
-                                    var numbertext = document.createElement('numbertext');
+                                        var numbertext = document.createElement('numbertext');
 
-                                    numbertext.classList.add('numbertext');
+                                        numbertext.classList.add('numbertext');
 
-                                    // numbertext.innerText = (j + 1) + ' / ' + countNumForHowManyThisBranchOfficeHasImage;
-                                    numbertext.innerText = currentImageNum + ' / ' + countNumForHowManyThisBranchOfficeHasImage;
-                                    mySlides_fade.append(numbertext);
-                                    var img_src = document.createElement('img');//working here
+                                        // numbertext.innerText = (j + 1) + ' / ' + countNumForHowManyThisBranchOfficeHasImage;
+                                        numbertext.innerText = currentImageNum + ' / ' + countNumForHowManyThisBranchOfficeHasImage;
+                                        mySlides_fade.append(numbertext);
+                                        var img_src = document.createElement('img');//working here
 
-                                    img_src.setAttribute('src', 'data:image/png; base64,' + branchOfficeImgSelectList[j].branchoffice_img_code);
-                                    img_src.setAttribute('style', 'width:60%; height:40%; margin-left:20%');
-                                    mySlides_fade.append(img_src);
-
-                                    currentImageNum++;
-                                } //End of if (branchOfficeSelectList[i].branchoffice_no == branchOfficeImgSelectList[j].branchoffice_no)
-                            } //End of for (let j = 0; j < branchOfficeImgSelectList.length; j++) {
-
-                            var dots_circles = document.createElement('div');
-                            dots_circles.setAttribute('style', 'text-align:center');
-                            slideShow_container.append(dots_circles);
-                            for (let j = 0; j < countNumForHowManyThisBranchOfficeHasImage; j++) {
-                                var dot = document.createElement('span');
-                                dot.classList.add('dot');
-                                dot.classList.add('dotP' + i);
-                                // dot.setAttribute('style','cursor: pointer;\n' +
-                                //     '    height: 15px;\n' +
-                                //     '    width: 15px;\n' +
-                                //     '    margin: 5px;\n' +
-                                //     '    background-color: #bbb;\n' +
-                                //     '    border-radius: 50%;\n' +
-                                //     '    display: inline-block;\n' +
-                                //     '    transition: background-color 0.6s ease;')
-                                // dot.addEventListener('click',currentSlide(j));
-
-                                dots_circles.append(dot);
-
-                            }// end of For (let j = 0; j < countNumForHowManyThisBranchOfficeHasImage;
-                            // var slides = document.getElementsByClassName("mySlides");
-                            // var slides = document.getElementsByClassName("mySlides" + i);
+                                        img_src.setAttribute('src', 'data:image/png; base64,' + branchOfficeImgSelectList[j].branchoffice_img_code);
+                                        img_src.setAttribute('style', 'width:60%; height:40%; margin-left:20%');
+                                        mySlides_fade.append(img_src);
 
 
+                                        // currentImageNum++;
+
+
+                                    } //End of if (branchOfficeSelectList[i].branchoffice_no == branchOfficeImgSelectList[j].branchoffice_no)
+
+
+                                } //End of for (let j = 0; j < branchOfficeImgSelectList.length; j++) {
+
+                                var dots_circles = document.createElement('div');
+                                dots_circles.setAttribute('style', 'text-align:center');
+                                slideShow_container.append(dots_circles);
+                                for (let m = 0; m < countNumForHowManyThisBranchOfficeHasImage; m++) {
+                                    var dot = document.createElement('span');
+                                    dot.classList.add('dot');
+                                    dot.classList.add('dotP' + i);
+                                    // dot.setAttribute('style','cursor: pointer;\n' +
+                                    //     '    height: 15px;\n' +
+                                    //     '    width: 15px;\n' +
+                                    //     '    margin: 5px;\n' +
+                                    //     '    background-color: #bbb;\n' +
+                                    //     '    border-radius: 50%;\n' +
+                                    //     '    display: inline-block;\n' +
+                                    //     '    transition: background-color 0.6s ease;')
+                                    // dot.addEventListener('click',currentSlide(j));
+
+                                    dots_circles.append(dot);
+
+                                }// end of For (let j = 0; j < countNumForHowManyThisBranchOfficeHasImage;
+                                // var slides = document.getElementsByClassName("mySlides");
+                                // var slides = document.getElementsByClassName("mySlides" + i);
+
+
+                                // Thumbnail image controls
+                                function currentSlide(n) {
+                                    console.log('currentSlide===> 동작');
+                                    // slideIndex = n;
+                                    //  eval('slideIndex'+i+'=n;');
+                                    slideArrayData.slideIndex[i] = n;
+
+                                    // showSlides( eval('slideIndex'+i));
+                                    showSlides(slideArrayData.slideIndex[i]);
+                                }
+
+                            } // end of if (branchOfficeSelectList[i].branchoffice_haspic == 'Y')
+                            /////////////////////////////////
                             slideArrayData.slides.push(document.getElementsByClassName("mySlides" + i));
 
                             // eval("var slides"+i+"=document.getElementsByClassName(\"mySlides\" + i);")
@@ -698,68 +724,83 @@ function goBranchOfficeListBoardAction() {
                             slideArrayData.dotsLength.push(Number(document.getElementsByClassName("dotP" + i).length));
 
                             var sec = 4000;
-                            setInterval(function () { //시간마다 반복함
-                                // slideIndex++;
-                                // eval('slideIndex'+i+'++;');
+
+                            if (slideArrayData.slideLength[i] !== 0) {
+
+                                branchOfficeImgSlideShow = setInterval(function () { //시간마다 반복함
+                                    console.log(branchOfficeImgSlideShow);
+                                    'use strict';
+                                    // slideIndex++;
+                                    // eval('slideIndex'+i+'++;');
 
 
-                                // slideArrayData.slideIndex.splice(i,1,slideArrayData.slideIndex++);
+                                    // slideArrayData.slideIndex.splice(i,1,slideArrayData.slideIndex++);
 
-                                console.log('setInterval에서의 slideArrayData.slideIndex[i] =====>>>>>'+slideArrayData.slideIndex[i]);
-                                console.log('setInterval에서의 slideArrayData.slideIndex[i] 타입 =====>>>>>'+typeof slideArrayData.slideIndex[i]);
-
-                                showSlides(slideArrayData.slideIndex[i]); // i가 인이입되서 진행
-                                console.log('=============After showSlides');
-                                slideArrayData.slideIndex[i] = slideArrayData.slideIndex[i]+Number(1); // i++ 증가
-                            }, sec); //시간마다
-
-                            // showSlides(eval('slideIndex'+i));
-
-                            function showSlides(n) { // 0 이라면
+                                    // console.log('setInterval에서의 slideArrayData.slideIndex[i] =====>>>>>'+slideArrayData.slideIndex[i]);
+                                    // console.log('setInterval에서의 slideArrayData.slideIndex[i] 타입 =====>>>>>'+typeof slideArrayData.slideIndex[i]);
 
 
-                                console.log('최초 인입된 n === > ' +n); // 5이상 들어와도
-                                console.log('최초 인입된 n === > ' +typeof n);
-                                console.log('slideArrayData.size[i]=====>'+slideArrayData.size[i]);
-                                console.log('slideArrayData.size[i] TYPE=== > ' +typeof slideArrayData.size[i]);
+                                    showSlides(slideArrayData.slideIndex[i]); // i가 인이입되서 진행
+                                    // showSlides(slideArrayData.slides[imageCounter]); // i가 인이입되서 진행
+                                    // console.log('=============After showSlides');
+                                    // console.log('-----END OF FUNCTION----------END OF FUNCTION----------END OF FUNCTION-----');
+                                    // slideIndex++;
+                                    slideArrayData.slideIndex[i] = slideArrayData.slideIndex[i] + Number(1); // i++ 증가
+                                    // slideArrayData.slides[imageCounter] = slideArrayData.slides[imageCounter]+Number(1); // i++ 증가
+
+                                }, sec); //시간마다z`
+
+                                // showSlides(eval('slideIndex'+i));
+                            } else {
+                                // console.log(' 이미지가 없는 지점패스 ');
+                            }
+
+                            async function showSlides(n) { // 0 이라면
+                                'use strict';
+
+                                // console.log('최초 인입된 n === > ' +n); // 5이상 들어와도
+                                // console.log('최초 인입된 n === > ' +typeof n);
+                                // console.log('slideArrayData.size[i]=====>'+slideArrayData.size[i]);
+                                // console.log('slideArrayData.size[i] TYPE=== > ' +typeof slideArrayData.size[i]);
 
                                 // if ((n + 1) > eval('size'+i)) { // 0+1 > slides = 15ea // 넘버가 슬라이드 갯수보다 크다면 초기화
                                 if ((n + 1) > slideArrayData.size[i]) { // 0+1 > slides = 15ea // 넘버가 슬라이드 갯수보다 크다면 초기화                                   eval('slideIndex'+i+'=0;')  // 0
-                                    console.log('-----if--(n + 1) > slideArrayData.size[i]------'+(n + 1)+'(-n+1-)'+slideArrayData.size[i]);
+                                    // console.log('-----if--(n + 1) > slideArrayData.size[i]------'+(n + 1)+'(-n+1-)'+slideArrayData.size[i]);
                                     n = 0; // 0
                                     slideArrayData.slideIndex[i] = 0;
-                                    console.log('After  N=====>' + n);
+                                    // slideArrayData.slides[imageCounter] = 0;
+                                    // console.log('After  N=====>' + n);
                                     // console.log('if ((n + 1) > size) ====> n === >'+n+'\n ===> size '+size);
                                 } else if (n < 0) {  // 0<0  N이 0보다 작다면 // -? 탈일은 없는데
                                     // slideIndex = (size - 1); // 인덱스는 15-1
                                     // eval('slideIndex'+i+'=(size'+i+'-1);');
-                                    console.log('----else-if-------------------');
+                                    // console.log('----else-if-------------------');
                                     slideArrayData.slideIndex[i] = slideArrayData.size[i] - 1;
-                                    console.log('slideArrayData.slideIndex[i] = slideArrayData.size[i] - 1;===> '+slideArrayData.slideIndex[i]);
+                                    // console.log('slideArrayData.slideIndex[i] = slideArrayData.size[i] - 1;===> '+slideArrayData.slideIndex[i]);
 
                                     // n = (size - 1); // n = 15 -1
                                     // n = (eval('size'+i) - 1); // n = 15 -1
                                     n = slideArrayData.size[i] - 1;
-                                    console.log('After Else if ======>'+ n);
+                                    // console.log('After Else if ======>'+ n);
 
                                     // console.log('if ((n + 1) > size) ====> n === >'+n+'\n ===> size '+size+'\n ===> slideIndex '+slideIndex  );
-                                }else {
-                                    console.log('-----------------else------------------------------');
+                                } else {
+                                    // console.log('-----------------else------------------------------');
                                 }
-                                console.log('NNNNNNNNNNNNNNNNNNNN ==========> ++++++++====>'+n);
-                                console.log('slideArrayData.slideLength[i]----------------->'+slideArrayData.slideLength[i]);
-                                console.log('slideArrayData.slideLength[i]----------------->'+typeof slideArrayData.slideLength[i]);
+                                // console.log('NNNNNNNNNNNNNNNNNNNN ==========> ++++++++====>'+n);
+                                // console.log('slideArrayData.slideLength[i]----------------->'+slideArrayData.slideLength[i]);
+                                // console.log('slideArrayData.slideLength[i]----------------->'+typeof slideArrayData.slideLength[i]);
                                 // for (let o = 0; o < eval('slides'+i).length; o++) { // i = 0; 0 <15 ; 0++
 
                                 for (let o = 0; o < slideArrayData.slideLength[i]; o++) { // i = 0; 0 <15 ; 0++
 
                                     // console.log('========> slides.length' + slides.length +'\n'+ '======>i ==>'+i);
                                     // eval('slides'+i+'[o].style.display = "none";'); //15인덱스 마다 모두 화면 없애준다.
-                                    console.log(' -----------> FOR o ------->FOR o');
-                                    console.log('========i>>>>'+i);
-                                    console.log('========o>>>>'+o);
+                                    // console.log(' -----------> FOR o ------->FOR o');
+                                    // console.log('========i>>>>'+i);
+                                    // console.log('========o>>>>'+o);
                                     // slideArrayData.slides[i][o].style.display = "none;";
-                                    slideArrayData.slides[i][o].setAttribute("style","display:none;");
+                                    slideArrayData.slides[i][o].setAttribute("style", "display:none;");
                                 }
                                 // for (let p = 0; p < eval('dotPs'+i).length; p++) { //i =0 ; 0 < 15; 0++
 
@@ -771,7 +812,7 @@ function goBranchOfficeListBoardAction() {
                                     // console.log('=============== > ============> =========== > '+slideArrayData.dots[i][p].className);
                                     // console.log(slideArrayData.dots[i][p].className.replace(" active", ""));
 
-                                     slideArrayData.dots[i][p].className = slideArrayData.dots[i][p].className.replace(" active", "");
+                                    slideArrayData.dots[i][p].className = slideArrayData.dots[i][p].className.replace(" active", "");
                                     // slideArrayData.dots[i][p].classList.replace(" active", "");
 
                                     // if (slideArrayData.dots[i][p].classList.contains("active")){
@@ -779,7 +820,7 @@ function goBranchOfficeListBoardAction() {
                                     // }
                                 }
 
-                                console.log('n=========>' + n + '\n' + 'i----------->' + i);
+                                // console.log('n=========>' + n + '\n' + 'i----------->' + i);
 
 
                                 // eval('slides'+i)[n].style.display = "block"; // n번 슬라이드 켜주기
@@ -788,145 +829,132 @@ function goBranchOfficeListBoardAction() {
                                 slideArrayData.dots[i][n].className += " active";
                             }  //End of  function showSlides(n)
 
-                            // Thumbnail image controls
-                            function currentSlide(n) {
-                                console.log('currentSlide===> 동작');
-                                // slideIndex = n;
-                                //  eval('slideIndex'+i+'=n;');
-                                slideArrayData.slideIndex[i] = n;
 
-                                // showSlides( eval('slideIndex'+i));
-                                showSlides(slideArrayData.slideIndex[i]);
-                            }
+                            var section = document.createElement('section');//rrr
+                            section.classList.add('py-5');
+                            document.getElementById('slideshow-container' + i).append(section);
 
-                        } // end of if (branchOfficeSelectList[i].branchoffice_haspic == 'Y')
+                            var container = document.createElement('div');
+                            container.classList.add('container');
+                            container.classList.add('px-4');
+                            container.classList.add('px-lg-5');
+                            // container.classList.add('mt-5');
+                            section.append(container);
 
-                        var section = document.createElement('section');//rrr
-                        section.classList.add('py-5');
-                        document.getElementById('slideshow-container' + i).append(section);
+                            var row = document.createElement('div');
+                            row.classList.add('row');
+                            row.classList.add('gx-4');
+                            row.classList.add('gx-lg-5');
+                            row.classList.add('row-cols-md-3');
+                            row.classList.add('row-cols-xl-4');
+                            row.classList.add('justify-content-center');
+                            container.append(row);
 
-                        var container = document.createElement('div');
-                        container.classList.add('container');
-                        container.classList.add('px-4');
-                        container.classList.add('px-lg-5');
-                        // container.classList.add('mt-5');
-                        section.append(container);
+                            var col = document.createElement('div');
+                            col.classList.add('col');
+                            col.classList.add('mb-5');
+                            row.append(col);
 
-                        var row = document.createElement('div');
-                        row.classList.add('row');
-                        row.classList.add('gx-4');
-                        row.classList.add('gx-lg-5');
-                        row.classList.add('row-cols-md-3');
-                        row.classList.add('row-cols-xl-4');
-                        row.classList.add('justify-content-center');
-                        container.append(row);
+                            var card = document.createElement('div');
+                            card.classList.add('card');
+                            card.classList.add('h-100');
+                            col.append(card);
 
-                        var col = document.createElement('div');
-                        col.classList.add('col');
-                        col.classList.add('mb-5');
-                        row.append(col);
+                            <!-- BranchOffice details-->
 
-                        var card = document.createElement('div');
-                        card.classList.add('card');
-                        card.classList.add('h-100');
-                        col.append(card);
+                            var cardBody = document.createElement('div');
+                            cardBody.classList.add('card-body');
+                            cardBody.classList.add('p-4');
+                            card.append(cardBody);
 
-                        <!-- BranchOffice details-->
+                            var textBox = document.createElement('div');
+                            textBox.classList.add('text-center');
+                            cardBody.append(textBox);
 
-                        var cardBody = document.createElement('div');
-                        cardBody.classList.add('card-body');
-                        cardBody.classList.add('p-4');
-                        card.append(cardBody);
+                            var detailBox = document.createElement('div');
+                            detailBox.setAttribute('style', 'display:none;')
+                            detailBox.classList.add('text-center');
+                            cardBody.append(detailBox);
 
-                        var textBox = document.createElement('div');
-                        textBox.classList.add('text-center');
-                        cardBody.append(textBox);
+                            <!-- BranchOffice No-->
+                            var branchNo = document.createElement('h9');
+                            branchNo.classList.add('branchOffice_no');
+                            branchNo.classList.add('fw-bolder');
+                            branchNo.setAttribute('id', 'branchOffice_no' + i);
+                            // branchInfo.setAttribute('style','display:none');
+                            branchNo.innerText = branchOfficeSelectList[i].branchoffice_no;
+                            textBox.append(branchNo);
 
-                        var detailBox = document.createElement('div');
-                        detailBox.setAttribute('style', 'display:none;')
-                        detailBox.classList.add('text-center');
-                        cardBody.append(detailBox);
+                            <!-- BranchOffice name-->
+                            var branchName = document.createElement('h5');
+                            branchName.classList.add('branchOffice_name');
+                            branchName.classList.add('fw-bolder');
+                            branchName.setAttribute('id', 'branchOffice_name' + i);
+                            branchName.innerText = branchOfficeSelectList[i].branchoffice_name;
+                            textBox.append(branchName);
 
-                        <!-- BranchOffice No-->
-                        var branchNo = document.createElement('h9');
-                        branchNo.classList.add('branchOffice_no');
-                        branchNo.classList.add('fw-bolder');
-                        branchNo.setAttribute('id', 'branchOffice_no' + i);
-                        // branchInfo.setAttribute('style','display:none');
-                        branchNo.innerText = branchOfficeSelectList[i].branchoffice_no;
-                        textBox.append(branchNo);
+                            <!-- BranchOffice local-->
+                            var branchLocal = document.createElement('h8');
+                            branchLocal.classList.add('branchOffice_local');
+                            branchLocal.setAttribute('id', 'branchOffice_local' + i);
+                            branchLocal.innerText = branchOfficeSelectList[i].branchoffice_local;
+                            detailBox.append(branchLocal);
 
-                        <!-- BranchOffice name-->
-                        var branchName = document.createElement('h5');
-                        branchName.classList.add('branchOffice_name');
-                        branchName.classList.add('fw-bolder');
-                        branchName.setAttribute('id', 'branchOffice_name' + i);
-                        branchName.innerText = branchOfficeSelectList[i].branchoffice_name;
-                        textBox.append(branchName);
+                            <!-- BranchOffice address-->
+                            var branchAddress = document.createElement('h8');
+                            branchAddress.classList.add('branchOffice_address');
+                            branchAddress.setAttribute('id', 'branchOffice_address' + i);
+                            branchAddress.innerText = branchOfficeSelectList[i].branchoffice_address;
+                            detailBox.append(branchAddress);
 
-                        <!-- BranchOffice local-->
-                        var branchLocal = document.createElement('h8');
-                        branchLocal.classList.add('branchOffice_local');
-                        branchLocal.setAttribute('id', 'branchOffice_local' + i);
-                        branchLocal.innerText = branchOfficeSelectList[i].branchoffice_local;
-                        detailBox.append(branchLocal);
+                            <!-- BranchOffice mobile-->
+                            var branchMobile = document.createElement('h8');
+                            branchMobile.classList.add('branchOffice_mobile');
+                            branchMobile.setAttribute('id', 'branchOffice_mobile' + i);
+                            branchMobile.innerText = branchOfficeSelectList[i].branchoffice_mobile;
+                            detailBox.append(branchMobile);
 
-                        <!-- BranchOffice address-->
-                        var branchAddress = document.createElement('h8');
-                        branchAddress.classList.add('branchOffice_address');
-                        branchAddress.setAttribute('id', 'branchOffice_address' + i);
-                        branchAddress.innerText = branchOfficeSelectList[i].branchoffice_address;
-                        detailBox.append(branchAddress);
+                            var cardFooter = document.createElement('div');
+                            cardFooter.classList.add('card-footer');
+                            cardFooter.classList.add('p-4');
+                            cardFooter.classList.add('pt-0');
+                            cardFooter.classList.add('border-top-0');
+                            cardFooter.classList.add('bg-transparent');
+                            card.append(cardFooter);
 
-                        <!-- BranchOffice mobile-->
-                        var branchMobile = document.createElement('h8');
-                        branchMobile.classList.add('branchOffice_mobile');
-                        branchMobile.setAttribute('id', 'branchOffice_mobile' + i);
-                        branchMobile.innerText = branchOfficeSelectList[i].branchoffice_mobile;
-                        detailBox.append(branchMobile);
+                            var branchButton = document.createElement('div');
+                            branchButton.classList.add('text-center');
+                            card.append(branchButton);
 
-                        var cardFooter = document.createElement('div');
-                        cardFooter.classList.add('card-footer');
-                        cardFooter.classList.add('p-4');
-                        cardFooter.classList.add('pt-0');
-                        cardFooter.classList.add('border-top-0');
-                        cardFooter.classList.add('bg-transparent');
-                        card.append(cardFooter);
+                            var goBranchOfficeDetailBoardBtn = document.createElement('a');
+                            goBranchOfficeDetailBoardBtn.setAttribute('id', 'goBranchOfficeDetailBoard' + i);
+                            goBranchOfficeDetailBoardBtn.classList.add('btn');
+                            goBranchOfficeDetailBoardBtn.classList.add('btn-outline-dark');
+                            goBranchOfficeDetailBoardBtn.classList.add('mt-auto');
+                            goBranchOfficeDetailBoardBtn.innerText = '지점상세';
 
-                        var branchButton = document.createElement('div');
-                        branchButton.classList.add('text-center');
-                        card.append(branchButton);
+                            card.append(goBranchOfficeDetailBoardBtn);
+                            document.getElementById('goBranchOfficeDetailBoard' + i).addEventListener('click', goBranchOfficeDetailBoard);
+                            // eval("let slideIndex"+i+"=0");
+                            // var slideIndex = 0; //slide index //sss
 
-                        var goBranchOfficeDetailBoardBtn = document.createElement('a');
-                        goBranchOfficeDetailBoardBtn.setAttribute('id', 'goBranchOfficeDetailBoard' + i);
-                        goBranchOfficeDetailBoardBtn.classList.add('btn');
-                        goBranchOfficeDetailBoardBtn.classList.add('btn-outline-dark');
-                        goBranchOfficeDetailBoardBtn.classList.add('mt-auto');
-                        goBranchOfficeDetailBoardBtn.innerText = '지점상세';
+                            // showSlides(slideIndex);
 
-                        card.append(goBranchOfficeDetailBoardBtn);
-                        document.getElementById('goBranchOfficeDetailBoard' + i).addEventListener('click', goBranchOfficeDetailBoard);
-                        // eval("let slideIndex"+i+"=0");
-                        // var slideIndex = 0; //slide index //sss
+                            /*
+                                                    for (let p = 0; p < dots.length; p++) {
 
-                        // showSlides(slideIndex);
+                                                        var slide_num = Number(p);
 
-                        /*
-                                                for (let p = 0; p < dots.length; p++) {
-
-                                                    var slide_num = Number(p);
-
-                                                    dots.item(p).addEventListener('click', currentSlide(slide_num));
-                                                    // dots.item(p).addEventListener('click',function (slide_num) {
-                                                    //     console.log('currentSlide===> 동작');
-                                                    //     slideIndex = slide_num;
-                                                    //     console.log('slideIndex====>'+slideIndex);
-                                                    //     showSlides(slideIndex);
-                                                    //
-                                                    // });
-                                                }
-                                                */
-
+                                                        dots.item(p).addEventListener('click', currentSlide(slide_num));
+                                                        // dots.item(p).addEventListener('click',function (slide_num) {
+                                                        //     console.log('currentSlide===> 동작');
+                                                        //     slideIndex = slide_num;
+                                                        //     console.log('slideIndex====>'+slideIndex);
+                                                        //     showSlides(slideIndex);
+                                                        //
+                                                        // });
+                                                    }
+                                                    */
                     } //End of for ==>지점이 몇개인지 반복<== (let i = 0; i < branchOfficeSelectList.length; i++) {
                     // var slideIndex = 0; //slide index //sss
 
@@ -1023,6 +1051,13 @@ function goBranchOfficeListBoardAction() {
 
 }
 
+function stopInterval() {
+    for (var i = 0 ; i < 100 ; i++) {
+        clearInterval(i);
+    }
+}
+
+
 
 /////////////
 
@@ -1107,7 +1142,8 @@ function dp_menu() {
 /* ClientDashBoard에서 문의하기 클릭시 눌렀을 때*/
 function doWriteQnaAction() {
 
-
+    varInitial();
+    stopInterval();
     console.log("doWriteQnaAction");
     $('#modalSpace').load("/Client/qnaWrite.do #clientQnaBoardWriteModal", function () {
         const body = document.querySelector('body');
@@ -1144,8 +1180,10 @@ function doRegisterBranchOfficeAction() {
 
 /* 신규 지점 등록 */
 function newBranchOfficeInsert(e) {
-    'use strict'
-
+    'use strict';
+    loadingElement.setAttribute('style', 'display:block');
+    stopInterval();
+    varInitial();
     console.log("newBranchOfficeInsert()");
     tr_code = 'insert';
     branchoffice_name = document.getElementById('newBranchOfficeName').value;
@@ -1204,9 +1242,10 @@ function newBranchOfficeInsert(e) {
         success: function (data) {
             console.log("Success");
             qnaDetailModalAction();
-            $('#mainPanel').children().remove();
-            $('#mainPanel').append("/BracnchOffice/select");
-
+            // $('#mainPanel').children().remove();
+            // $('#mainPanel').append("/BracnchOffice/select");
+            goBranchOfficeListBoardAction();
+            loadingElement.setAttribute('style', 'display:none');
         },
     });
 }
@@ -1320,9 +1359,16 @@ function goBranchOfficeDetailBoard() {
             ;
 
             if ((sessionStorage.getItem("sid").split("=")[1]) == 'MEM282108') {
+
                 console.log("관리자 확인.");
                 document.getElementById("spaceAddButton").setAttribute("style", "display:block;");
                 document.getElementById("spaceAddButton").setAttribute("style", "font-size:1.5rem;");
+
+                document.getElementById("updateBranchOffice").setAttribute("style", "display:block;");
+                document.getElementById("updateBranchOffice").setAttribute("style", "font-size:1.5rem;");
+
+                document.getElementById("deleteBranchOffice").setAttribute("style", "display:block;");
+                document.getElementById("deleteBranchOffice").setAttribute("style", "font-size:1.5rem;");
 
 
             }
@@ -1344,7 +1390,7 @@ document.querySelectorAll('.doPay').forEach(function (doPays) {
         reserv_no = e.target.closest('tr').childNodes[1].innerText;
         name = e.target.closest('tr').childNodes[3].innerText + '  ' + e.target.closest('tr').childNodes[5].innerText + '시간';//대여장소
         buyer_name = e.target.closest('tr').childNodes[2].innerText;
-
+        amount = Number(e.target.closest('tr').childNodes[8].innerText);
         requestPay(e);
 
     }, false);
@@ -1357,9 +1403,9 @@ function requestPay(e) {
         pay_method: "card",
         merchant_uid: reserv_no,
         name: name,
-        amount: 500,
+        amount,
         buyer_email: "rs.moony@gmail.com",
-        buyer_name: " ",
+        buyer_name,
         buyer_tel: "010-4242-4242",
         // buyer_addr: "서울특별시 강남구 신사동",
         // buyer_postcode: "01181"
@@ -1405,4 +1451,80 @@ function requestPay(e) {
             alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
         }
     });
+}
+
+function varInitial() {
+    tr_code                 = '' ;
+    poolBase                =  0;
+    p_sid                   =  '';
+    sid                     =  '';
+
+    member_name             =  '';
+
+    reserv_no               =  '';
+    reserv_date             =  '';
+    reserv_hostcode         =  '';
+    reserv_start_time       =  '';
+    reserv_end_time         =  '';
+    reserv_host_mobile      =  '';
+    reserv_paystatement     =  '';
+    reserv_regdate          =  '';
+    reserv_host_email       =  '';
+    reserv_updatedate       =  '';
+    reserv_pay_limited      =  '';
+    reserv_space            =  '';
+    reserv_del_sign         =  '';
+
+    qna_no                  =  '';
+    qna_recomment_no        =  '';
+    qna_recomment_writer    =  '';
+    qna_recomment_content   =  '';
+
+    branchoffice_no         =  '';
+    branchoffice_name       =  '';
+    branchoffice_local      =  '';
+    branchoffice_address    =  '';
+    branchoffice_mobile     =  0;
+
+
+    space_no                =  '';
+    space_name              =  '';
+    space_description       =  '';
+    space_capacity          =  0;
+    space_maxpeople         =  0;
+    space_basicprice        =  0;
+    spaceUpdateButton       =  '';
+    spaceUpdateSubmitButton =  '';
+    spaceUpdateAbortButton  =  '';
+    spaceAddSubmitButton    =  '';
+    spaceDeleteButton       =  '';
+    spaceBookButton         =  '';
+    spaceBookSubmitButton   =  '';
+    spaceBookAbortButton    =  '';
+
+    imgFile                 =  '';
+    stored_file_name        =  '';
+    DownloadQnaFileFormData = '' ;
+    image                   = '' ;
+    reader                  = '' ;
+    img                     = '' ;
+    choosenDate             =  '';
+
+    pg                      =  '';
+    pay_method              = '' ;
+    merchant_uid            = '' ;
+    name                    = '' ;
+    amount                  =  0;
+    buyer_email             =  '';
+    buyer_name              =  '';
+    buyer_tel               =  '';
+
+    slideArrayData = {
+        slides: [],
+        dots: [],
+        size: [],
+        slideIndex: [],
+        slideLength: [],
+        dotsLength: []
+    }
 }

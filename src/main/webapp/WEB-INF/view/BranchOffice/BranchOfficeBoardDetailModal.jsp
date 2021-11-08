@@ -5,7 +5,7 @@
   Time: 오전 11:16
   To change this template use File | Settings | File Templates.
 --%>
-<div id="branchOfficeBoardDetailModal" class="modal" onclick="BranchOfficeDetailModalAction()">
+<div id="branchOfficeBoardDetailModal" class="modal" onclick="BranchOfficeDetailModalAction(),{capture: false}">
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <%@ page import="java.util.*" %>
     <%@ page import="com.example.studiozen.DTO.SpaceDTO" %>
@@ -50,8 +50,15 @@
             <%--            <input type="file" id="file" name="file" class="branchOfficeBoardDetailArea" multiple="multiple"/> <br/><br/>--%>
             <%--            <a href="#this" class="btn btn-warning" id="branchOfficeBoardDetailwrite" onclick="ClientQnaBoardWrite()">작성하기</a>--%>
         </form>
+
         <button id="spaceAddButton" class="btn btn-primary" style="font-size:1.5rem; display:none;">
             공간 추가
+        </button>
+        <button id="updateBranchOffice" class="btn btn-warning" style="font-size:1.5rem; display:none;">
+            지점 수정
+        </button>
+        <button id="deleteBranchOffice" class="btn btn-danger" style="font-size:1.5rem; display:none;">
+            지점 삭제
         </button>
     </div>
 
@@ -275,7 +282,7 @@
         reserv_end_time;
         reserv_paystatement = 'ready';
         let xhr = new XMLHttpRequest();
-        loadingElement.setAttribute('style','display:block');
+        loadingElement.setAttribute('style', 'display:block');
         if ((reserv_end_time - reserv_start_time) >= 1) { // 한시간 이상 예약인 경우
 
             // tr_code               = 'insert';
@@ -289,7 +296,7 @@
 
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    loadingElement.setAttribute('style','display:none');
+                    loadingElement.setAttribute('style', 'display:none');
                     alert('예약이 완료되었습니다.');
                     BranchOfficeDetailModalAction();
 
@@ -329,11 +336,11 @@
 
                 if (this.readyState == 4 && this.status == 200) {
                     alert(reserv_start_time + '~' + reserv_end_time + '예약이 완료되었습니다.');
-                    loadingElement.setAttribute('style','display:none');
+                    loadingElement.setAttribute('style', 'display:none');
                     BranchOfficeDetailModalAction();
                 } // End of if-  xhr.onreadystatechange function if.
 
-                else if(this.readyState == 3) { //
+                else if (this.readyState == 3) { //
                     /* 1. UNSENT (숫자 0) : XMLHttpRequest 객체가 생성됨.
 
                     2. OPENED (숫자 1) : open() 메소드가 성공적으로 실행됨.
@@ -553,6 +560,7 @@
 
 
 
+
         ${dd}"]`);
 
         var date = yy + '.' + init.addZero(mm) + '.' + init.addZero(dd);
@@ -609,10 +617,10 @@
             choosenDate = document.querySelector('.cal-year').textContent + '-' + document.querySelector('.cal-month').textContent + '-' + choosenday(targetday);
             console.log(choosenDate);
             let xhr = new XMLHttpRequest;
-            loadingElement.setAttribute('style','display:block');
+            loadingElement.setAttribute('style', 'display:block');
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    loadingElement.setAttribute('style','display:none');
+                    loadingElement.setAttribute('style', 'display:none');
                     var booKedTimeList = JSON.parse(xhr.response);
 
                     console.log(booKedTimeList);
@@ -882,7 +890,7 @@
         document.getElementById("spaceUpdateSubmitButton").addEventListener("click", function () {
             event.stopImmediatePropagation();
             let xhr = new XMLHttpRequest();
-            loadingElement.setAttribute('style','display:block');
+            loadingElement.setAttribute('style', 'display:block');
             // let newBranchOfficeUpdateFormData = document.getElementById("extraBranchOfficeBoardDetailModalForm");
 
             var p_space_no = document.getElementById("space_no").value;
@@ -909,17 +917,17 @@
             }
 
             xhr.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200){
-                alert(xhr.responseText);
-                loadingElement.setAttribute('style','display:none');
-                /* 수정 버튼이 눌렀을 때 수정 버튼 나타냄. */
-                document.getElementById("spaceUpdateButton").style.display = "block";
-                /* 수정 버튼이 눌렸을 때 확인 버튼 숨김. */
-                document.getElementById("spaceUpdateSubmitButton").style.display = "none";
-                /* 수정 버튼이 눌렸을 때 취소 버튼 숨김. */
-                document.getElementById("spaceUpdateAbortButton").style.display = "none";
-                /* 삭제 버튼 나타냄 */
-                document.getElementById("spaceDeleteButton").style.display = "block";
+                if (this.readyState == 4 && this.status == 200) {
+                    alert(xhr.responseText);
+                    loadingElement.setAttribute('style', 'display:none');
+                    /* 수정 버튼이 눌렀을 때 수정 버튼 나타냄. */
+                    document.getElementById("spaceUpdateButton").style.display = "block";
+                    /* 수정 버튼이 눌렸을 때 확인 버튼 숨김. */
+                    document.getElementById("spaceUpdateSubmitButton").style.display = "none";
+                    /* 수정 버튼이 눌렸을 때 취소 버튼 숨김. */
+                    document.getElementById("spaceUpdateAbortButton").style.display = "none";
+                    /* 삭제 버튼 나타냄 */
+                    document.getElementById("spaceDeleteButton").style.display = "block";
 
                 }
             };
@@ -1097,7 +1105,7 @@
         event.stopImmediatePropagation();
 
         let xhr = new XMLHttpRequest();
-        loadingElement.setAttribute('style','display:block');
+        loadingElement.setAttribute('style', 'display:block');
         tr_code = "insert";
         space_no = document.getElementById("space_no").value;
         space_name = document.getElementById("space_name").value;
@@ -1110,7 +1118,7 @@
 
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                loadingElement.setAttribute('style','display:none');
+                loadingElement.setAttribute('style', 'display:none');
                 // 추가 버튼 누르면 모달 창 닫힘.
                 var body = document.querySelector('body');
                 var modal = document.querySelector('.modal');
@@ -1160,7 +1168,7 @@
         document.getElementById("spaceDeleteButton").addEventListener('click', function () {
             event.stopImmediatePropagation();
             let xhr = new XMLHttpRequest();
-            loadingElement.setAttribute('style','display:block');
+            loadingElement.setAttribute('style', 'display:block');
             tr_code = "DELETE";
             space_no = document.getElementById("space_no").value;
             space_name = document.getElementById("space_name").value;
@@ -1172,7 +1180,7 @@
 
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    loadingElement.setAttribute('style','display:none');
+                    loadingElement.setAttribute('style', 'display:none');
                     BranchOfficeDetailModalAction();
                     document.getElementById('modalSpace').innerHTML = "";
                 }
@@ -1205,6 +1213,103 @@
 
         document.getElementById("spaceBookModalbd").style.display = "block";
         drawingCalendar();
+
+    });
+
+
+    /* 지점 삭제 버튼 */
+
+    document.getElementById('deleteBranchOffice').addEventListener('click', function () {
+        // clearInterval(branchOfficeImgSlideShow);
+        stopInterval();
+        console.log('삭제버튼 작동');
+        if (confirm("정말 삭제하시겠습니까? ") == true) {
+            var xhr = new XMLHttpRequest;
+            loadingElement.setAttribute('style', 'display:block');
+            xhr.onreadystatechange = function () {
+                if (this.status == 200 && this.readyState == 4) {
+                    alert("삭제가 완료 되었습니다. ");
+                    document.getElementById('mainPanel').innerHTML = xhr.response;
+                    loadingElement.setAttribute('style', 'display:none');
+                    goBranchOfficeListBoardAction();
+
+                } else if (this.status == 404 || this.status == 500) {
+                    alert('문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
+                    return;
+                }
+            }
+            xhr.open('POST', '/BracnchOffice/delete', true);
+            xhr.setRequestHeader('Content-type', 'application/json');
+            xhr.send(JSON.stringify({
+                    tr_code: 'delete',
+                    branchoffice_name: document.getElementById('branchoffice_name').textContent,
+                    branchoffice_local: document.getElementById('branchOffice_local').value,
+                    branchoffice_mobile: document.getElementById('branchOffice_mobile').value,
+                    branchoffice_address: document.getElementById('branchOffice_address').value,
+                    branchoffice_no: document.getElementById('branchoffice_no').value
+                })
+            );
+
+        } else { //취소
+            return;
+        }
+    });
+
+    /* 지점 수정 버튼 */
+
+    document.getElementById('updateBranchOffice').addEventListener('click', function () {
+        // stopInterval();
+        console.log('수정버튼 작동');
+        var updateBranchOfficeCofirmButton = document.createElement('button');
+        updateBranchOfficeCofirmButton.setAttribute('id', 'updateBranchOfficeCofirm');
+        updateBranchOfficeCofirmButton.setAttribute('style', 'font-size:1.5rem');
+        updateBranchOfficeCofirmButton.classList.add('btn');
+        updateBranchOfficeCofirmButton.classList.add('btn-warning');
+        updateBranchOfficeCofirmButton.innerText = '수정 확인';
+
+        updateBranchOfficeCofirmButton.addEventListener('click', function () {
+            if (confirm("수정 하시겠습니까? ") == true) {
+                var xhr = new XMLHttpRequest;
+                loadingElement.setAttribute('style', 'display:block');
+                xhr.onreadystatechange = function () {
+                    if (this.status == 200 && this.readyState == 4) {
+                        alert("수정이 완료 되었습니다. ");
+                        // document.getElementById('mainPanel').innerHTML = xhr.response;
+                        loadingElement.setAttribute('style', 'display:none');
+                        goBranchOfficeListBoardAction();
+
+                    } else if (this.status == 404 || this.status == 500) {
+                        alert('문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
+                        return;
+                    }
+                }
+
+                xhr.open('POST', '/BracnchOffice/delete', true);
+                xhr.setRequestHeader('Content-type', 'application/json');
+                xhr.send(JSON.stringify({
+                        tr_code: 'update',
+                        branchoffice_name: document.getElementById('branchoffice_name').textContent,
+                        branchoffice_local: document.getElementById('branchOffice_local').value,
+                        branchoffice_mobile: document.getElementById('branchOffice_mobile').value,
+                        branchoffice_address: document.getElementById('branchOffice_address').value,
+                        branchoffice_no: document.getElementById('branchoffice_no').value
+                    })
+                );
+
+            } else { //취소
+                return;
+            }
+        })
+
+        document.getElementById('updateBranchOffice').replaceWith(updateBranchOfficeCofirmButton);
+
+        //input 태그 안의 내용 수정 가능한 상태로 변경
+        for (let i = 0; i < document.getElementsByClassName('branchOfficeBoardDetailArea').length; i++) {
+            if(document.getElementById('branchoffice_no').getAttribute('id') != document.getElementsByClassName('branchOfficeBoardDetailArea').item(i).getAttribute('id')){
+            document.getElementsByClassName('branchOfficeBoardDetailArea').item(i).removeAttribute("readonly");
+            }
+        }
+        document.getElementById('branchoffice_name').removeAttribute('readonly');
 
     });
 

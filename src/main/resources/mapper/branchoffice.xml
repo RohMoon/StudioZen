@@ -24,10 +24,11 @@
             BRANCHOFFICE_MOBILE,
             BRANCHOFFICE_ADDRESS,
             BRANCHOFFICE_REGDATE,
-            BRANCHOFFICE_DELSIGN,
             BRANCHOFFICE_HASPIC
         From BRANCHOFFICE_TB
+        WHERE BRANCHOFFICE_DELSIGN = 'N'
         ORDER BY BRANCHOFFICE_NO
+
     </select>
 
     <select id="BracnchOfficeImgSelect" parameterType="com.example.studiozen.DTO.BranchOfficeDTO" resultType="com.example.studiozen.DTO.BranchOfficeDTO" statementType="PREPARED">
@@ -58,5 +59,10 @@
                   #{file_size, mode=IN, jdbcType=NUMERIC, javaType=java.lang.Long}
               )
     </insert>
+    <update id="BracnchOffice_itHasFile" parameterType="com.example.studiozen.DTO.QNABoardDTO" statementType="PREPARED">
+        update
+            BRANCHOFFICE_TB set BRANCHOFFICE_HASPIC = 'Y'
+        WHERE BRANCHOFFICE_NO = #{after_key, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+    </update>
 
 </mapper>

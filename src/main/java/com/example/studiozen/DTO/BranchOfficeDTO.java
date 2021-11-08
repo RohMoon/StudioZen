@@ -11,6 +11,7 @@ public class BranchOfficeDTO extends CommonDTO {
     private String branchoffice_img_no;
     private String branchoffice_img_code;
     private String branchoffice_haspic;
+    private String branchoffice_delsign;
 
     @Override
     public int getResult() {
@@ -30,6 +31,14 @@ public class BranchOfficeDTO extends CommonDTO {
     @Override
     public void setTr_code(String tr_code) {
         super.setTr_code(tr_code);
+    }
+
+    public String getBranchoffice_delsign() {
+        return branchoffice_delsign;
+    }
+
+    public void setBranchoffice_delsign(String branchoffice_delsign) {
+        this.branchoffice_delsign = branchoffice_delsign;
     }
 
     public String getBranchoffice_no() {
@@ -182,6 +191,7 @@ public class BranchOfficeDTO extends CommonDTO {
                 ", branchoffice_address='" + branchoffice_address + '\'' +
                 ", branchoffice_regdate='" + branchoffice_regdate + '\'' +
                 ", branchoffice_img_no='" + branchoffice_img_no + '\'' +
+                ", branchoffice_haspic='" + branchoffice_haspic + '\'' +
                 '}';
     }
 }

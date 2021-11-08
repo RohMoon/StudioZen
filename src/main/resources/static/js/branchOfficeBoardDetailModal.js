@@ -1,7 +1,7 @@
 /* 대여공간 디테일 창에서 수정버튼 이벤트 리스너 */
 document.getElementById("spaceUpdateButton").addEventListener('click', function () {
     /* 이벤트 전파 막기*/
-    event.stopImmediatePropagation();
+    // event.stopImmediatePropagation();
     /* 수정 버튼이 눌렀을 때 수정 버튼 숨김. */
     document.getElementById("spaceUpdateButton").style.display = "none";
     /* 수정 버튼이 눌렸을 때 확인 버튼 나타남. */
@@ -19,7 +19,7 @@ document.getElementById("spaceUpdateButton").addEventListener('click', function 
 /* 수정버튼 후 나오는 취소 버튼 이벤트 리스너, 다시 수정버튼만 나오게끔 */
 document.getElementById("spaceUpdateAbortButton").addEventListener("click", function () {
     /* 이벤트 전파 막기*/
-    event.stopImmediatePropagation();
+    // event.stopImmediatePropagation();
     /* 수정 버튼이 눌렀을 때 수정 버튼 나타냄. */
     document.getElementById("spaceUpdateButton").style.display = "block";
     /* 수정 버튼이 눌렸을 때 확인 버튼 숨김. */
@@ -36,7 +36,7 @@ document.getElementById("spaceUpdateAbortButton").addEventListener("click", func
 
 /* 수정 확인 버튼 이벤트 리스너 */
 document.getElementById("spaceUpdateSubmitButton").addEventListener("click", function () {
-    event.stopImmediatePropagation();
+    // event.stopImmediatePropagation();
     let xhr = new XMLHttpRequest();
     // let newBranchOfficeUpdateFormData = document.getElementById("extraBranchOfficeBoardDetailModalForm");
 
@@ -95,7 +95,7 @@ for (let i = 0; i < spaceList.length; i++) {
     /* Space Detail Listener Function */
     spaceList.item(i).addEventListener("click", function () {
         console.log(" 마우스 클릭");
-        event.stopImmediatePropagation();
+        // event.stopImmediatePropagation();
 
         var spaceListTextString = spaceInfo.item(i).textContent.split("/");
 
@@ -120,7 +120,7 @@ for (let i = 0; i < spaceList.length; i++) {
 
         /* 대여 공간 디테일창을 관리자가 봤을 때*/
         if ((sessionStorage.getItem("sid").split("=")[1]) == 'MEM282108') {
-            event.stopPropagation();
+            // event.stopPropagation();
             console.log("관리자 확인.");
             document.getElementById("spaceUpdateButton").style.display = "block;";
             document.getElementById("spaceDeleteButton").style.display = "block";
@@ -152,11 +152,11 @@ for (let i = 0; i < spaceList.length; i++) {
 
 /* 모달창 켜져있을때 클릭시 */
 function BranchOfficeDetailModalAction() {
-    event.stopPropagation();
+    // event.stopPropagation();
     var body = document.querySelector('body');
     var modal = document.querySelector('.modal');
     console.log("모달창 떠있으니 닫자");
-
+    
     // document.getElementById("extraModalBd").classList.remove("show");
     // document.getElementById("extraModalBd").style.display = "none";
     if (document.getElementById("extraModalBd").classList.contains('show')) {
@@ -184,7 +184,7 @@ function BranchOfficeDetailModalAction() {
 /* 공간 추가 버튼  */
 document.getElementById("spaceAddButton").addEventListener('click', function () {
     console.log("aa");
-    event.stopPropagation(); // 이벤트 전파 방지
+    // event.stopPropagation(); // 이벤트 전파 방지
 
     /* 수정 폼을 재활용위한 input태그 내부 값 초기화 */
     document.getElementById("extraBranchOfficeBoardDetailModalForm").reset();
@@ -217,14 +217,14 @@ document.getElementById("spaceAddButton").addEventListener('click', function () 
 
     }
 
-});
+});  // End of 공간추가 버튼 클릭시 버튼 가시/ 비가시 컨트롤 
 
 
 
 
 /* 대여 공간 추가 버튼 이벤트 리스너*/
 document.getElementById("spaceAddSubmitButton").addEventListener('click', function () {
-    event.stopImmediatePropagation();
+    // event.stopPropagation();
 
     let xhr = new XMLHttpRequest();
     tr_code = "insert";
@@ -259,15 +259,14 @@ document.getElementById("spaceAddSubmitButton").addEventListener('click', functi
         space_description,
         branchoffice_no
     }));
-});
+}); // end of 대여 공간 추가 버튼 이벤트 리스너
 
 
 
 
 /* 삭제 버튼 이벤트 리스너 */
-
-document.getElementById("spaceDeleteButton").addEventListener('click', function () {
-    event.stopImmediatePropagation();
+document.getElementById('spaceDeleteButton').addEventListener('click', function () {
+    // event.stopImmediatePropagation();
     let xhr = new XMLHttpRequest();
     tr_code = "DELETE";
     space_no = document.getElementById("space_no").value;
@@ -281,15 +280,7 @@ document.getElementById("spaceDeleteButton").addEventListener('click', function 
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             BranchOfficeDetailModalAction();
-            document.getElementById('modalSpace').innerHTML = "";
-            // console.log(xhr.responseText);
-            //  var afterRes = JSON.parse(xhr.responseText);
-            // console.log((xhr.responseText));
-            // console.log(afterRes[0].space_no);
-            //e08
-            // for (let i = 0; i < document.getElementsByClassName('spaceList').length; i++) {
-            //     document.getElementsByClassName('spaceList').item(i).remove();
-            // }
+            goBranchOfficeListBoardAction();
 
         }
         ;
@@ -316,7 +307,7 @@ document.getElementById("spaceDeleteButton").addEventListener('click', function 
 /* 예약 버튼 이벤트 리스너  */
 document.getElementById("spaceBookButton").addEventListener('click', function () {
 
-    event.stopImmediatePropagation();
+    // event.stopImmediatePropagation();
     console.log("예약하기 버튼");
 
     document.getElementById("modalSpace").innerHTML +=
@@ -353,5 +344,6 @@ document.getElementById("spaceBookButton").addEventListener('click', function ()
 
 
 });
+
 
 

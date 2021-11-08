@@ -1,6 +1,7 @@
 /* ClientDashBoard에서 문의하기 클릭시 눌렀을 때*/
 function doWriteQnaAction() {
-
+    varInitial();
+    stopInterval();
 
     console.log("doWriteQnaAction");
     $('#modalSpace').load("/Client/qnaWrite.do #clientQnaBoardWriteModal", function () {
