@@ -5,7 +5,9 @@ import com.example.studiozen.DTO.ReservationDTO;
 import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -246,5 +248,30 @@ public class ReservationController {
         }
 
     }// End of DELETE Method   // End of DELETE Method  // End of DELETE Method
+
+    @GetMapping("/test")
+    @ResponseBody
+    public ResponseEntity<Void> goSmash() {
+        RestTemplate restTemplate = new RestTemplate();
+        for (int i = 0; i < 100; i++) {
+            Thread thread = new Thread(() -> {
+                logger.info("발사!");
+                String result = restTemplate
+                        .getForObject("http://172.30.1.43:8080/reservation/hello", String.class);
+                logger.info(result);
+            });
+            thread.start();
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping("/hello")
+    public ResponseEntity<Void> hello() throws InterruptedException {
+        logger.warn("start");
+        Thread.sleep(3000);
+        logger.warn("end");
+        return ResponseEntity.ok().build();
+    }
 
 }

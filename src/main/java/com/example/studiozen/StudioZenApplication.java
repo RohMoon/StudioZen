@@ -5,10 +5,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+@MapperScan(basePackages = "com.example.studiozen" )
 public class StudioZenApplication {
+
 
     public static void main(String[] args) {
         SpringApplication.run(StudioZenApplication.class, args);
+
+
     }
+
 
 }

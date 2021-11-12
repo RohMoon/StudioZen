@@ -43,7 +43,7 @@
 
     <div class="row placeholders">
         <%--      <div class="col-xs-6 col-sm-3 placeholder">--%>
-        <div class="col-xs-6 col-sm-3 " style="cursor: pointer" onclick="qnaListBoardAction()" >
+        <div class="col-xs-6 col-sm-3 " style="cursor: pointer" onclick="qnaListBoardAction()">
             <img src="../images/dash-check.png" class="img-responsive dash-icon" alt="Generic placeholder thumbnail">
             <h4>Q&A리스트</h4>
         </div>
@@ -72,6 +72,10 @@
     <p>
     </p>
     <h2 class="sub-header">예약현황</h2>
+    <div id="reserv_search">
+        <input id="reserv_search_input" style="font-size: 1.7rem"/>
+        <button id="reserv_search_button" class="btn btn-primary" style="font-size: 1.7rem">검색</button>
+    </div>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -91,46 +95,47 @@
             <tbody>
             <%
                 if (reservationSelectList != null && reservationSelectList.size() > 0) {
-                    int end_time; int start_time;
-                for (ReservationDTO index : reservationSelectList) {
-                    end_time =Integer.parseInt(index.getReserv_end_time());
-                    start_time = Integer.parseInt(index.getReserv_start_time());
-                    out.print("<tr class=\"btn-open-popup\" onclick=\"reservationListBoardAction(this)\">");
-                    out.print("<td>");
-                    out.print(index.getRow_num());
-                    out.print("</td>");
-                    out.print("<td>");
-                    out.print(index.getReserv_no());
-                    out.print("</td>");
-                    out.print("<td>");
-                    out.print(index.getReserv_hostname());
-                    out.print("</td>");
-                    out.print("<td>");
-                    out.print(index.getSpace_name());
-                    out.print("</td>");
-                    out.print("<td>");
-                    out.print((index.getReserv_date()).substring(0,10));
-                    out.print("</td>");
-                    out.print("<td>");
-                    out.print(end_time-start_time) ;
-                    out.print("</td>");
-                    out.print("<td>");
-                    out.print(index.getReserv_start_time());
-                    out.print("</td>");
-                    out.print("<td>");
-                    out.print(index.getReserv_end_time());
-                    out.print("</td>");
-                    out.print("<td>");
-                    out.print(index.getSpace_basicprice()*((Integer.parseInt(index.getReserv_end_time())-Integer.parseInt(index.getReserv_start_time()))));
-                    out.print("</td>");
-                    out.print("<td>");
-                    out.print(index.getReserv_paystatement());
-                    out.print("</td>");
-                    out.print("</tr>");
-                }
-                return;
+                    int end_time;
+                    int start_time;
+                    for (ReservationDTO index : reservationSelectList) {
+                        end_time = Integer.parseInt(index.getReserv_end_time());
+                        start_time = Integer.parseInt(index.getReserv_start_time());
+                        out.print("<tr class=\"btn-open-popup\" onclick=\"reservationListBoardAction(this)\">");
+                        out.print("<td>");
+                        out.print(index.getRow_num());
+                        out.print("</td>");
+                        out.print("<td>");
+                        out.print(index.getReserv_no());
+                        out.print("</td>");
+                        out.print("<td>");
+                        out.print(index.getReserv_hostname());
+                        out.print("</td>");
+                        out.print("<td>");
+                        out.print(index.getSpace_name());
+                        out.print("</td>");
+                        out.print("<td>");
+                        out.print((index.getReserv_date()).substring(0, 10));
+                        out.print("</td>");
+                        out.print("<td>");
+                        out.print(end_time - start_time);
+                        out.print("</td>");
+                        out.print("<td>");
+                        out.print(index.getReserv_start_time());
+                        out.print("</td>");
+                        out.print("<td>");
+                        out.print(index.getReserv_end_time());
+                        out.print("</td>");
+                        out.print("<td>");
+                        out.print(index.getSpace_basicprice() * ((Integer.parseInt(index.getReserv_end_time()) - Integer.parseInt(index.getReserv_start_time()))));
+                        out.print("</td>");
+                        out.print("<td>");
+                        out.print(index.getReserv_paystatement());
+                        out.print("</td>");
+                        out.print("</tr>");
+                    }
+                    return;
 
-            }
+                }
             %>
             </tbody>
         </table>

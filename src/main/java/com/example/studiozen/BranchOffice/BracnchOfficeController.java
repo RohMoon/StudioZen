@@ -1,18 +1,21 @@
 package com.example.studiozen.BranchOffice;
 
 
+import com.example.studiozen.AOP.LogExecutionTime;
 import com.example.studiozen.DTO.BranchOfficeDTO;
 import com.example.studiozen.DTO.SpaceDTO;
 import com.google.gson.Gson;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.List;
@@ -22,12 +25,11 @@ import java.util.Map;
 @RequestMapping("BracnchOffice")
 public class BracnchOfficeController {
 
-    private static Logger logger = LogManager.getLogger(BracnchOfficeController.class);
+    private static Logger logger = LoggerFactory.getLogger(BracnchOfficeController.class);
 
     private final BracnchOfficeLogic bracnchOfficeLogic;
 
     private final String branchOfficeImgPath = "C:\\dev\\file\\images\\branchoffice\\";
-
     //생성자 주입
     public BracnchOfficeController(BracnchOfficeLogic bracnchOfficeLogic) {
         this.bracnchOfficeLogic = bracnchOfficeLogic;
@@ -96,7 +98,7 @@ public class BracnchOfficeController {
      }
      **********************/
 
-
+    @LogExecutionTime
     @RequestMapping(value =  "/selectPage")
     public ModelAndView BracnchOfficeSelectPage(HttpServletRequest httpServletRequest,
                                         BranchOfficeDTO branchOfficeDTO) {
@@ -116,7 +118,7 @@ public class BracnchOfficeController {
         }
     }
 
-
+    @LogExecutionTime
     @RequestMapping(value = "/select")
     public String BracnchOfficeSelect(BranchOfficeDTO branchOfficeDTO) {
         //@ResponseBody을 설정하시면
@@ -259,7 +261,7 @@ public class BracnchOfficeController {
 
 
 
-        logger.info(branchOfficeDTO.getResult());
+//        logger.info(branchOfficeDTO.getResult());
         logger.info(result);
 
         //게시판 CUD 중 수정 성공 / 실패에 대한 결과값을 int result로 반환
@@ -292,7 +294,7 @@ public class BracnchOfficeController {
 
         String result = bracnchOfficeLogic.BracnchOfficeDelete(branchOfficeDTO);
 
-        logger.info(branchOfficeDTO.getResult());
+        logger.debug(result);
         logger.info(result);
 
         ModelAndView mav = new ModelAndView();

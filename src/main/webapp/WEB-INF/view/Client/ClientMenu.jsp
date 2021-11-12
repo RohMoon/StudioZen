@@ -18,14 +18,7 @@
     </br>
     <%--  대쉬보드 페이지 가기 버튼  --%>
     <button id="goClientDashBoardPage" type="button" class="btn btn-warning" onclick="goClientDashBoardPageAction()">
-        메인 화면
-    </button>
-    </br>
-    </br>
-
-    <%--  예약관리 페이지 가기 버튼  --%>
-    <button id="goClientReservationManagePage" type="button" class="btn btn-warning">
-        예약 내역
+        대쉬보드
     </button>
     </br>
     </br>
@@ -39,6 +32,12 @@
     <%--  문의 내역 페이지 가기 버튼  --%>
     <button id="goClientQnaHistoryPage" type="button" class="btn btn-warning" onclick="goClientQnaHistoryPageAction()">
         문의하기
+    </button>
+    </br>
+    </br>
+    <%--  로그아웃  버튼  --%>
+    <button id="goLogOut" type="button" class="btn btn-warning" onclick="logOutButtonAction()">
+        로그아웃
     </button>
     </br>
     </br>

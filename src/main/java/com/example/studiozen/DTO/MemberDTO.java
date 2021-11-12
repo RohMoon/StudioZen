@@ -1,8 +1,6 @@
 package com.example.studiozen.DTO;
 
 
-import org.apache.ibatis.session.ResultHandler;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -20,6 +18,7 @@ public class MemberDTO extends CommonDTO {
     private Date member_date;
     private String member_signDate;
     private String member_outSign;
+    private String loginresult;
 
 
     @Override
@@ -120,5 +119,31 @@ public class MemberDTO extends CommonDTO {
 
     public void setMember_outSign(String member_outSign) {
         this.member_outSign = member_outSign;
+    }
+
+    public String getLoginresult() {
+        return loginresult;
+    }
+
+    public void setLoginresult(String loginresult) {
+        this.loginresult = loginresult;
+    }
+
+
+    @Override
+    public String toString() {
+        return "MemberDTO{" +
+                "member_no='" + member_no + '\'' +
+                ", member_password='" + member_password + '\'' +
+                ", member_name='" + member_name + '\'' +
+                ", member_mail='" + member_mail + '\'' +
+                ", member_phone=" + member_phone +
+                ", member_money=" + member_money +
+                ", member_remark='" + member_remark + '\'' +
+                ", member_date=" + member_date +
+                ", member_signDate='" + member_signDate + '\'' +
+                ", member_outSign='" + member_outSign + '\'' +
+                ", loginresult='" + loginresult + '\'' +
+                '}';
     }
 }

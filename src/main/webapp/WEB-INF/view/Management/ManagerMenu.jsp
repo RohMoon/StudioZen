@@ -46,4 +46,8 @@
     <button id="goBranchOfficePage" type="button" class="btn btn-primary">
         지점  관리
     </button>
+    <%--   로그아웃 버튼  --%>
+    <button id="goLogOut" type="button" class="btn btn-primary" onclick="logOutButtonAction()">
+        로그아웃
+    </button>
 </div>

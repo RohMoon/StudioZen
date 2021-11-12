@@ -5,7 +5,6 @@ import org.apache.ibatis.session.SqlSessionException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -24,6 +23,11 @@ public class MemberDAO {
 
     } // end of Login -- 로그인 메소드
 
+    // 로그아웃 메소드
+    public void Logout(MemberDTO memberDTO) throws SqlSessionException {
+        sqlSessionTemplate.insert("getLogout",memberDTO);
+
+    } // end of Login -- 로그아웃 메소드
     
     // 회원가입 DAO 메소드
     public void Member_Register(MemberDTO memberDTO) throws SqlSessionException{

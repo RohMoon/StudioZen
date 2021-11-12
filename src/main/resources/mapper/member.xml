@@ -5,7 +5,7 @@
         {CALL PROC_LOGIN(
             #{member_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
             ,#{member_password, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
-            ,#{result, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer})}
+            ,#{loginresult, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String})}
     </select>
     <select id="member_CUD" parameterType="com.example.studiozen.DTO.MemberDTO" resultType="com.example.studiozen.DTO.MemberDTO" statementType="CALLABLE" >
         {CALL Proc_member_CUD(
@@ -34,6 +34,19 @@
             )}
     </select>
 
+    <insert id="getLogout" parameterType="com.example.studiozen.DTO.MemberDTO" statementType="PREPARED">
+        INSERT INTO MEMBERLOG_IN_OUT_HISTORY(
+                                             LOGINOUTHISTORY_NO,
+                                             MEMBER_NO,
+                                             LOGINOUTDIVI,
+                                             LOG_DATE)
+        VALUES (
+                   'MEMLOGIOGHIST'||'N'||MEMBERLOG_HISTORY_TB_SEQ.nextval,
+                   #{member_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String},
+                   'OUT',
+                   SYSDATE
+               )
+    </insert>
 
 
 </mapper>

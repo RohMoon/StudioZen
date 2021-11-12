@@ -10,7 +10,7 @@ spring:
       password: tiger
       connection-timeout: 15000
       minimum-idle: 5
-      driver-class-name: oracle.jdbc.driver.OracleDriver
+      driver-class-name: oracle.jdbc.OracleDriver
       maximum-pool-size: 100
       max-lifetime: 1800000
       idle-timeout: 300000
@@ -46,6 +46,10 @@ spring:
 server:
   tomcat:
     additional-tld-skip-patterns: "*.jar"
+    threads:
+      max: 5 #생성할 수 있는 thread의 총 개수
+      min-spare: 5 #항상 활성화 되어있는 (idle) thread의 갯수
+    accept-count: 10 #작업 큐의 사이즈
   port: 8080
 #WWW 8000~8999 ??? ??? ?? ????.
 mybatis:

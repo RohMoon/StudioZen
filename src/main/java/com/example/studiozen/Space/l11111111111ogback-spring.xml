@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+    <!-- 어디에, 어떤 포맷으로 로그를 남길지 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>%d{HH:mm} %-5level %logger{36} - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>C:\dev\file\log\logfile.txt</file>
+        <!-- 언제 백업 될지 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/Users/mac/Desktop/logs/access-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 처음로부터 최대 30개 생성 넘어가면 이전 로그 삭제-->
+            <maxHistory>100</maxHistory>
+        </rollingPolicy>
+
+
+        <encoder>
+            <charset>utf8</charset>
+            <Pattern>%d{HH:mm} %-5level %logger{36} - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <!-- name패키지에 속한 클래스에서 출력하는 로그는 info 이상의 레벨에 해당하는 것으로 출력 -->
+    <logger name="org.springframework" level="info"/>
+    <logger name="kr.or.connect" level="debug"/>
+
+    <root level="debug">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>

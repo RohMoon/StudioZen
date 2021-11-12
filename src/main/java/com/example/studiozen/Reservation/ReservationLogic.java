@@ -103,6 +103,16 @@ public class ReservationLogic {
         }
         logger.info("서비스 클래스에서의 동작 성공 결과 구분 ==== > " + reservationDTO.getResult());
 
+        try {
+            logger.info("start");
+            Thread.sleep(7000);
+            logger.info("end");
+        } catch (InterruptedException e) {
+            logger.error(e.getMessage());
+        }
+
+
+
         return result;
 
     }

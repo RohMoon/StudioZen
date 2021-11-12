@@ -27,32 +27,44 @@
         AND RESERV_DATE = #{reserv_date, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
     </select>
     <select id="reservation_Select" parameterType="com.example.studiozen.DTO.ReservationDTO" resultType="com.example.studiozen.DTO.ReservationDTO" statementType="PREPARED">
+
         SELECT
-            ROWNUM row_num,
-            RS.RESERV_NO,
-            RS.SPACE_NO,
-            sp.SPACE_NAME,
-            sp.SPACE_BASICPRICE,
-            RS.RESERV_HOSTCODE,
-            RS.RESERV_DATE,
-            RS.RESERV_START_TIME,
-            RS.RESERV_END_TIME,
-            RS.RESERV_HOST_MOBILE,
-            RS.RESERV_PAYSTATEMENT,
-            (substr(to_char(RESERV_DATE)    ,0,10)) RESERV_DATE,
-            RS.RESERV_HOST_EMAIL,
-            RS.RESERV_UPDATEDATE,
-            RS.RESERV_DEL_SIGN,
-            RS.RESERV_DEL_REASON,
-            RS.RESERV_DEL_DATE,
-            RS.RESERV_PAY_LIMITED,
-            MEM.MEMBER_NAME as reserv_hostname
+        ROWNUM row_num,
+        RS.RESERV_NO,
+        RS.SPACE_NO,
+        sp.SPACE_NAME,
+        sp.SPACE_BASICPRICE,
+        RS.RESERV_HOSTCODE,
+        RS.RESERV_DATE,
+        RS.RESERV_START_TIME,
+        RS.RESERV_END_TIME,
+        RS.RESERV_HOST_MOBILE,
+        RS.RESERV_PAYSTATEMENT,
+        (substr(to_char(RS.RESERV_DATE)    ,0,10)) RESERV_DATE,
+        RS.RESERV_HOST_EMAIL,
+        RS.RESERV_UPDATEDATE,
+        RS.RESERV_DEL_SIGN,
+        RS.RESERV_DEL_REASON,
+        RS.RESERV_DEL_DATE,
+        RS.RESERV_PAY_LIMITED,
+        MEM.MEMBER_NAME as reserv_hostname
         FROM RESERVATION_MANAGE_TB RS
-                 join MEMBER_TB MEM
-                      ON RS.RESERV_HOSTCODE = MEM.MEMBER_NO
-                 join SPACE_TB sp
-                      ON sp.SPACE_NO = rs.SPACE_NO
-        WHERE RESERV_DEL_SIGN = 'N'
+        join MEMBER_TB MEM
+        ON RS.RESERV_HOSTCODE = MEM.MEMBER_NO
+        join SPACE_TB sp
+        ON sp.SPACE_NO = rs.SPACE_NO
+        WHERE RS.RESERV_DEL_SIGN = 'N'
+        <if test=""
+        And (
+        RS.RESERV_NO like '%'||:x||'%'
+        OR RS.SPACE_NO like '%'||:x||'%'
+        OR RS.RESERV_HOSTCODE like '%'||:x||'%'
+        OR RS.RESERV_DATE like '%'||:x||'%'
+        OR RS.RESERV_START_TIME like '%'||:x||'%'
+        OR RS.RESERV_END_TIME like '%'||:x||'%'
+        OR RS.RESERV_HOST_MOBILE like '%'||:x||'%'
+        OR RS.RESERV_HOST_EMAIL like '%'||:x||'%'
+        OR RS.RESERV_PAYSTATEMENT like '%'||:x||'%')
         <if test="reserv_hostcode != 'MEM282108'">
             AND RS.RESERV_HOSTCODE = #{reserv_hostcode, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
         </if>

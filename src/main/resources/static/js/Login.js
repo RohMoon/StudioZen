@@ -6,8 +6,9 @@ function loginButtonAction() {
     /* 입력한 멤버 패스워드 직렬화*/
     let member_password = $("input[name=member_password]").serialize();
     /* 입력 값 JSON 문법으로 변형 확인*/
-    console.log(JSON.stringify({member_no, member_password}));
+    // console.log(JSON.stringify({member_no, member_password}));
     /*  ajax Post 방식으로 값 전송*/
+
     $.ajax({
         method: 'POST',
         url: '/member/login',
@@ -187,3 +188,27 @@ function emailValueCheck() {
         },
     });
    }
+
+/*  로그아웃 버튼을 눌렀을 때*/
+function logOutButtonAction() {
+    console.log(sessionStorage.sid.split('=')[1]);
+    console.log(JSON.stringify({member_no:sessionStorage.sid.split('=')[1]}));
+    console.log("로그아웃 버튼 눌렀을때");
+
+    /*  ajax Post 방식으로 값 전송*/
+    $.ajax({
+        method: 'POST',
+        url: '/member/logout',
+        contentType: 'application/json',
+        data: JSON.stringify({member_no:sessionStorage.sid.split('=')[1]}),
+        error: function (xhr, status, error) {
+            alert(error);
+        },
+        success: function (data) {
+            location.href= "index.do";
+            sessionStorage.clear();
+
+        },
+    });
+
+}

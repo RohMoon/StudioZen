@@ -725,3 +725,8 @@ tr.timeTableTrTd td{
     margin-left:-100px;
     z-index: 20000;
 }
+
+div#reserv_search {
+    margin-left: 50%;
+    margin-bottom: 1%;
+}

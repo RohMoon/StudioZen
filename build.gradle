@@ -33,8 +33,18 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     
     //log4j 의존성
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.1'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'
+//    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.1'
+//    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'
+
+    implementation('org.slf4j:jcl-over-slf4j')
+    implementation('ch.qos.logback:logback-classic')
+    // https://mvnrepository.com/artifact/ch.qos.logback/logback-core
+    implementation group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
+
+    // https://mvnrepository.com/artifact/org.slf4j/jcl-over-slf4j
+    implementation group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.25'
+
+
 
     //히카리CP
     // https://mvnrepository.com/artifact/com.zaxxer/HikariCP
@@ -48,6 +58,9 @@ dependencies {
     compile 'com.google.api-client:google-api-client:1.23.0'
     compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
     compile 'com.google.apis:google-api-services-gmail:v1-rev83-1.23.0'
+
+
+
 
     // https://mvnrepository.com/artifact/com.sun.mail/javax.mail
     implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
@@ -76,6 +89,13 @@ dependencies {
 //    compile('javax.servlet:jstl:1.2')
     implementation 'javax.servlet:jstl:1.2'
 
+
+    //Spring Boot Starter AP 2.5.6 Apsect
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '2.5.6'
+
+//    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+//    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
 
 }
 
