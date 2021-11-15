@@ -72,10 +72,81 @@
     <p>
     </p>
     <h2 class="sub-header">예약현황</h2>
+
     <div id="reserv_search">
-        <input id="reserv_search_input" style="font-size: 1.7rem"/>
-        <button id="reserv_search_button" class="btn btn-primary" style="font-size: 1.7rem">검색</button>
+
+        <div id="reserv_search_detailCheckBox_reserv_no" style="font-size: 1.7rem">
+
+            <input class="form-check-input" type="checkbox" value="checked_reserv_no" id="reserv_search_detailCheckBox_reserv_no_input">
+            <label class="form-check-label" for="reserv_search_detailCheckBox_reserv_no_input"
+                   style="font-size: 1.7rem">
+                예약번호
+            </label>
+
+            <input class="form-check-input" type="checkbox" value="checked_space_no" id="reserv_search_detailCheckBox_space_no_input">
+            <label class="form-check-label" for="reserv_search_detailCheckBox_space_no_input" style="font-size: 1.7rem">
+                공간번호
+            </label>
+
+            <input class="form-check-input" type="checkbox" value="checked_reserv_date"
+                   id="reserv_search_detailCheckBox_reserv_date_input">
+            <label class="form-check-label" for="reserv_search_detailCheckBox_reserv_date_input"
+                   style="font-size: 1.7rem">
+                예약날짜
+            </label>
+
+            <input class="form-check-input" type="checkbox" value="checked_reserv_start_time"
+                   id="reserv_search_detailCheckBox_reserv_start_time_input">
+            <label class="form-check-label" for="reserv_search_detailCheckBox_reserv_start_time_input"
+                   style="font-size: 1.7rem">
+                사용 시작 시간
+            </label>
+
+            <input class="form-check-input" type="checkbox" value="checked_reserv_end_time"
+                   id="reserv_search_detailCheckBox_reserv_end_time_input">
+            <label class="form-check-label" for="reserv_search_detailCheckBox_reserv_end_time_input"
+                   style="font-size: 1.7rem">
+                사용 마감 시간
+            </label>
+
+            <input class="form-check-input" type="checkbox" value="checked_reserv_host_mobile"
+                   id="reserv_search_detailCheckBox_reserv_host_mobile_input">
+            <label class="form-check-label" for="reserv_search_detailCheckBox_reserv_host_mobile_input"
+                   style="font-size: 1.7rem">
+                예약자 전화번호
+            </label>
+
+            <input class="form-check-input" type="checkbox" value="checked_reserv_host_email"
+                   id="reserv_search_detailCheckBox_reserv_host_email_input">
+            <label class="form-check-label" for="reserv_search_detailCheckBox_reserv_host_email_input"
+                   style="font-size: 1.7rem">
+                예약자 이메일
+            </label>
+
+            <input class="form-check-input" type="checkbox" value="checked_reserv_hostcode"
+                   id="reserv_search_detailCheckBox_reserv_hostcode_input">
+            <label class="form-check-label" for="reserv_search_detailCheckBox_reserv_hostcode_input"
+                   style="font-size: 1.7rem">
+                예약자 번호
+            </label>
+
+            <select class="" value=""
+                   id="reserv_search_detailCheckBox_reserv_paystatement_input">
+                <option value="paystatement">결제상태</option>
+                <option value="ready">결제대기</option>
+                <option value="done">결제완료</option>
+                <option value="cancel">결제취소</option>
+            </select>
+
+        </div>
+
+        <div id="reserv_search_input_div">
+            <input id="reserv_search_input" style="font-size: 1.7rem">
+            <button id="reserv_search_button" class="btn btn-primary" style="font-size: 1.7rem" onclick="Reserv_filterSelect()" >검색</button>
+        </div>
+
     </div>
+
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>

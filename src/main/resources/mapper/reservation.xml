@@ -26,7 +26,7 @@
         WHERE SPACE_NO = #{space_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
         AND RESERV_DATE = #{reserv_date, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
     </select>
-    <select id="reservation_Select" parameterType="com.example.studiozen.DTO.ReservationDTO" resultType="com.example.studiozen.DTO.ReservationDTO" statementType="PREPARED">
+<!--    <select id="reservation_Select" parameterType="com.example.studiozen.DTO.ReservationDTO" resultType="com.example.studiozen.DTO.ReservationDTO" statementType="PREPARED">
 
         SELECT
         ROWNUM row_num,
@@ -54,21 +54,98 @@
         join SPACE_TB sp
         ON sp.SPACE_NO = rs.SPACE_NO
         WHERE RS.RESERV_DEL_SIGN = 'N'
-        <if test=""
-        And (
-        RS.RESERV_NO like '%'||:x||'%'
-        OR RS.SPACE_NO like '%'||:x||'%'
-        OR RS.RESERV_HOSTCODE like '%'||:x||'%'
-        OR RS.RESERV_DATE like '%'||:x||'%'
-        OR RS.RESERV_START_TIME like '%'||:x||'%'
-        OR RS.RESERV_END_TIME like '%'||:x||'%'
-        OR RS.RESERV_HOST_MOBILE like '%'||:x||'%'
-        OR RS.RESERV_HOST_EMAIL like '%'||:x||'%'
-        OR RS.RESERV_PAYSTATEMENT like '%'||:x||'%')
         <if test="reserv_hostcode != 'MEM282108'">
             AND RS.RESERV_HOSTCODE = #{reserv_hostcode, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
         </if>
+        <if test="">
+        And
+        RS.RESERV_NO like '%'||:x||'%' </if>
+        <if test="">
+        OR RS.SPACE_NO like '%'||:x||'%'</if>
+        <if test="">
+        OR RS.RESERV_HOSTCODE like '%'||:x||'%'</if>
+        <if test="">
+        OR RS.RESERV_DATE like '%'||:x||'%'</if>
+        <if test="">
+        OR RS.RESERV_START_TIME like '%'||:x||'%'</if>
+        <if test="">
+        OR RS.RESERV_END_TIME like '%'||:x||'%'</if>
+        <if test="">
+        OR RS.RESERV_HOST_MOBILE like '%'||:x||'%'</if>
+        <if test="">
+        OR RS.RESERV_HOST_EMAIL like '%'||:x||'%'</if>
+        <if test="">
+        OR RS.RESERV_PAYSTATEMENT like '%'||:x||'%'</if>
+    </select>-->
+
+    <select id="reservation_Select" parameterType="com.example.studiozen.DTO.ReservationDTO" resultType="com.example.studiozen.DTO.ReservationDTO" statementType="PREPARED">
+        SELECT
+        ROWNUM row_num,
+        BO.RESERV_NO,
+        BO.SPACE_NO,
+        sp.SPACE_NAME,
+        sp.SPACE_BASICPRICE,
+        BO.RESERV_HOSTCODE,
+        BO.RESERV_DATE,
+        BO.RESERV_START_TIME,
+        BO.RESERV_END_TIME,
+        BO.RESERV_HOST_MOBILE,
+        BO.RESERV_PAYSTATEMENT,
+        BO.RESERV_HOST_EMAIL,
+        BO.RESERV_UPDATEDATE,
+        BO.RESERV_DEL_SIGN,
+        BO.RESERV_DEL_REASON,
+        BO.RESERV_DEL_DATE,
+        BO.RESERV_PAY_LIMITED,
+        MEM.MEMBER_NAME as RESERV_HOSTNAME
+        FROM(
+        SELECT
+        RSMT.RESERV_NO,
+        RSMT.SPACE_NO,
+        RSMT.RESERV_HOSTCODE,
+        RSMT.RESERV_DATE,
+        RSMT.RESERV_START_TIME,
+        RSMT.RESERV_END_TIME,
+        RSMT.RESERV_HOST_MOBILE,
+        RSMT.RESERV_PAYSTATEMENT,
+        RSMT.RESERV_HOST_EMAIL,
+        RSMT.RESERV_UPDATEDATE,
+        RSMT.RESERV_DEL_SIGN,
+        RSMT.RESERV_DEL_REASON,
+        RSMT.RESERV_DEL_DATE,
+        RSMT.RESERV_PAY_LIMITED
+        FROM RESERVATION_MANAGE_TB RSMT
+        ) BO
+        join MEMBER_TB MEM
+        ON BO.RESERV_HOSTCODE = MEM.MEMBER_NO
+        join SPACE_TB sp
+        ON sp.SPACE_NO = BO.SPACE_NO
+        WHERE RESERV_DEL_SIGN = 'N'
+        <if test="reserv_hostcode != 'MEM282108'">
+            AND BO.RESERV_HOSTCODE = #{reserv_hostcode, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+        </if>
+        <if test="reserv_no_box !=null">
+            And
+            BO.RESERV_NO like '%'||#{wantSearchWord, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%' </if>
+        <if test="space_no_box !=null">
+            And BO.SPACE_NO like '%'||#{wantSearchWord, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'</if>
+        <if test="reserv_hostcode_box !=null">
+            And BO.RESERV_HOSTCODE like '%'||#{wantSearchWord, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'</if>
+        <if test="reserv_date_box !=null">
+            And BO.RESERV_DATE like '%'||#{wantSearchWord, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'</if>
+        <if test="reserv_start_time_box !=null">
+            And BO.RESERV_START_TIME like '%'||#{wantSearchWord, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'</if>
+        <if test="reserv_end_time_box!=null">
+            And BO.RESERV_END_TIME like '%'||#{wantSearchWord, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'</if>
+        <if test="reserv_host_mobile_box !=null">
+            And BO.RESERV_HOST_MOBILE like '%'||#{wantSearchWord, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'</if>
+        <if test="reserv_host_email_box !=null">
+            And BO.RESERV_HOST_EMAIL like '%'||#{wantSearchWord, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'</if>
+        <if test="reserv_paystatement_box !=null">
+            And BO.RESERV_PAYSTATEMENT like '%'||#{wantSearchWord, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'</if>
+
     </select>
+
     <select id="reservation_CUD" parameterType="com.example.studiozen.DTO.ReservationDTO" resultType="com.example.studiozen.DTO.ReservationDTO" statementType="CALLABLE">
         {CALL Proc_RESERVATION_MANAGE_CUD(
              #{tr_code, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}

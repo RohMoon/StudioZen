@@ -1,17 +1,15 @@
 package com.example.studiozen.Management;
 
-import com.example.studiozen.BranchOffice.BracnchOfficeDAO;
-import com.example.studiozen.Client.ClientController;
+import com.example.studiozen.DTO.ReservationDTO;
+import com.example.studiozen.Reservation.ReservationLogic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import javax.servlet.http.HttpServletRequest;
-import com.example.studiozen.Reservation.ReservationLogic;
-import com.example.studiozen.DTO.ReservationDTO;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -31,6 +29,7 @@ public class ManagementController {
 
         return mv;
     }
+
     /* 관리자 페이지 대쉬보드 */
     @RequestMapping(value="/dash.do/{sessionNo}")
     public ModelAndView ManagementDashBoard(HttpServletRequest request, @PathVariable String sessionNo){
@@ -39,7 +38,7 @@ public class ManagementController {
         ModelAndView mv = new ModelAndView();
         List<ReservationDTO> reservationSelectList =
                 reservationLogic.ReservationSelect(reservationDTO);
-        logger.info("\nreservationSelectList  ===>" +reservationSelectList);
+        logger.info("\n reservationSelectList  ===>" +reservationSelectList);
         request.setAttribute("reservationSelectList",reservationSelectList);
         mv.setViewName("Management/ManagementDash");
 

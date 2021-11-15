@@ -39,9 +39,10 @@ public class ReservationController {
      }
      **********************/
     @RequestMapping(value = "/selectAll")
-    public ModelAndView ReservationSelect(HttpServletRequest request) {
+    public ModelAndView ReservationSelect(HttpServletRequest request, @RequestBody(required = false) ReservationDTO reservationDTO) {
 
-        ReservationDTO reservationDTO = new ReservationDTO();
+        logger.info("\n============>@"+reservationDTO);
+//        ReservationDTO reservationDTO = new ReservationDTO();
 
         List<ReservationDTO> reservationSelectList =
 

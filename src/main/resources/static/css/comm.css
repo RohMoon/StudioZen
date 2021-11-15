@@ -726,7 +726,11 @@ tr.timeTableTrTd td{
     z-index: 20000;
 }
 
-div#reserv_search {
-    margin-left: 50%;
+div#reserv_search_input_div {
+    margin-left: 40%;
     margin-bottom: 1%;
+}
+
+div#reserv_search_detailCheckBox_reserv_no{
+    margin-left: 13%;
 }

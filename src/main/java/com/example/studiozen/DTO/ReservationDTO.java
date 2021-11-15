@@ -17,6 +17,96 @@ public class ReservationDTO extends SpaceDTO {
     private String reserv_space;
     private String reserv_pay_limited;
     private String reserv_del_sign;
+    private String wantSearchWord;
+    private String reserv_no_box;
+    private String space_no_box;
+    private String reserv_date_box;
+    private String reserv_start_time_box;
+    private String reserv_end_time_box;
+    private String reserv_host_mobile_box;
+    private String reserv_host_email_box;
+    private String reserv_hostcode_box;
+    private String reserv_paystatement_box;
+
+    public String getReserv_no_box() {
+        return reserv_no_box;
+    }
+
+    public void setReserv_no_box(String reserv_no_box) {
+        this.reserv_no_box = reserv_no_box;
+    }
+
+    public String getSpace_no_box() {
+        return space_no_box;
+    }
+
+    public void setSpace_no_box(String space_no_box) {
+        this.space_no_box = space_no_box;
+    }
+
+    public String getReserv_date_box() {
+        return reserv_date_box;
+    }
+
+    public void setReserv_date_box(String reserv_date_box) {
+        this.reserv_date_box = reserv_date_box;
+    }
+
+    public String getReserv_start_time_box() {
+        return reserv_start_time_box;
+    }
+
+    public void setReserv_start_time_box(String reserv_start_time_box) {
+        this.reserv_start_time_box = reserv_start_time_box;
+    }
+
+    public String getReserv_end_time_box() {
+        return reserv_end_time_box;
+    }
+
+    public void setReserv_end_time_box(String reserv_end_time_box) {
+        this.reserv_end_time_box = reserv_end_time_box;
+    }
+
+    public String getReserv_host_mobile_box() {
+        return reserv_host_mobile_box;
+    }
+
+    public void setReserv_host_mobile_box(String reserv_host_mobile_box) {
+        this.reserv_host_mobile_box = reserv_host_mobile_box;
+    }
+
+    public String getReserv_host_email_box() {
+        return reserv_host_email_box;
+    }
+
+    public void setReserv_host_email_box(String reserv_host_email_box) {
+        this.reserv_host_email_box = reserv_host_email_box;
+    }
+
+    public String getReserv_hostcode_box() {
+        return reserv_hostcode_box;
+    }
+
+    public void setReserv_hostcode_box(String reserv_hostcode_box) {
+        this.reserv_hostcode_box = reserv_hostcode_box;
+    }
+
+    public String getReserv_paystatement_box() {
+        return reserv_paystatement_box;
+    }
+
+    public void setReserv_paystatement_box(String reserv_paystatement_box) {
+        this.reserv_paystatement_box = reserv_paystatement_box;
+    }
+
+    public String getWantSearchWord() {
+        return wantSearchWord;
+    }
+
+    public void setWantSearchWord(String wantSearchWord) {
+        this.wantSearchWord = wantSearchWord;
+    }
 
     @Override
     public int getResult() {

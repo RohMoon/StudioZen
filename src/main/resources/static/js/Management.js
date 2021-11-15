@@ -611,350 +611,350 @@ function goBranchOfficeListBoardAction() {
                     for (let i = 0; i < branchOfficeSelectList.length; i++) {
                         console.log(branchOfficeSelectList);
 
-                            var imageCounter = Number(0);
+                        var imageCounter = Number(0);
 
-                            var slideShow_container = document.createElement('div');
-                            slideShow_container.setAttribute('id', 'slideshow-container' + i);
-                            slideShow_container.classList.add('slideshow-container');
-                            document.getElementById('branchOfficeSelectList').append(slideShow_container);
+                        var slideShow_container = document.createElement('div');
+                        slideShow_container.setAttribute('id', 'slideshow-container' + i);
+                        slideShow_container.classList.add('slideshow-container');
+                        document.getElementById('branchOfficeSelectList').append(slideShow_container);
 
-                            // console.log(branchOfficeImgSelectList[i].getBranchoffice_img_code);
+                        // console.log(branchOfficeImgSelectList[i].getBranchoffice_img_code);
 
-                            if (branchOfficeSelectList[i].branchoffice_haspic == 'Y') {
+                        if (branchOfficeSelectList[i].branchoffice_haspic == 'Y') {
 
-                                var countNumForHowManyThisBranchOfficeHasImage = Number(0);
+                            var countNumForHowManyThisBranchOfficeHasImage = Number(0);
 
-                                for (let k = 0; k < branchOfficeImgSelectList.length; k++) {
-                                    if (branchOfficeSelectList[i].branchoffice_no == branchOfficeImgSelectList[k].branchoffice_no) {
-                                        countNumForHowManyThisBranchOfficeHasImage++;
-                                    }
+                            for (let k = 0; k < branchOfficeImgSelectList.length; k++) {
+                                if (branchOfficeSelectList[i].branchoffice_no == branchOfficeImgSelectList[k].branchoffice_no) {
+                                    countNumForHowManyThisBranchOfficeHasImage++;
                                 }
-                                for (let j = 0; j < branchOfficeImgSelectList.length; j++) {
+                            }
+                            for (let j = 0; j < branchOfficeImgSelectList.length; j++) {
 
 
-                                    if (branchOfficeSelectList[i].branchoffice_no == branchOfficeImgSelectList[j].branchoffice_no) {
+                                if (branchOfficeSelectList[i].branchoffice_no == branchOfficeImgSelectList[j].branchoffice_no) {
 
-                                        console.log(' j  ============>' + j);
-                                        var currentImageNum = 1;
-                                        let branchOfficeImgSelectList = bracnchOfficeSelectMap.branchOfficeImgSelectList;
-                                        var mySlides_fade = document.createElement('div');
-                                        mySlides_fade.classList.add('mySlides' + i); //sss
-                                        mySlides_fade.classList.add('mySlides');
+                                    console.log(' j  ============>' + j);
+                                    var currentImageNum = 1;
+                                    let branchOfficeImgSelectList = bracnchOfficeSelectMap.branchOfficeImgSelectList;
+                                    var mySlides_fade = document.createElement('div');
+                                    mySlides_fade.classList.add('mySlides' + i); //sss
+                                    mySlides_fade.classList.add('mySlides');
 
-                                        mySlides_fade.classList.add('fade');
-                                        slideShow_container.append(mySlides_fade);
+                                    mySlides_fade.classList.add('fade');
+                                    slideShow_container.append(mySlides_fade);
 
-                                        var numbertext = document.createElement('numbertext');
+                                    var numbertext = document.createElement('numbertext');
 
-                                        numbertext.classList.add('numbertext');
+                                    numbertext.classList.add('numbertext');
 
-                                        // numbertext.innerText = (j + 1) + ' / ' + countNumForHowManyThisBranchOfficeHasImage;
-                                        numbertext.innerText = currentImageNum + ' / ' + countNumForHowManyThisBranchOfficeHasImage;
-                                        mySlides_fade.append(numbertext);
-                                        var img_src = document.createElement('img');//working here
+                                    // numbertext.innerText = (j + 1) + ' / ' + countNumForHowManyThisBranchOfficeHasImage;
+                                    numbertext.innerText = currentImageNum + ' / ' + countNumForHowManyThisBranchOfficeHasImage;
+                                    mySlides_fade.append(numbertext);
+                                    var img_src = document.createElement('img');//working here
 
-                                        img_src.setAttribute('src', 'data:image/png; base64,' + branchOfficeImgSelectList[j].branchoffice_img_code);
-                                        img_src.setAttribute('style', 'width:60%; height:40%; margin-left:20%');
-                                        mySlides_fade.append(img_src);
-
-
-                                        // currentImageNum++;
+                                    img_src.setAttribute('src', 'data:image/png; base64,' + branchOfficeImgSelectList[j].branchoffice_img_code);
+                                    img_src.setAttribute('style', 'width:60%; height:40%; margin-left:20%');
+                                    mySlides_fade.append(img_src);
 
 
-                                    } //End of if (branchOfficeSelectList[i].branchoffice_no == branchOfficeImgSelectList[j].branchoffice_no)
+                                    // currentImageNum++;
 
 
-                                } //End of for (let j = 0; j < branchOfficeImgSelectList.length; j++) {
-
-                                var dots_circles = document.createElement('div');
-                                dots_circles.setAttribute('style', 'text-align:center');
-                                slideShow_container.append(dots_circles);
-                                for (let m = 0; m < countNumForHowManyThisBranchOfficeHasImage; m++) {
-                                    var dot = document.createElement('span');
-                                    dot.classList.add('dot');
-                                    dot.classList.add('dotP' + i);
-                                    // dot.setAttribute('style','cursor: pointer;\n' +
-                                    //     '    height: 15px;\n' +
-                                    //     '    width: 15px;\n' +
-                                    //     '    margin: 5px;\n' +
-                                    //     '    background-color: #bbb;\n' +
-                                    //     '    border-radius: 50%;\n' +
-                                    //     '    display: inline-block;\n' +
-                                    //     '    transition: background-color 0.6s ease;')
-                                    // dot.addEventListener('click',currentSlide(j));
-
-                                    dots_circles.append(dot);
-
-                                }// end of For (let j = 0; j < countNumForHowManyThisBranchOfficeHasImage;
-                                // var slides = document.getElementsByClassName("mySlides");
-                                // var slides = document.getElementsByClassName("mySlides" + i);
+                                } //End of if (branchOfficeSelectList[i].branchoffice_no == branchOfficeImgSelectList[j].branchoffice_no)
 
 
-                                // Thumbnail image controls
-                                function currentSlide(n) {
-                                    console.log('currentSlide===> 동작');
-                                    // slideIndex = n;
-                                    //  eval('slideIndex'+i+'=n;');
-                                    slideArrayData.slideIndex[i] = n;
+                            } //End of for (let j = 0; j < branchOfficeImgSelectList.length; j++) {
 
-                                    // showSlides( eval('slideIndex'+i));
-                                    showSlides(slideArrayData.slideIndex[i]);
-                                }
+                            var dots_circles = document.createElement('div');
+                            dots_circles.setAttribute('style', 'text-align:center');
+                            slideShow_container.append(dots_circles);
+                            for (let m = 0; m < countNumForHowManyThisBranchOfficeHasImage; m++) {
+                                var dot = document.createElement('span');
+                                dot.classList.add('dot');
+                                dot.classList.add('dotP' + i);
+                                // dot.setAttribute('style','cursor: pointer;\n' +
+                                //     '    height: 15px;\n' +
+                                //     '    width: 15px;\n' +
+                                //     '    margin: 5px;\n' +
+                                //     '    background-color: #bbb;\n' +
+                                //     '    border-radius: 50%;\n' +
+                                //     '    display: inline-block;\n' +
+                                //     '    transition: background-color 0.6s ease;')
+                                // dot.addEventListener('click',currentSlide(j));
 
-                            } // end of if (branchOfficeSelectList[i].branchoffice_haspic == 'Y')
-                            /////////////////////////////////
-                            slideArrayData.slides.push(document.getElementsByClassName("mySlides" + i));
+                                dots_circles.append(dot);
 
-                            // eval("var slides"+i+"=document.getElementsByClassName(\"mySlides\" + i);")
-                            // var dots = document.getElementsByClassName('dot'); //sss
-                            // var dotPs = document.getElementsByClassName('dotP' + i);
-
-                            slideArrayData.dots.push(document.getElementsByClassName("dotP" + i));
-                            // eval("var dotPs"+i+"=document.getElementsByClassName(\"dotP\" + i);");
-                            // var dots = document.getElementsByClassName('dot');
-                            // var size = slides.length;
-
-                            slideArrayData.size.push(Number(document.getElementsByClassName("mySlides" + i).length));
-                            // eval("var size"+i+"=slides"+i+".length;");
-
-                            slideArrayData.slideIndex.push(Number(0));
-                            // eval('var slideIndex'+i+'=0');
-
-                            slideArrayData.slideLength.push(Number(document.getElementsByClassName("mySlides" + i).length));
-                            slideArrayData.dotsLength.push(Number(document.getElementsByClassName("dotP" + i).length));
-
-                            var sec = 4000;
-
-                            if (slideArrayData.slideLength[i] !== 0) {
-
-                                branchOfficeImgSlideShow = setInterval(function () { //시간마다 반복함
-                                    console.log(branchOfficeImgSlideShow);
-                                    'use strict';
-                                    // slideIndex++;
-                                    // eval('slideIndex'+i+'++;');
+                            }// end of For (let j = 0; j < countNumForHowManyThisBranchOfficeHasImage;
+                            // var slides = document.getElementsByClassName("mySlides");
+                            // var slides = document.getElementsByClassName("mySlides" + i);
 
 
-                                    // slideArrayData.slideIndex.splice(i,1,slideArrayData.slideIndex++);
+                            // Thumbnail image controls
+                            function currentSlide(n) {
+                                console.log('currentSlide===> 동작');
+                                // slideIndex = n;
+                                //  eval('slideIndex'+i+'=n;');
+                                slideArrayData.slideIndex[i] = n;
 
-                                    // console.log('setInterval에서의 slideArrayData.slideIndex[i] =====>>>>>'+slideArrayData.slideIndex[i]);
-                                    // console.log('setInterval에서의 slideArrayData.slideIndex[i] 타입 =====>>>>>'+typeof slideArrayData.slideIndex[i]);
-
-
-                                    showSlides(slideArrayData.slideIndex[i]); // i가 인이입되서 진행
-                                    // showSlides(slideArrayData.slides[imageCounter]); // i가 인이입되서 진행
-                                    // console.log('=============After showSlides');
-                                    // console.log('-----END OF FUNCTION----------END OF FUNCTION----------END OF FUNCTION-----');
-                                    // slideIndex++;
-                                    slideArrayData.slideIndex[i] = slideArrayData.slideIndex[i] + Number(1); // i++ 증가
-                                    // slideArrayData.slides[imageCounter] = slideArrayData.slides[imageCounter]+Number(1); // i++ 증가
-
-                                }, sec); //시간마다z`
-
-                                // showSlides(eval('slideIndex'+i));
-                            } else {
-                                // console.log(' 이미지가 없는 지점패스 ');
+                                // showSlides( eval('slideIndex'+i));
+                                showSlides(slideArrayData.slideIndex[i]);
                             }
 
-                            async function showSlides(n) { // 0 이라면
+                        } // end of if (branchOfficeSelectList[i].branchoffice_haspic == 'Y')
+                        /////////////////////////////////
+                        slideArrayData.slides.push(document.getElementsByClassName("mySlides" + i));
+
+                        // eval("var slides"+i+"=document.getElementsByClassName(\"mySlides\" + i);")
+                        // var dots = document.getElementsByClassName('dot'); //sss
+                        // var dotPs = document.getElementsByClassName('dotP' + i);
+
+                        slideArrayData.dots.push(document.getElementsByClassName("dotP" + i));
+                        // eval("var dotPs"+i+"=document.getElementsByClassName(\"dotP\" + i);");
+                        // var dots = document.getElementsByClassName('dot');
+                        // var size = slides.length;
+
+                        slideArrayData.size.push(Number(document.getElementsByClassName("mySlides" + i).length));
+                        // eval("var size"+i+"=slides"+i+".length;");
+
+                        slideArrayData.slideIndex.push(Number(0));
+                        // eval('var slideIndex'+i+'=0');
+
+                        slideArrayData.slideLength.push(Number(document.getElementsByClassName("mySlides" + i).length));
+                        slideArrayData.dotsLength.push(Number(document.getElementsByClassName("dotP" + i).length));
+
+                        var sec = 4000;
+
+                        if (slideArrayData.slideLength[i] !== 0) {
+
+                            branchOfficeImgSlideShow = setInterval(function () { //시간마다 반복함
+                                console.log(branchOfficeImgSlideShow);
                                 'use strict';
-
-                                // console.log('최초 인입된 n === > ' +n); // 5이상 들어와도
-                                // console.log('최초 인입된 n === > ' +typeof n);
-                                // console.log('slideArrayData.size[i]=====>'+slideArrayData.size[i]);
-                                // console.log('slideArrayData.size[i] TYPE=== > ' +typeof slideArrayData.size[i]);
-
-                                // if ((n + 1) > eval('size'+i)) { // 0+1 > slides = 15ea // 넘버가 슬라이드 갯수보다 크다면 초기화
-                                if ((n + 1) > slideArrayData.size[i]) { // 0+1 > slides = 15ea // 넘버가 슬라이드 갯수보다 크다면 초기화                                   eval('slideIndex'+i+'=0;')  // 0
-                                    // console.log('-----if--(n + 1) > slideArrayData.size[i]------'+(n + 1)+'(-n+1-)'+slideArrayData.size[i]);
-                                    n = 0; // 0
-                                    slideArrayData.slideIndex[i] = 0;
-                                    // slideArrayData.slides[imageCounter] = 0;
-                                    // console.log('After  N=====>' + n);
-                                    // console.log('if ((n + 1) > size) ====> n === >'+n+'\n ===> size '+size);
-                                } else if (n < 0) {  // 0<0  N이 0보다 작다면 // -? 탈일은 없는데
-                                    // slideIndex = (size - 1); // 인덱스는 15-1
-                                    // eval('slideIndex'+i+'=(size'+i+'-1);');
-                                    // console.log('----else-if-------------------');
-                                    slideArrayData.slideIndex[i] = slideArrayData.size[i] - 1;
-                                    // console.log('slideArrayData.slideIndex[i] = slideArrayData.size[i] - 1;===> '+slideArrayData.slideIndex[i]);
-
-                                    // n = (size - 1); // n = 15 -1
-                                    // n = (eval('size'+i) - 1); // n = 15 -1
-                                    n = slideArrayData.size[i] - 1;
-                                    // console.log('After Else if ======>'+ n);
-
-                                    // console.log('if ((n + 1) > size) ====> n === >'+n+'\n ===> size '+size+'\n ===> slideIndex '+slideIndex  );
-                                } else {
-                                    // console.log('-----------------else------------------------------');
-                                }
-                                // console.log('NNNNNNNNNNNNNNNNNNNN ==========> ++++++++====>'+n);
-                                // console.log('slideArrayData.slideLength[i]----------------->'+slideArrayData.slideLength[i]);
-                                // console.log('slideArrayData.slideLength[i]----------------->'+typeof slideArrayData.slideLength[i]);
-                                // for (let o = 0; o < eval('slides'+i).length; o++) { // i = 0; 0 <15 ; 0++
-
-                                for (let o = 0; o < slideArrayData.slideLength[i]; o++) { // i = 0; 0 <15 ; 0++
-
-                                    // console.log('========> slides.length' + slides.length +'\n'+ '======>i ==>'+i);
-                                    // eval('slides'+i+'[o].style.display = "none";'); //15인덱스 마다 모두 화면 없애준다.
-                                    // console.log(' -----------> FOR o ------->FOR o');
-                                    // console.log('========i>>>>'+i);
-                                    // console.log('========o>>>>'+o);
-                                    // slideArrayData.slides[i][o].style.display = "none;";
-                                    slideArrayData.slides[i][o].setAttribute("style", "display:none;");
-                                }
-                                // for (let p = 0; p < eval('dotPs'+i).length; p++) { //i =0 ; 0 < 15; 0++
-
-                                for (let p = 0; p < slideArrayData.dotsLength[i]; p++) { //i =0 ; 0 < 15; 0++
-
-                                    // console.log('========> dotPs.length' + dotPs.length +'\n'+ '======>i ==>'+i);
-                                    // eval('dotPs'+i)[p].className = eval('dotPs'+i)[p].className.replace(" active", ""); // 번갈아가면 해당 번호 active 들어가있는 객체에서 active 모두 빼준다.
-                                    // dots[i].className = dots[i].className.replace(" active", ""); // 번갈아가면 해당 번호 active 들어가있는 객체에서 active 모두 빼준다.
-                                    // console.log('=============== > ============> =========== > '+slideArrayData.dots[i][p].className);
-                                    // console.log(slideArrayData.dots[i][p].className.replace(" active", ""));
-
-                                    slideArrayData.dots[i][p].className = slideArrayData.dots[i][p].className.replace(" active", "");
-                                    // slideArrayData.dots[i][p].classList.replace(" active", "");
-
-                                    // if (slideArrayData.dots[i][p].classList.contains("active")){
-                                    // slideArrayData.dots[i][p].classList.remove("active");
-                                    // }
-                                }
-
-                                // console.log('n=========>' + n + '\n' + 'i----------->' + i);
+                                // slideIndex++;
+                                // eval('slideIndex'+i+'++;');
 
 
-                                // eval('slides'+i)[n].style.display = "block"; // n번 슬라이드 켜주기
-                                slideArrayData.slides[i][n].style.display = "block";
-                                // eval('dotPs'+i)[n].className += " active"; // n번 active 구슬 켜주기
-                                slideArrayData.dots[i][n].className += " active";
-                            }  //End of  function showSlides(n)
+                                // slideArrayData.slideIndex.splice(i,1,slideArrayData.slideIndex++);
+
+                                // console.log('setInterval에서의 slideArrayData.slideIndex[i] =====>>>>>'+slideArrayData.slideIndex[i]);
+                                // console.log('setInterval에서의 slideArrayData.slideIndex[i] 타입 =====>>>>>'+typeof slideArrayData.slideIndex[i]);
 
 
-                            var section = document.createElement('section');//rrr
-                            section.classList.add('py-5');
-                            document.getElementById('slideshow-container' + i).append(section);
+                                showSlides(slideArrayData.slideIndex[i]); // i가 인이입되서 진행
+                                // showSlides(slideArrayData.slides[imageCounter]); // i가 인이입되서 진행
+                                // console.log('=============After showSlides');
+                                // console.log('-----END OF FUNCTION----------END OF FUNCTION----------END OF FUNCTION-----');
+                                // slideIndex++;
+                                slideArrayData.slideIndex[i] = slideArrayData.slideIndex[i] + Number(1); // i++ 증가
+                                // slideArrayData.slides[imageCounter] = slideArrayData.slides[imageCounter]+Number(1); // i++ 증가
 
-                            var container = document.createElement('div');
-                            container.classList.add('container');
-                            container.classList.add('px-4');
-                            container.classList.add('px-lg-5');
-                            // container.classList.add('mt-5');
-                            section.append(container);
+                            }, sec); //시간마다z`
 
-                            var row = document.createElement('div');
-                            row.classList.add('row');
-                            row.classList.add('gx-4');
-                            row.classList.add('gx-lg-5');
-                            row.classList.add('row-cols-md-3');
-                            row.classList.add('row-cols-xl-4');
-                            row.classList.add('justify-content-center');
-                            container.append(row);
+                            // showSlides(eval('slideIndex'+i));
+                        } else {
+                            // console.log(' 이미지가 없는 지점패스 ');
+                        }
 
-                            var col = document.createElement('div');
-                            col.classList.add('col');
-                            col.classList.add('mb-5');
-                            row.append(col);
+                        async function showSlides(n) { // 0 이라면
+                            'use strict';
 
-                            var card = document.createElement('div');
-                            card.classList.add('card');
-                            card.classList.add('h-100');
-                            col.append(card);
+                            // console.log('최초 인입된 n === > ' +n); // 5이상 들어와도
+                            // console.log('최초 인입된 n === > ' +typeof n);
+                            // console.log('slideArrayData.size[i]=====>'+slideArrayData.size[i]);
+                            // console.log('slideArrayData.size[i] TYPE=== > ' +typeof slideArrayData.size[i]);
 
-                            <!-- BranchOffice details-->
+                            // if ((n + 1) > eval('size'+i)) { // 0+1 > slides = 15ea // 넘버가 슬라이드 갯수보다 크다면 초기화
+                            if ((n + 1) > slideArrayData.size[i]) { // 0+1 > slides = 15ea // 넘버가 슬라이드 갯수보다 크다면 초기화                                   eval('slideIndex'+i+'=0;')  // 0
+                                // console.log('-----if--(n + 1) > slideArrayData.size[i]------'+(n + 1)+'(-n+1-)'+slideArrayData.size[i]);
+                                n = 0; // 0
+                                slideArrayData.slideIndex[i] = 0;
+                                // slideArrayData.slides[imageCounter] = 0;
+                                // console.log('After  N=====>' + n);
+                                // console.log('if ((n + 1) > size) ====> n === >'+n+'\n ===> size '+size);
+                            } else if (n < 0) {  // 0<0  N이 0보다 작다면 // -? 탈일은 없는데
+                                // slideIndex = (size - 1); // 인덱스는 15-1
+                                // eval('slideIndex'+i+'=(size'+i+'-1);');
+                                // console.log('----else-if-------------------');
+                                slideArrayData.slideIndex[i] = slideArrayData.size[i] - 1;
+                                // console.log('slideArrayData.slideIndex[i] = slideArrayData.size[i] - 1;===> '+slideArrayData.slideIndex[i]);
 
-                            var cardBody = document.createElement('div');
-                            cardBody.classList.add('card-body');
-                            cardBody.classList.add('p-4');
-                            card.append(cardBody);
+                                // n = (size - 1); // n = 15 -1
+                                // n = (eval('size'+i) - 1); // n = 15 -1
+                                n = slideArrayData.size[i] - 1;
+                                // console.log('After Else if ======>'+ n);
 
-                            var textBox = document.createElement('div');
-                            textBox.classList.add('text-center');
-                            cardBody.append(textBox);
+                                // console.log('if ((n + 1) > size) ====> n === >'+n+'\n ===> size '+size+'\n ===> slideIndex '+slideIndex  );
+                            } else {
+                                // console.log('-----------------else------------------------------');
+                            }
+                            // console.log('NNNNNNNNNNNNNNNNNNNN ==========> ++++++++====>'+n);
+                            // console.log('slideArrayData.slideLength[i]----------------->'+slideArrayData.slideLength[i]);
+                            // console.log('slideArrayData.slideLength[i]----------------->'+typeof slideArrayData.slideLength[i]);
+                            // for (let o = 0; o < eval('slides'+i).length; o++) { // i = 0; 0 <15 ; 0++
 
-                            var detailBox = document.createElement('div');
-                            detailBox.setAttribute('style', 'display:none;')
-                            detailBox.classList.add('text-center');
-                            cardBody.append(detailBox);
+                            for (let o = 0; o < slideArrayData.slideLength[i]; o++) { // i = 0; 0 <15 ; 0++
 
-                            <!-- BranchOffice No-->
-                            var branchNo = document.createElement('h9');
-                            branchNo.classList.add('branchOffice_no');
-                            branchNo.classList.add('fw-bolder');
-                            branchNo.setAttribute('id', 'branchOffice_no' + i);
-                            // branchInfo.setAttribute('style','display:none');
-                            branchNo.innerText = branchOfficeSelectList[i].branchoffice_no;
-                            textBox.append(branchNo);
+                                // console.log('========> slides.length' + slides.length +'\n'+ '======>i ==>'+i);
+                                // eval('slides'+i+'[o].style.display = "none";'); //15인덱스 마다 모두 화면 없애준다.
+                                // console.log(' -----------> FOR o ------->FOR o');
+                                // console.log('========i>>>>'+i);
+                                // console.log('========o>>>>'+o);
+                                // slideArrayData.slides[i][o].style.display = "none;";
+                                slideArrayData.slides[i][o].setAttribute("style", "display:none;");
+                            }
+                            // for (let p = 0; p < eval('dotPs'+i).length; p++) { //i =0 ; 0 < 15; 0++
 
-                            <!-- BranchOffice name-->
-                            var branchName = document.createElement('h5');
-                            branchName.classList.add('branchOffice_name');
-                            branchName.classList.add('fw-bolder');
-                            branchName.setAttribute('id', 'branchOffice_name' + i);
-                            branchName.innerText = branchOfficeSelectList[i].branchoffice_name;
-                            textBox.append(branchName);
+                            for (let p = 0; p < slideArrayData.dotsLength[i]; p++) { //i =0 ; 0 < 15; 0++
 
-                            <!-- BranchOffice local-->
-                            var branchLocal = document.createElement('h8');
-                            branchLocal.classList.add('branchOffice_local');
-                            branchLocal.setAttribute('id', 'branchOffice_local' + i);
-                            branchLocal.innerText = branchOfficeSelectList[i].branchoffice_local;
-                            detailBox.append(branchLocal);
+                                // console.log('========> dotPs.length' + dotPs.length +'\n'+ '======>i ==>'+i);
+                                // eval('dotPs'+i)[p].className = eval('dotPs'+i)[p].className.replace(" active", ""); // 번갈아가면 해당 번호 active 들어가있는 객체에서 active 모두 빼준다.
+                                // dots[i].className = dots[i].className.replace(" active", ""); // 번갈아가면 해당 번호 active 들어가있는 객체에서 active 모두 빼준다.
+                                // console.log('=============== > ============> =========== > '+slideArrayData.dots[i][p].className);
+                                // console.log(slideArrayData.dots[i][p].className.replace(" active", ""));
 
-                            <!-- BranchOffice address-->
-                            var branchAddress = document.createElement('h8');
-                            branchAddress.classList.add('branchOffice_address');
-                            branchAddress.setAttribute('id', 'branchOffice_address' + i);
-                            branchAddress.innerText = branchOfficeSelectList[i].branchoffice_address;
-                            detailBox.append(branchAddress);
+                                slideArrayData.dots[i][p].className = slideArrayData.dots[i][p].className.replace(" active", "");
+                                // slideArrayData.dots[i][p].classList.replace(" active", "");
 
-                            <!-- BranchOffice mobile-->
-                            var branchMobile = document.createElement('h8');
-                            branchMobile.classList.add('branchOffice_mobile');
-                            branchMobile.setAttribute('id', 'branchOffice_mobile' + i);
-                            branchMobile.innerText = branchOfficeSelectList[i].branchoffice_mobile;
-                            detailBox.append(branchMobile);
+                                // if (slideArrayData.dots[i][p].classList.contains("active")){
+                                // slideArrayData.dots[i][p].classList.remove("active");
+                                // }
+                            }
 
-                            var cardFooter = document.createElement('div');
-                            cardFooter.classList.add('card-footer');
-                            cardFooter.classList.add('p-4');
-                            cardFooter.classList.add('pt-0');
-                            cardFooter.classList.add('border-top-0');
-                            cardFooter.classList.add('bg-transparent');
-                            card.append(cardFooter);
+                            // console.log('n=========>' + n + '\n' + 'i----------->' + i);
 
-                            var branchButton = document.createElement('div');
-                            branchButton.classList.add('text-center');
-                            card.append(branchButton);
 
-                            var goBranchOfficeDetailBoardBtn = document.createElement('a');
-                            goBranchOfficeDetailBoardBtn.setAttribute('id', 'goBranchOfficeDetailBoard' + i);
-                            goBranchOfficeDetailBoardBtn.classList.add('btn');
-                            goBranchOfficeDetailBoardBtn.classList.add('btn-outline-dark');
-                            goBranchOfficeDetailBoardBtn.classList.add('mt-auto');
-                            goBranchOfficeDetailBoardBtn.innerText = '지점상세';
+                            // eval('slides'+i)[n].style.display = "block"; // n번 슬라이드 켜주기
+                            slideArrayData.slides[i][n].style.display = "block";
+                            // eval('dotPs'+i)[n].className += " active"; // n번 active 구슬 켜주기
+                            slideArrayData.dots[i][n].className += " active";
+                        }  //End of  function showSlides(n)
 
-                            card.append(goBranchOfficeDetailBoardBtn);
-                            document.getElementById('goBranchOfficeDetailBoard' + i).addEventListener('click', goBranchOfficeDetailBoard);
-                            // eval("let slideIndex"+i+"=0");
-                            // var slideIndex = 0; //slide index //sss
 
-                            // showSlides(slideIndex);
+                        var section = document.createElement('section');//rrr
+                        section.classList.add('py-5');
+                        document.getElementById('slideshow-container' + i).append(section);
 
-                            /*
-                                                    for (let p = 0; p < dots.length; p++) {
+                        var container = document.createElement('div');
+                        container.classList.add('container');
+                        container.classList.add('px-4');
+                        container.classList.add('px-lg-5');
+                        // container.classList.add('mt-5');
+                        section.append(container);
 
-                                                        var slide_num = Number(p);
+                        var row = document.createElement('div');
+                        row.classList.add('row');
+                        row.classList.add('gx-4');
+                        row.classList.add('gx-lg-5');
+                        row.classList.add('row-cols-md-3');
+                        row.classList.add('row-cols-xl-4');
+                        row.classList.add('justify-content-center');
+                        container.append(row);
 
-                                                        dots.item(p).addEventListener('click', currentSlide(slide_num));
-                                                        // dots.item(p).addEventListener('click',function (slide_num) {
-                                                        //     console.log('currentSlide===> 동작');
-                                                        //     slideIndex = slide_num;
-                                                        //     console.log('slideIndex====>'+slideIndex);
-                                                        //     showSlides(slideIndex);
-                                                        //
-                                                        // });
-                                                    }
-                                                    */
+                        var col = document.createElement('div');
+                        col.classList.add('col');
+                        col.classList.add('mb-5');
+                        row.append(col);
+
+                        var card = document.createElement('div');
+                        card.classList.add('card');
+                        card.classList.add('h-100');
+                        col.append(card);
+
+                        <!-- BranchOffice details-->
+
+                        var cardBody = document.createElement('div');
+                        cardBody.classList.add('card-body');
+                        cardBody.classList.add('p-4');
+                        card.append(cardBody);
+
+                        var textBox = document.createElement('div');
+                        textBox.classList.add('text-center');
+                        cardBody.append(textBox);
+
+                        var detailBox = document.createElement('div');
+                        detailBox.setAttribute('style', 'display:none;')
+                        detailBox.classList.add('text-center');
+                        cardBody.append(detailBox);
+
+                        <!-- BranchOffice No-->
+                        var branchNo = document.createElement('h9');
+                        branchNo.classList.add('branchOffice_no');
+                        branchNo.classList.add('fw-bolder');
+                        branchNo.setAttribute('id', 'branchOffice_no' + i);
+                        // branchInfo.setAttribute('style','display:none');
+                        branchNo.innerText = branchOfficeSelectList[i].branchoffice_no;
+                        textBox.append(branchNo);
+
+                        <!-- BranchOffice name-->
+                        var branchName = document.createElement('h5');
+                        branchName.classList.add('branchOffice_name');
+                        branchName.classList.add('fw-bolder');
+                        branchName.setAttribute('id', 'branchOffice_name' + i);
+                        branchName.innerText = branchOfficeSelectList[i].branchoffice_name;
+                        textBox.append(branchName);
+
+                        <!-- BranchOffice local-->
+                        var branchLocal = document.createElement('h8');
+                        branchLocal.classList.add('branchOffice_local');
+                        branchLocal.setAttribute('id', 'branchOffice_local' + i);
+                        branchLocal.innerText = branchOfficeSelectList[i].branchoffice_local;
+                        detailBox.append(branchLocal);
+
+                        <!-- BranchOffice address-->
+                        var branchAddress = document.createElement('h8');
+                        branchAddress.classList.add('branchOffice_address');
+                        branchAddress.setAttribute('id', 'branchOffice_address' + i);
+                        branchAddress.innerText = branchOfficeSelectList[i].branchoffice_address;
+                        detailBox.append(branchAddress);
+
+                        <!-- BranchOffice mobile-->
+                        var branchMobile = document.createElement('h8');
+                        branchMobile.classList.add('branchOffice_mobile');
+                        branchMobile.setAttribute('id', 'branchOffice_mobile' + i);
+                        branchMobile.innerText = branchOfficeSelectList[i].branchoffice_mobile;
+                        detailBox.append(branchMobile);
+
+                        var cardFooter = document.createElement('div');
+                        cardFooter.classList.add('card-footer');
+                        cardFooter.classList.add('p-4');
+                        cardFooter.classList.add('pt-0');
+                        cardFooter.classList.add('border-top-0');
+                        cardFooter.classList.add('bg-transparent');
+                        card.append(cardFooter);
+
+                        var branchButton = document.createElement('div');
+                        branchButton.classList.add('text-center');
+                        card.append(branchButton);
+
+                        var goBranchOfficeDetailBoardBtn = document.createElement('a');
+                        goBranchOfficeDetailBoardBtn.setAttribute('id', 'goBranchOfficeDetailBoard' + i);
+                        goBranchOfficeDetailBoardBtn.classList.add('btn');
+                        goBranchOfficeDetailBoardBtn.classList.add('btn-outline-dark');
+                        goBranchOfficeDetailBoardBtn.classList.add('mt-auto');
+                        goBranchOfficeDetailBoardBtn.innerText = '지점상세';
+
+                        card.append(goBranchOfficeDetailBoardBtn);
+                        document.getElementById('goBranchOfficeDetailBoard' + i).addEventListener('click', goBranchOfficeDetailBoard);
+                        // eval("let slideIndex"+i+"=0");
+                        // var slideIndex = 0; //slide index //sss
+
+                        // showSlides(slideIndex);
+
+                        /*
+                                                for (let p = 0; p < dots.length; p++) {
+
+                                                    var slide_num = Number(p);
+
+                                                    dots.item(p).addEventListener('click', currentSlide(slide_num));
+                                                    // dots.item(p).addEventListener('click',function (slide_num) {
+                                                    //     console.log('currentSlide===> 동작');
+                                                    //     slideIndex = slide_num;
+                                                    //     console.log('slideIndex====>'+slideIndex);
+                                                    //     showSlides(slideIndex);
+                                                    //
+                                                    // });
+                                                }
+                                                */
                     } //End of for ==>지점이 몇개인지 반복<== (let i = 0; i < branchOfficeSelectList.length; i++) {
                     // var slideIndex = 0; //slide index //sss
 
@@ -1052,11 +1052,10 @@ function goBranchOfficeListBoardAction() {
 }
 
 function stopInterval() {
-    for (var i = 0 ; i < 100 ; i++) {
+    for (var i = 0; i < 100; i++) {
         clearInterval(i);
     }
 }
-
 
 
 /////////////
@@ -1454,70 +1453,70 @@ function requestPay(e) {
 }
 
 function varInitial() {
-    tr_code                 = '' ;
-    poolBase                =  0;
-    p_sid                   =  '';
-    sid                     =  '';
+    tr_code = '';
+    poolBase = 0;
+    p_sid = '';
+    sid = '';
 
-    member_name             =  '';
+    member_name = '';
 
-    reserv_no               =  '';
-    reserv_date             =  '';
-    reserv_hostcode         =  '';
-    reserv_start_time       =  '';
-    reserv_end_time         =  '';
-    reserv_host_mobile      =  '';
-    reserv_paystatement     =  '';
-    reserv_regdate          =  '';
-    reserv_host_email       =  '';
-    reserv_updatedate       =  '';
-    reserv_pay_limited      =  '';
-    reserv_space            =  '';
-    reserv_del_sign         =  '';
+    reserv_no = '';
+    reserv_date = '';
+    reserv_hostcode = '';
+    reserv_start_time = '';
+    reserv_end_time = '';
+    reserv_host_mobile = '';
+    reserv_paystatement = '';
+    reserv_regdate = '';
+    reserv_host_email = '';
+    reserv_updatedate = '';
+    reserv_pay_limited = '';
+    reserv_space = '';
+    reserv_del_sign = '';
 
-    qna_no                  =  '';
-    qna_recomment_no        =  '';
-    qna_recomment_writer    =  '';
-    qna_recomment_content   =  '';
+    qna_no = '';
+    qna_recomment_no = '';
+    qna_recomment_writer = '';
+    qna_recomment_content = '';
 
-    branchoffice_no         =  '';
-    branchoffice_name       =  '';
-    branchoffice_local      =  '';
-    branchoffice_address    =  '';
-    branchoffice_mobile     =  0;
+    branchoffice_no = '';
+    branchoffice_name = '';
+    branchoffice_local = '';
+    branchoffice_address = '';
+    branchoffice_mobile = 0;
 
 
-    space_no                =  '';
-    space_name              =  '';
-    space_description       =  '';
-    space_capacity          =  0;
-    space_maxpeople         =  0;
-    space_basicprice        =  0;
-    spaceUpdateButton       =  '';
-    spaceUpdateSubmitButton =  '';
-    spaceUpdateAbortButton  =  '';
-    spaceAddSubmitButton    =  '';
-    spaceDeleteButton       =  '';
-    spaceBookButton         =  '';
-    spaceBookSubmitButton   =  '';
-    spaceBookAbortButton    =  '';
+    space_no = '';
+    space_name = '';
+    space_description = '';
+    space_capacity = 0;
+    space_maxpeople = 0;
+    space_basicprice = 0;
+    spaceUpdateButton = '';
+    spaceUpdateSubmitButton = '';
+    spaceUpdateAbortButton = '';
+    spaceAddSubmitButton = '';
+    spaceDeleteButton = '';
+    spaceBookButton = '';
+    spaceBookSubmitButton = '';
+    spaceBookAbortButton = '';
 
-    imgFile                 =  '';
-    stored_file_name        =  '';
-    DownloadQnaFileFormData = '' ;
-    image                   = '' ;
-    reader                  = '' ;
-    img                     = '' ;
-    choosenDate             =  '';
+    imgFile = '';
+    stored_file_name = '';
+    DownloadQnaFileFormData = '';
+    image = '';
+    reader = '';
+    img = '';
+    choosenDate = '';
 
-    pg                      =  '';
-    pay_method              = '' ;
-    merchant_uid            = '' ;
-    name                    = '' ;
-    amount                  =  0;
-    buyer_email             =  '';
-    buyer_name              =  '';
-    buyer_tel               =  '';
+    pg = '';
+    pay_method = '';
+    merchant_uid = '';
+    name = '';
+    amount = 0;
+    buyer_email = '';
+    buyer_name = '';
+    buyer_tel = '';
 
     slideArrayData = {
         slides: [],
@@ -1527,4 +1526,84 @@ function varInitial() {
         slideLength: [],
         dotsLength: []
     }
+}
+
+
+function Reserv_filterSelect() {
+    var reserv_select_opcode = [];
+    var p_reserv_select_opcode = new Map();
+    var wantSearchWored = document.getElementById('reserv_search_input').value;
+    for (let i = 0; i < document.getElementsByTagName('tbody').length; i++) {
+
+        document.getElementsByTagName('tbody').item(i).remove();
+    }
+
+    if (document.getElementById('reserv_search_detailCheckBox_reserv_no_input').checked
+    ){
+        p_reserv_select_opcode.set("reserv_no_box","checked");
+    }
+
+    if(document.getElementById('reserv_search_detailCheckBox_space_no_input').checked
+    ){
+        p_reserv_select_opcode.set("space_no_box","checked");
+    }
+
+    if(document.getElementById('reserv_search_detailCheckBox_reserv_date_input').checked
+    ){
+        p_reserv_select_opcode.set("reserv_date_box","checked");
+    }
+
+    if(document.getElementById('reserv_search_detailCheckBox_reserv_start_time_input').checked
+    ){
+        p_reserv_select_opcode.set("reserv_start_time_box","checked");
+    }
+
+    if(document.getElementById('reserv_search_detailCheckBox_reserv_end_time_input').checked
+    ){
+        p_reserv_select_opcode.set("reserv_end_time_box","checked");
+    }
+
+    if(document.getElementById('reserv_search_detailCheckBox_reserv_host_mobile_input').checked
+    ){
+        p_reserv_select_opcode.set("reserv_host_mobile_box","checked");
+    }
+
+    if(document.getElementById('reserv_search_detailCheckBox_reserv_host_email_input').checked
+    ){
+        p_reserv_select_opcode.set("reserv_host_email_box","checked");
+    }
+
+    if(document.getElementById('reserv_search_detailCheckBox_reserv_hostcode_input').checked
+    ){
+        p_reserv_select_opcode.set("reserv_hostcode_box","checked");
+    }
+
+    if(document.getElementById('reserv_search_detailCheckBox_reserv_paystatement_input').value!='paystatement'
+    ){
+        p_reserv_select_opcode.set("reserv_paystatement_box",document.getElementById('reserv_search_detailCheckBox_reserv_paystatement_input').value);
+    }
+
+    if(document.getElementById('reserv_search_input').value!=null
+    ){
+        p_reserv_select_opcode.set("wantSearchWord_box",document.getElementById('reserv_search_input').value);
+    }
+
+    for (let param of p_reserv_select_opcode)
+        reserv_select_opcode.push(param);
+    console.log(reserv_select_opcode);
+    console.log(JSON.stringify({reserv_select_opcode}));
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            alert('aa');
+
+        }
+    }
+    reserv_select_opcode
+    xhr.open('POST', 'reservation/selectAll');
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.send(reserv_select_opcode[0]);
+
 }
