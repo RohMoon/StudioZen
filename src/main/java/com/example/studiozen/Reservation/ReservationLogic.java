@@ -168,4 +168,16 @@ public class ReservationLogic {
         return result;
 
     }
+
+    /* 자동 완성기능 로직*/
+    public List<ReservationDTO> AutoFilled(ReservationDTO reservationDTO) {
+        List<ReservationDTO> reservationSelectList = null;
+        try {
+            reservationSelectList = reservationDAO.AutoFilled(reservationDTO);
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+        }
+        return reservationSelectList;
+
+    }
 }

@@ -17,7 +17,7 @@ public class ReservationDTO extends SpaceDTO {
     private String reserv_space;
     private String reserv_pay_limited;
     private String reserv_del_sign;
-    private String wantSearchWord;
+    private String wantSearchWord_box;
     private String reserv_no_box;
     private String space_no_box;
     private String reserv_date_box;
@@ -100,12 +100,12 @@ public class ReservationDTO extends SpaceDTO {
         this.reserv_paystatement_box = reserv_paystatement_box;
     }
 
-    public String getWantSearchWord() {
-        return wantSearchWord;
+    public String getWantSearchWord_box() {
+        return wantSearchWord_box;
     }
 
-    public void setWantSearchWord(String wantSearchWord) {
-        this.wantSearchWord = wantSearchWord;
+    public void setWantSearchWord_box(String wantSearchWord_box) {
+        this.wantSearchWord_box = wantSearchWord_box;
     }
 
     @Override
@@ -135,7 +135,6 @@ public class ReservationDTO extends SpaceDTO {
     public void setReserv_no(String reserv_no) {
         this.reserv_no = reserv_no;
     }
-
 
     @Override
     public String getSpace_no() {
@@ -261,22 +260,32 @@ public class ReservationDTO extends SpaceDTO {
 
     @Override
     public String toString() {
-        return "\n tr_code ====>" + getTr_code() + "\n" +
-                "\n Space_no() ====>" + getSpace_no() + "\n" +
-                "reserv_no       === > " + reserv_no + "\n" +
-                "reserv_hostcode       === > " + reserv_hostcode + "\n" +
-                "reserv_date       === > " + reserv_date + "\n" +
-                "reserv_start_time       === > " + reserv_start_time + "\n" +
-                "reserv_end_time       === > " + reserv_end_time + "\n" +
-                "reserv_host_mobile       === > " + reserv_host_mobile + "\n" +
-                "reserv_paystatement       === > " + reserv_paystatement + "\n" +
-                "reserv_host_email       === > " + reserv_host_email + "\n" +
-                "reserv_updatedate       === > " + reserv_updatedate + "\n" +
-                "reserv_del_reason       === > " + reserv_del_reason + "\n" +
-                "reserv_hostname       === > " + reserv_hostname + "\n" +
-                "reserv_space       === > " + reserv_space + "\n" +
-                "paylimitedtime       === > " + reserv_pay_limited + "\n" +
-                "reserv_del_sign    ==== > " + reserv_del_sign
-                ;
+        return "\nReservationDTO{" +
+                "reserv_no='" + reserv_no + '\'' +                              '\n'+
+                ", reserv_hostcode='" + reserv_hostcode + '\'' +                '\n'+
+                ", reserv_date='" + reserv_date + '\'' +                        '\n'+
+                ", reserv_regdate='" + reserv_regdate + '\'' +                  '\n'+
+                ", reserv_start_time='" + reserv_start_time + '\'' +            '\n'+
+                ", reserv_end_time='" + reserv_end_time + '\'' +                '\n'+
+                ", reserv_host_mobile='" + reserv_host_mobile + '\'' +          '\n'+
+                ", reserv_paystatement='" + reserv_paystatement + '\'' +        '\n'+
+                ", reserv_host_email='" + reserv_host_email + '\'' +            '\n'+
+                ", reserv_updatedate='" + reserv_updatedate + '\'' +            '\n'+
+                ", reserv_del_reason='" + reserv_del_reason + '\'' +            '\n'+
+                ", reserv_hostname='" + reserv_hostname + '\'' +                '\n'+
+                ", reserv_space='" + reserv_space + '\'' +                      '\n'+
+                ", reserv_pay_limited='" + reserv_pay_limited + '\'' +          '\n'+
+                ", reserv_del_sign='" + reserv_del_sign + '\'' +                '\n'+
+                ", wantSearchWord='" + wantSearchWord_box + '\'' +                  '\n'+
+                ", reserv_no_box='" + reserv_no_box + '\'' +                    '\n'+
+                ", space_no_box='" + space_no_box + '\'' +                      '\n'+
+                ", reserv_date_box='" + reserv_date_box + '\'' +                '\n'+
+                ", reserv_start_time_box='" + reserv_start_time_box + '\'' +    '\n'+
+                ", reserv_end_time_box='" + reserv_end_time_box + '\'' +        '\n'+
+                ", reserv_host_mobile_box='" + reserv_host_mobile_box + '\'' +  '\n'+
+                ", reserv_host_email_box='" + reserv_host_email_box + '\'' +    '\n'+
+                ", reserv_hostcode_box='" + reserv_hostcode_box + '\'' +        '\n'+
+                ", reserv_paystatement_box='" + reserv_paystatement_box + '\'' +'\n'+
+                '}';
     }
 }

@@ -1530,80 +1530,114 @@ function varInitial() {
 
 
 function Reserv_filterSelect() {
-    var reserv_select_opcode = [];
-    var p_reserv_select_opcode = new Map();
-    var wantSearchWored = document.getElementById('reserv_search_input').value;
-    for (let i = 0; i < document.getElementsByTagName('tbody').length; i++) {
+    // var reserv_select_opcode = new Array();
+    let p_reserv_select_opcode = new Map();
+    var wantSearchWord_box = document.getElementById('reserv_search_input').value;
 
-        document.getElementsByTagName('tbody').item(i).remove();
-    }
+    // for (let i = 0; i < document.getElementsByTagName('tbody').length; i++) {
+    //
+    //     document.getElementsByTagName('tbody').item(i).remove();
+    // }
 
     if (document.getElementById('reserv_search_detailCheckBox_reserv_no_input').checked
     ){
         p_reserv_select_opcode.set("reserv_no_box","checked");
+        // reserv_select_opcode.push("reserv_no_box","checked");
     }
 
     if(document.getElementById('reserv_search_detailCheckBox_space_no_input').checked
     ){
         p_reserv_select_opcode.set("space_no_box","checked");
+        // reserv_select_opcode.push("space_no_box","checked");
     }
 
     if(document.getElementById('reserv_search_detailCheckBox_reserv_date_input').checked
     ){
         p_reserv_select_opcode.set("reserv_date_box","checked");
+        // reserv_select_opcode.push("reserv_date_box","checked");
     }
 
     if(document.getElementById('reserv_search_detailCheckBox_reserv_start_time_input').checked
     ){
         p_reserv_select_opcode.set("reserv_start_time_box","checked");
+        // reserv_select_opcode.push("reserv_start_time_box","checked");
     }
 
     if(document.getElementById('reserv_search_detailCheckBox_reserv_end_time_input').checked
     ){
         p_reserv_select_opcode.set("reserv_end_time_box","checked");
+        // reserv_select_opcode.push("reserv_start_time_box","checked");
     }
 
     if(document.getElementById('reserv_search_detailCheckBox_reserv_host_mobile_input').checked
     ){
         p_reserv_select_opcode.set("reserv_host_mobile_box","checked");
+        // reserv_select_opcode.push("reserv_host_mobile_box","checked");
     }
 
     if(document.getElementById('reserv_search_detailCheckBox_reserv_host_email_input').checked
     ){
         p_reserv_select_opcode.set("reserv_host_email_box","checked");
+        // reserv_select_opcode.push("reserv_host_email_box","checked");
     }
 
     if(document.getElementById('reserv_search_detailCheckBox_reserv_hostcode_input').checked
     ){
         p_reserv_select_opcode.set("reserv_hostcode_box","checked");
+        // reserv_select_opcode.push("reserv_hostcode_box","checked");
     }
 
     if(document.getElementById('reserv_search_detailCheckBox_reserv_paystatement_input').value!='paystatement'
     ){
         p_reserv_select_opcode.set("reserv_paystatement_box",document.getElementById('reserv_search_detailCheckBox_reserv_paystatement_input').value);
+        // reserv_select_opcode.push("reserv_paystatement_box",document.getElementById('reserv_search_detailCheckBox_reserv_paystatement_input').value);
     }
 
     if(document.getElementById('reserv_search_input').value!=null
     ){
         p_reserv_select_opcode.set("wantSearchWord_box",document.getElementById('reserv_search_input').value);
+        // reserv_select_opcode.push("wantSearchWord_box",document.getElementById('reserv_search_input').value);
     }
+    // console.log(p_reserv_select_opcode);
+    //
+    // for (let param of p_reserv_select_opcode){
+    //     reserv_select_opcode.push(param);
+    // }
+    // console.log(reserv_select_opcode);
+    // console.log(p_reserv_select_opcode);
 
-    for (let param of p_reserv_select_opcode)
-        reserv_select_opcode.push(param);
-    console.log(reserv_select_opcode);
-    console.log(JSON.stringify({reserv_select_opcode}));
+    // var obj = Object.fromEntries(p_reserv_select_opcode);
+    p_reserv_select_opcode.set('reserv_hostcode',sessionStorage.sid.split("=")[1]);
 
     var xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+            document.getElementById('managementDashBoard').remove();
             alert('aa');
-
+            document.getElementById('mainPanel').innerHTML=xhr.response;
         }
     }
-    reserv_select_opcode
+    console.log(JSON.stringify(p_reserv_select_opcode));
+    console.log(JSON.stringify(Object.fromEntries(p_reserv_select_opcode)));
+    // reserv_select_opcode
     xhr.open('POST', 'reservation/selectAll');
     xhr.setRequestHeader('Content-type', 'application/json');
-    xhr.send(reserv_select_opcode[0]);
+    xhr.send(JSON.stringify(Object.fromEntries(p_reserv_select_opcode)));
+
+}
+
+
+function AutoFilled() {
+
+    var pressedKey= document.getElementById('reserv_search_input').value;
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+
+    }
+    xhr.open('GET','reservation/autofilled?pressedKey='+pressedKey);
+    // xhr.setRequestHeader('Content-type', 'application');
+    xhr.send();
 
 }

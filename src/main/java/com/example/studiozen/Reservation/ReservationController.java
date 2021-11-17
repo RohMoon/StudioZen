@@ -38,8 +38,8 @@ public class ReservationController {
      "qna_Content" :  "Method Post TEST Content"
      }
      **********************/
-    @RequestMapping(value = "/selectAll")
-    public ModelAndView ReservationSelect(HttpServletRequest request, @RequestBody(required = false) ReservationDTO reservationDTO) {
+    @PostMapping(value = "/selectAll")
+    public ModelAndView ReservationSelect(HttpServletRequest request, @RequestBody(required = true) ReservationDTO reservationDTO) {
 
         logger.info("\n============>@"+reservationDTO);
 //        ReservationDTO reservationDTO = new ReservationDTO();
@@ -274,5 +274,24 @@ public class ReservationController {
         logger.warn("end");
         return ResponseEntity.ok().build();
     }
+    /* 자동 완성기능 로직*/
+    @PostMapping(value = "/autofilled")
+    public ModelAndView AutoFilled(HttpServletRequest request, @RequestBody(required = true) ReservationDTO reservationDTO) {
 
+        List<ReservationDTO> reservationSelectList =
+
+                reservationLogic.ReservationSelect(reservationDTO);
+
+        request.setAttribute("reservationSelectList", reservationSelectList);
+
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/Management/ManagementDash");
+
+        if (reservationSelectList.size() == 0) {
+            logger.info("nonono");
+            return mv;
+        } else {
+            return mv;
+        }
+    }
 }

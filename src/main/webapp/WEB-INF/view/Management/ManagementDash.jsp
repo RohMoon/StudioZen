@@ -141,7 +141,7 @@
         </div>
 
         <div id="reserv_search_input_div">
-            <input id="reserv_search_input" style="font-size: 1.7rem">
+            <input id="reserv_search_input" style="font-size: 1.7rem" onkeydown="AutoFilled()">
             <button id="reserv_search_button" class="btn btn-primary" style="font-size: 1.7rem" onclick="Reserv_filterSelect()" >검색</button>
         </div>
 
