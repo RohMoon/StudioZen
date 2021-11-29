@@ -9,6 +9,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @ComponentScan
 public class MemberLogic {
@@ -113,6 +115,23 @@ public class MemberLogic {
         }
         logger.info(memberDTO.getResult());
         return result;
+    }
+
+    /*********  회원 검색  *********/
+    public List<MemberDTO> Select(MemberDTO memberDTO){
+        String result = null;
+        List<MemberDTO> memberList = null;
+        try {
+            memberList = memberDAO.Select(memberDTO);
+            result = "Nice";
+
+        }
+        catch (SqlSessionException e){
+            result = "bad";
+            logger.info(e.getStackTrace());
+        }
+//        logger.info(memberDTO.getResult());
+        return memberList;
     }
 
 

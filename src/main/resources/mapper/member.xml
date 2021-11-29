@@ -48,5 +48,21 @@
                )
     </insert>
 
+    <select id="memberSelect" parameterType="com.example.studiozen.DTO.MemberDTO" resultType="com.example.studiozen.DTO.MemberDTO" statementType="PREPARED" >
+        SELECT
+               MEMBER_NO,
+               MEMBER_NAME,
+               MEMBER_MAIL,
+               MEMBER_PHONE,
+               MEMBER_MONEY,
+               MEMBER_REMARK,
+               MEMBER_SIGNDATE,
+               MEMBER_OUTSIGN,
+               MEMBER_PASSWORD,
+               MAILCONFIRM
+        FROM MEMBER_TB
+
+    </select>
+
 
 </mapper>

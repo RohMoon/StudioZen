@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("member")
@@ -190,7 +191,20 @@ public class MemberController {
     }// End of Login Method   // End of Login Method  // End of Login Method
 
 
+    /*********  회원 검색  *********/
+    @GetMapping(value = "/memberSelect" )
+    public List<MemberDTO> Select(HttpServletRequest req, @RequestBody(required = false) MemberDTO memberDTO) {
+
+        List<MemberDTO> memberList = memberLogic.Select(memberDTO);
+        logger.info(String.valueOf(memberList));
+        return memberList;
+
+    }// End of Login Method   // End of Login Method  // End of Login Method
+
 }
+
+
+
 /*
 
     Http 프로토콜 자체가 한번 응답이 끝나 버리면 데이터를 아무것도 유지하지 않습니다.

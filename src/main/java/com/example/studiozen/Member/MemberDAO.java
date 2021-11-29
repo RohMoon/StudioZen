@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class MemberDAO {
     private static Logger logger = LogManager.getLogger(MemberController.class);
@@ -92,6 +94,16 @@ public class MemberDAO {
                         memberDTO.getMember_outSign   () + "=== >Member_OutSign"
         );
         sqlSessionTemplate.selectList("duplicateMailCheck",memberDTO);
+
+    } // end of Member_EmailCertify --  이메일 인증 메소드
+
+
+    /*********  회원 검색  *********/
+    public List<MemberDTO> Select(MemberDTO memberDTO) throws SqlSessionException{
+
+        List<MemberDTO> memberList =  sqlSessionTemplate.selectList("memberSelect",memberDTO);
+
+    return memberList;
 
     } // end of Member_EmailCertify --  이메일 인증 메소드
 

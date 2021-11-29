@@ -55,9 +55,9 @@
             <%--      <span class="text-muted">Something else</span>--%>
         </div>
         <%--    <div class="col-xs-6 col-sm-3 placeholder">--%>
-        <div class="col-xs-6 col-sm-3 ">
+        <div class="col-xs-6 col-sm-3 " style="cursor: pointer" onclick="goMemberListBoardAction()">
             <img src="../images/dash-qna.png" class="img-responsive dash-icon" alt="Generic placeholder thumbnail">
-            <h4>Q&A</h4>
+            <h4>회원 관리</h4>
             <%--      <span class="text-muted">Something else</span>--%>
         </div>
         <%--    <div class="col-xs-6 col-sm-3 placeholder">--%>
@@ -141,8 +141,9 @@
         </div>
 
         <div id="reserv_search_input_div">
-            <input id="reserv_search_input" style="font-size: 1.7rem" onkeydown="AutoFilled()">
+            <input id="reserv_search_input" style="font-size: 1.7rem" onkeyup="AutoFilled()">
             <button id="reserv_search_button" class="btn btn-primary" style="font-size: 1.7rem" onclick="Reserv_filterSelect()" >검색</button>
+            <div id='autoMaker'></div>
         </div>
 
     </div>

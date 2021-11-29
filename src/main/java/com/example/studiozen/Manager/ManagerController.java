@@ -3,6 +3,7 @@ package com.example.studiozen.Manager;
 
 
 import com.example.studiozen.DTO.ManagerDTO;
+import com.example.studiozen.Member.MemberLogic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +15,12 @@ public class ManagerController {
     private static Logger logger = LogManager.getLogger(ManagerController.class);
 
     private final ManagerLogic managerLogic;
-
+    private final MemberLogic memberLogic;
     //생성자 주입
-    public ManagerController(ManagerLogic managerLogic) {
+    public ManagerController(ManagerLogic managerLogic, MemberLogic memberLogic) {
         this.managerLogic = managerLogic;
+
+        this.memberLogic = memberLogic;
     }
 
     /********************************************매니저 정보 관리 기능*****************************************************/
@@ -120,5 +123,8 @@ public class ManagerController {
         }
 
     }// End of DELETE Method   // End of DELETE Method  // End of DELETE Method
+
+
+
 
 }

@@ -74,24 +74,34 @@
         <if test="reserv_hostcode != 'MEM282108'">
             AND BO.RESERV_HOSTCODE = #{reserv_hostcode, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
         </if>
-        <if test="reserv_no_box !=null">
-            And
-            BO.RESERV_NO like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%' </if>
-        <if test="space_no_box !=null">
+
+         <if test="wantSearchWord_box != null and (reserv_no_box == null) and (space_no_box == null) and (reserv_hostcode_box == null) and (reserv_date_box == null) and (reserv_start_time_box == null) and (reserv_end_time_box == null) and (reserv_host_mobile_box == null) and (reserv_host_email_box == null)">
+             AND( BO.RESERV_NO like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'
+             OR BO.SPACE_NO like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'
+             OR BO.RESERV_HOSTCODE like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'
+             OR BO.RESERV_DATE like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'
+             OR BO.RESERV_START_TIME like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'
+             OR BO.RESERV_END_TIME like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'
+             OR BO.RESERV_HOST_MOBILE like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'
+             OR BO.RESERV_HOST_EMAIL like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%')
+             </if>
+        <if test="reserv_no_box != null and wantSearchWord_box != null">
+            And BO.RESERV_NO like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%' </if>
+        <if test="space_no_box != null and wantSearchWord_box != null">
             And BO.SPACE_NO like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'</if>
-        <if test="reserv_hostcode_box !=null">
+        <if test="reserv_hostcode_box != null and wantSearchWord_box != null">
             And BO.RESERV_HOSTCODE like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'</if>
-        <if test="reserv_date_box !=null">
+        <if test="reserv_date_box != null and wantSearchWord_box != null">
             And BO.RESERV_DATE like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'</if>
-        <if test="reserv_start_time_box !=null">
+        <if test="reserv_start_time_box != null and wantSearchWord_box != null">''
             And BO.RESERV_START_TIME like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'</if>
-        <if test="reserv_end_time_box !=null">
+        <if test="reserv_end_time_box != null and wantSearchWord_box != null">
             And BO.RESERV_END_TIME like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'</if>
-        <if test="reserv_host_mobile_box !=null">
+        <if test="reserv_host_mobile_box != null and wantSearchWord_box != null">
             And BO.RESERV_HOST_MOBILE like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'</if>
-        <if test="reserv_host_email_box !=null">
+        <if test="reserv_host_email_box != null and wantSearchWord_box != null">
             And BO.RESERV_HOST_EMAIL like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'</if>
-        <if test="reserv_paystatement_box !=null">
+        <if test="reserv_paystatement_box != null and wantSearchWord_box != null">
             And BO.RESERV_PAYSTATEMENT like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'</if>
     </select>
 
@@ -138,51 +148,51 @@
                       on reserv.SPACE_NO = sp.SPACE_NO
                 where reserv.RESERV_NO = #{reserv_no, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
     </select>
-    <select id="AutoFilled" parameterType="com.example.studiozen.DTO.ReservationDTO" resultType="com.example.studiozen.DTO.ReservationDTO" statementType="PREPARED">
+    <select id="AutoFilled" parameterType="com.example.studiozen.DTO.ReservationDTO" resultType="java.lang.String" statementType="PREPARED">
     SELECT
     RESERV_NO
     FROM RESERVATION_MANAGE_TB
-    where RESERV_NO like '%'||:x||'%'
+    where RESERV_NO like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'
     UNION ALL
     select
     SPACE_NO
     FROM RESERVATION_MANAGE_TB
-    where SPACE_NO like '%'||:x||'%'
+    where SPACE_NO like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'
     UNION ALL
     select
     RESERV_HOSTCODE
     FROM RESERVATION_MANAGE_TB
-    where RESERV_HOSTCODE like '%'||:x||'%'
+    where RESERV_HOSTCODE like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'
     UNION ALL
     select
     TO_CHAR(RESERV_DATE)
     FROM RESERVATION_MANAGE_TB
-    where TO_CHAR(RESERV_DATE) like '%'||:x||'%'
+    where TO_CHAR(RESERV_DATE) like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'
     UNION ALL
     select
     to_char(RESERV_START_TIME)
     FROM RESERVATION_MANAGE_TB
-    where to_char(RESERV_START_TIME) like '%'||:x||'%'
+    where to_char(RESERV_START_TIME) like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'
     UNION ALL
     select
     to_char(RESERV_END_TIME)
     FROM RESERVATION_MANAGE_TB
-    where to_char(RESERV_END_TIME) like '%'||:x||'%'
+    where to_char(RESERV_END_TIME) like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'
     UNION ALL
     select
     TO_CHAR(RESERV_HOST_MOBILE)
     FROM RESERVATION_MANAGE_TB
-    where TO_CHAR(RESERV_HOST_MOBILE) like '%'||:x||'%'
+    where TO_CHAR(RESERV_HOST_MOBILE) like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'
     UNION ALL
     select
     TO_CHAR(RESERV_REGDATE)
     FROM RESERVATION_MANAGE_TB
-    where TO_CHAR(RESERV_REGDATE) like '%'||:x||'%'
+    where TO_CHAR(RESERV_REGDATE) like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'
     UNION ALL
     select
     RESERV_HOST_EMAIL
     FROM RESERVATION_MANAGE_TB
-    where RESERV_HOST_EMAIL like '%'||:x||'%'
+    where RESERV_HOST_EMAIL like '%'||#{wantSearchWord_box, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}||'%'
     </select>
 
 </mapper>

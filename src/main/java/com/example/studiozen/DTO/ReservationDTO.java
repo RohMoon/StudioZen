@@ -276,7 +276,7 @@ public class ReservationDTO extends SpaceDTO {
                 ", reserv_space='" + reserv_space + '\'' +                      '\n'+
                 ", reserv_pay_limited='" + reserv_pay_limited + '\'' +          '\n'+
                 ", reserv_del_sign='" + reserv_del_sign + '\'' +                '\n'+
-                ", wantSearchWord='" + wantSearchWord_box + '\'' +                  '\n'+
+                ", wantSearchWord_box='" + wantSearchWord_box + '\'' +                  '\n'+
                 ", reserv_no_box='" + reserv_no_box + '\'' +                    '\n'+
                 ", space_no_box='" + space_no_box + '\'' +                      '\n'+
                 ", reserv_date_box='" + reserv_date_box + '\'' +                '\n'+

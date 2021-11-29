@@ -967,7 +967,6 @@ function goBranchOfficeListBoardAction() {
 
                     /*
 
-                    // Next/previous controls
                                         function moveSlides(n) {
                                             slideIndex = slideIndex + n
                                             showSlides(slideIndex);
@@ -1614,11 +1613,11 @@ function Reserv_filterSelect() {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             document.getElementById('managementDashBoard').remove();
-            alert('aa');
+            alert('xhr.response');
             document.getElementById('mainPanel').innerHTML=xhr.response;
         }
     }
-    console.log(JSON.stringify(p_reserv_select_opcode));
+    // console.log(JSON.stringify(p_reserv_select_opcode));
     console.log(JSON.stringify(Object.fromEntries(p_reserv_select_opcode)));
     // reserv_select_opcode
     xhr.open('POST', 'reservation/selectAll');
@@ -1627,17 +1626,402 @@ function Reserv_filterSelect() {
 
 }
 
+/*
 
-function AutoFilled() {
+function findMatches(wordToMatch, autoFilledList) {
+    return autoFilledList.filter(function (autoFilledListPaper) {
+        const regex = new RegExp(wordToMatch, 'gi');
+        return autoFilledListPaper.match(regex)
+    });
+}
 
-    var pressedKey= document.getElementById('reserv_search_input').value;
+function displayInputValue() {
+    const matchedArray = findMatches(this.value, autoFilledListPaper);
+}
 
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
+*/
 
+async function AutoFilled() {
+    autoFilledList = [];
+
+    var wantSearchWord_box = document.getElementById('reserv_search_input').value;
+
+
+    fetch('reservation/autofilled?wantSearchWord_box='+wantSearchWord_box)
+        .then(function (res) {
+           return res.json();
+        })
+        .then(function (res) {
+            for (let i = 0; i < document.getElementById('autoMaker').childNodes.length; i++) {
+                document.getElementById('autoMaker').childNodes.item(i).remove();
+            }
+                console.log(res);
+            autoFilledList.push(...res);
+            console.log('====##'+autoFilledList);
+            // document.getElementById('autoMaker').append(document.createElement('div').innerText);
+            // displayInputValue(wantSearchWord_box,autoFilledList);
+            for (let i = 0; i < autoFilledList.length; i++) {
+                document.getElementById('autoMaker').append(document.createElement('div'));
+                document.getElementById('autoMaker').lastElementChild.setAttribute('id','recommendWord'+i);
+                document.getElementById('autoMaker').lastElementChild.classList.add('automakerDiv');
+                document.getElementById('autoMaker').lastElementChild.textContent = autoFilledList[i];
+                document.getElementById('autoMaker').children.item(i).addEventListener('click',function () {
+                document.getElementById('reserv_search_input').value = this.textContent;
+                });
+            }
+               return autoFilledList;
+        })
+        .catch(function () {
+            console.log("error:",onmessageerror);
+        })
+
+    //fetch() 기본 문법
+    // let promise = fetch('reservation/autofilled?wantSearchWord_box='+wantSearchWord_box,get)
+    /*
+    * let promise = fetch(url, [options])
+    * url = 접근하고자 하는 URL
+    * options - 선택 매개 변수, method나 header등 을 지정할 수 있음.
+    *
+    * options에 아무것도 없으면 요청은 GET 메소드로 진행 되어 URL 로부터 콘텐츠가 다운로드 됩니다.
+    *
+    * fetch()를 호출하면 브라우저는 네트워크 요청을 보내고 프로미스가 반환됩니다.
+    * 반환되는 프로미스는 fetch()를 호출하는 코드에서 사용됩니다.
+    *
+    * 응답은 대게 두단계를 거쳐서 진행됩니다.
+    *
+    * 먼저, 서버에서 응답 헤더를 받자마자 fetch 호출시 반환받은 promise가 내장 클래스 Response의 인스턴스와 함께 이행상태가 된다.
+    *
+    * 이 단계는 아직 본문(body)이 도착하기 전이지만, 개발자는 응답 헤더를 보고 요청이 성공적으로 처리 되었는지 아닌지 확인할 수 있습니다.
+    *
+    * 네트워크 문제나 존재하지 않는 사이트에 접속하려는 경우 같이 HTTP 요청을 보낼 수 없는 상태에선 프로미스는 거부상태가 됩니다.
+    *
+    * HTTP 상태는 응답 프로퍼티를 사용해 확인할 수 있습니다.
+    *
+    *  - Status : HTTP 상태코드 (예:200)
+    *  - Ok : 불린 값 , HTTP 상태 코드가 200과 299 사이일 경우 true
+    *
+    * 예시 :
+    *
+    * */
+/*
+    let responese = await fetch('reservation/autofilled?wantSearchWord_box=' + wantSearchWord_box);
+
+    if (responese.ok){ //HTTP 상태 코드가 200~299일 경우
+        //응답 본문을 받습니다. (관련 메서드는 아래에서 설명.)
+        let json = await responese.json();
+    }else {
+        alert("Http-Error : "+ responese.status);
     }
-    xhr.open('GET','reservation/autofilled?pressedKey='+pressedKey);
-    // xhr.setRequestHeader('Content-type', 'application');
-    xhr.send();
+*/
+
+    /*
+    * 두번째 단계에선 추가 메소드를 호출해 본문을 받습니다.
+    * response에는 프로미스를 기반으로 하는 다양한 메서드가 있습니다. 이 메서드들을 사용하면 다양한 형태의 응답 본문을 처리할 수 있습니다.
+    *
+    * * response.text() : 응답을 읽고 텍스트를 반환합니다.
+    * * response.json() : 응답을 JSON 형태로 파싱합니다.
+    * * response.formData() : 응답을 FormData 객체 형태로 반환합니다.
+    * * response.blob() : 응답을 Blob (타입이 있는 바이너리 데이터)형태로 반환 합니다.
+    * * response.arrayBuffer() : 응답을 ArrayBuffer(바이너 데이터를 로우 레벨 형식으로 표현한것)형태로 반환합니다.
+    *
+    * 이 외에도 response.body가 있는데, ReadableStream 객체인  response.body를 사용하면 응답 본문을 청크 단위로 읽을 수 있습니다.
+    *
+    * */
+
+/*
+
+    let url = 'http://172.30.1.43:8080/reservation/autofilled?wantSearchWord_box=' + wantSearchWord_box;
+
+    let response = await fetch(url);
+
+    let commits = await response.json(); // 응답 본문을 읽고 JSON 형태로 파싱함.
+
+    alert(commits[0].author.login);
+*/
+/*
+
+    //위 예시를 await 없이 프로미스만 사용하면 다음처럼 바뀐다.
+fetch('http://172.30.1.43:8080/reservation/autofilled?wantSearchWord_box=' + wantSearchWord_box)
+.then(response => response.json())
+.then(commits => alert(commits[0].author.login));
+
+*/
+/*
+    let response = await fetch('/article/fetch/logo-fetch.svg');
+
+    let blob = await response.blob(); // 응답을 Blob 객체로 형태로 다운로드 받습니다.
+
+    //다운로드 받은 Blob 을 담을 <img>를 만듭니다.
+    let img = document.createElement('img');
+    img.style = 'position:fixed; top:10px; left:10px; width:100px';
+    document.body.append(img);
+
+    //이미지를 화면에 보여줍니다.
+    img.src = URL.createObjectURL(blob);
+
+    setTimeout(() =>{//3초 후 이미지를 숨깁니다.
+        img.remove();
+        URL.revokeObjectURL(img.src);
+    },3000);
+    */
+    /*
+    * !중요!
+    * 
+    * 본문을 읽을 때 사용되는 메서드는 딱 하나만 사용할 수 있습니다.
+    * response.text()를 사용해 응답을 얻었다면 본문의 콘텐츠는 모두 처리 된 상태이기 때문에
+    * response.json()은 동작하지 않습니다.
+    *
+    * let text = await response.text(); //응답 본문이 소비됩니다.
+    * let parsed = await response.json(); //실패
+    * */
+
+    /*
+    * 응답 헤더
+    *
+    * 응답 헤더는 response.headers 에 맵과 유사한 형태로 저장됩니다.
+    * 
+    * 맵은 아닙니다, 하지만 맵과 유사한 메서드를 지원하죠. 이 메서드들을 사용하면 헤더 일부만 추출하거나
+    * 헤더 전체를 순회할 수 있습니다.
+    * */
+/*
+
+    let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits');
+
+    //헤더 일부를 추출
+    alert(response.headers.get('Content-type')); //application/json; charset=utf-8
+    
+    //헤더 전체를 순회
+    for (let [key, value]of response.headers){
+        alert(`${key} = ${value}`);
+    }
+*/
+
+    /*
+    * 요청헤더
+    * headers 옵션을 사용하면 fetch에 요청 헤더를 설정할 수 있습니다.
+    * headers 엔 아래와 같이 다양한 헤더 정보가 담긴 객체를 넘기게 됩니다.
+    * */
+  /*
+    let response = fetch(protectedUrl,{
+            headers: {
+                Authentication : 'secret'
+            }
+    });
+*/
+/*
+* Headers를 사용해 설정할 수 없는 헤더도 있다. 전체목록은 따로 확인할 것.
+*  Accept-Charset, Accept-Encoding
+*  Access-Control-Request-Headers
+*  Access-Control-Request-Method
+*  Connection
+*  Content-Length
+*  Cookie, Cookie2
+*  Date
+*  DNT
+*  Expect
+*  Host
+*  Keep-Alive
+*  Origin
+*  Referer
+*  TE
+*  Trailer
+*  Transfer-Encoding
+*  Upgrade
+*  Via
+*  Proxy-*
+*  Sec-*
+*
+* 이런 제약은 hTTP 를 목적에 맞고 안전하게 사용할 수 있도록 하려고 만들어졌습니다.
+* 금지 목록에 있는 헤더는 브라우저만 배타적으로 설정, 관리 할 수 있습니다.
+* */
+    
+    /*
+    * POST 요청
+    * GET 이외의 요청을 보내려면 추가 옵션을 사용해야 합니다.
+    * method - HTTP 메서드 (예: POST)
+    * body - 요청 본문으로 다음 항 목중 하나이어야 합니다.
+    * * 문자열 (예: JSON 문자열)
+    * FormData 객체 - form/Multipart 형태로 데이터를 전송을 하기 위해 쓰입니다.
+    * Blob이나 BufferSource : 바이너리 데이터 전송을 위해 쓰입니다.
+    * URLSerachParams : 데이터를 x-www-form-urlencoded 형태로 보내기 위해 쓰이는데, 요즘엔 잘 사용하지 않습니다.
+    *
+    * 대부분 JSON을 요청 본문에 실어 보내게 됩니다.
+    * user 객체를 본문에 실어 보내는 예시를 살펴봅시다.
+    * */
+/*
+
+    let user = {
+        name: 'John',
+        surname: 'Smith'
+    };
+
+    let response = await fetch('/article/fetch/post/user',{
+        method : 'Post',
+        headers : {
+            'Content-Type':'application/json;charset=utf-8'
+        },
+        body : JSON.stringify(user)
+    });
+
+    let result = await response.json();
+    alert(result.message);
+*/
+/*
+* POST 요청을 보낼 때 주의할 점은 요청 본문이 문자열일 때 Content-Type 헤더가
+* text/plain; charset=UTF-8 로 기본 설정된다는 점 입니다.
+*
+* 하지만 위 예시에선 JSON 을 전송하고 있기 때문에 headers에 제대로 된 Content-Type 인 application/json을 설정해주었습니다.
+*
+* 이미지 전송하기
+* Blob 이나 BufferSource 객체를 사용하면 fetch 로 바이너리 데이터를 전송할 수 있습니다.
+* 예시를 살펴봅시다. <canvas> 에 마우스를 움직여 이미지를 만들고 '전송' 버튼을 눌러 이미지를 서버에 전송해보겠습니다.
+*
+* <body style = "margin:0">
+* <canvas id="canvasElem" width ="100" height="80" style="border:1px solid"></canvas>
+*
+* <input type="button" value="전송" onclick="submit()">
+* <script>
+* canvasElem.onmousemove = function(e) {
+* let ctx = canvasElem.getContext('2d');
+* ctx.lineTo(e.clientX, e.clientY);
+* ctx.stroke();
+* };
+*
+* async function submit(){
+* let blob = await new Promise(resolve =>canvasElem.toBlob(resolve, 'image/png')
+* let response= await fetch('/article/fetch/post/image',{
+* method : 'Post',
+* body : blob
+* });
+*
+* //전송이 잘 되었다는 응답이 오고 이미지 사이즈가 얼럿창에 출력됩니다.
+*
+* let result = await response.json();
+* alert(result.message);
+* }
+* </script>
+* </body>
+*
+* */
+/*
+* 이번엔 Content-Type 헤더를 명시적으로 설정하지 않은 점에 주목해주시기 바랍니다.
+* Blob 객체는 내장 타입을 갖기 때문에 특별히 Content-Type을 설정하지 안하도 됩니다.
+*  예시는 이미지를 전송하기 때문에 toBlob에 의해 image/png 가 자동으로 설정되었습니다.
+* 이렇게 Blob 객체의 경우 해당 객체의 타입이 Content-type헤더의 값이 됩니다.
+*
+* 위 예시의 함수 submit ()을 async/await 없이 작성하면 아래와 같습니다.
+* */
+/*
+    function submit() {
+        canvasElem.toBlob(function (blob) {
+            fetch('/article/fetch/post/image',{
+                method :'Post',
+                body: blob
+            })
+                .then(response =>response.json())
+                .then(result =>alert(JSON.stringify(result,null,2)))
+        },'image/png');
+    }
+    */
+    /* 요약
+     * 일반적인 fetch 요청은 두 개의 await 호출로 구성됩니다.
+     *
+     * let response = await fetch(url, options);  //응답 헤더와 함께 이행됨
+     * let result = await response.json();   //json 본문을 읽음
+     *
+     * 물론 awiat 없이도 요청을 보낼 수 있습니다.
+     *  */
+
+
+/*
+    fetch(url, options)
+        .then(response =>response.json())
+        .then(result => /!*결과 처리 *!/)
+*/
+/*
+* 응답 객체의 프로퍼티는 다음과 같습니다.
+* response.status : 응답의 HTTP코드
+* response.ok : 응답 상태가 200과 299 사이에 있는 경우 true
+* response.headers : 맵과 유사한 형태의 HTTP 헤더
+*
+* 응답 본문을 얻으려면 다음과 같은 메서드를 사용하면 됩니다.
+* response.text() : 응답을 텍스트 형태로 반환함.
+* response.json() : 응답을 파싱해 JSON 객체로 변경함.
+* response.formData() : 응답을 FormData 객체로 반환 (form/multipart인코딩에 대한 내용은 다음 챕터에서 다룸)
+* response.blob() : 응답을 Blob(타입이 있는 바이너리 데이터)형태로 반환.
+* response.arrayBuffer() : 응답을 ArrayBuffer(바이너리 데이터를 로우레벨로 표현한 것) 형태로 반환
+*
+* 지금까지 fetch 옵션은 다음과 같습니다.
+* method - HTTP 메서드
+* headers - 요청 헤드가 담긴 객체 (제약 사항이 있음)
+* body - 보내려는 데이터 (요청 본문)로 string 이나 FormData, BufferSource, Blob, UrlSearchParams 객체 형태
+*
+*
+* */
+
+    /*
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+
+        }
+        xhr.open('GET','reservation/autofilled?wantSearchWord_box='+wantSearchWord_box);
+        // xhr.setRequestHeader('Content-type', 'application');
+        xhr.send();
+    */
 
 }
+
+
+function goMemberListBoardAction() {
+
+    for (let i = 0; i < document.getElementById('mainPanel').children.length; i++) {
+
+        document.getElementById('mainPanel').children.item(i).remove();
+
+    }
+
+    var memberListBorad = document.createElement('div');
+    memberListBorad.setAttribute('id','memberListBorad');
+    memberListBorad.innerHTML =
+        "<div id=\"modalSpace\">"+
+        "</div>"+
+    "<div id=\"dropdown\" class=\"dropdown\">"+
+        "</div>"+
+    "<div class=\"table-responsive\">"+
+        "<table class=\"table table-striped\">"+
+            "<thead>"+
+            "<tr>"+
+                "<th>#</th>      "   +
+                "<th>멤버번호</th>   "   +
+                "<th>이름</th>     "   +
+                "<th>메일</th>     "   +
+                "<th>연락처</th>    "   +
+                "<th>가입날짜</th>   "   +
+                "<th>메일 인증여부</th>"   +
+                "<th>탈퇴여부</th>   "   +
+            "</tr>"+
+            "</thead>"+
+            "<tbody>"+
+            "</tbody>"+
+        "</table>"+
+    "</div>";
+
+    document.getElementById('mainPanel').append(memberListBorad);
+
+    fetch('member/memberSelect')
+        .then(function (res) {
+            return res.json();
+        })
+        .then(function (res) {
+
+            console.log(res);
+
+            return
+        })
+        .catch(function () {
+            console.log("error:",onmessageerror);
+        })
+
+
+}
+

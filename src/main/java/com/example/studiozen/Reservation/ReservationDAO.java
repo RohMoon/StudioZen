@@ -48,11 +48,11 @@ public class ReservationDAO {
         return reservationDetailList;
     }
 
-    public List<ReservationDTO> AutoFilled(ReservationDTO reservationDTO) throws SqlSessionException {
+    public List<String> AutoFilled(ReservationDTO reservationDTO) throws SqlSessionException {
 
-        List<ReservationDTO> reservationDetailList =  sqlSessionTemplate.selectList("AutoFilled",reservationDTO);
-
-        return reservationDetailList;
+        List<String> autofilledList =  sqlSessionTemplate.selectList("AutoFilled",reservationDTO);
+        logger.info("*****===>"+autofilledList);
+        return autofilledList;
     }
 
 }

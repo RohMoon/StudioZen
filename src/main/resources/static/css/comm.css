@@ -734,3 +734,16 @@ div#reserv_search_input_div {
 div#reserv_search_detailCheckBox_reserv_no{
     margin-left: 13%;
 }
+
+.automakerDiv{
+    border-width: medium;
+    font-size: 1.7rem;
+}
+.automakerDiv:hover{
+    background-color: #0c63e4;
+    animation-delay: 3s;
+    color: white;
+    transition-timing-function: ease-out;
+    transition-duration: 1s;
+    cursor: pointer;
+}

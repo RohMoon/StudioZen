@@ -41,9 +41,17 @@ public class ReservationController {
     @PostMapping(value = "/selectAll")
     public ModelAndView ReservationSelect(HttpServletRequest request, @RequestBody(required = true) ReservationDTO reservationDTO) {
 
+//        if (reservationDTO.getWantSearchWord_box() != null && reservationDTO.getReserv_no_box() == null)
         logger.info("\n============>@"+reservationDTO);
 //        ReservationDTO reservationDTO = new ReservationDTO();
-
+        if (reservationDTO.getWantSearchWord_box() != null
+                && reservationDTO.getReserv_no_box() == null
+                && reservationDTO.getSpace_no_box() == null
+                && reservationDTO.getReserv_hostcode_box() == null
+                && reservationDTO.getReserv_date_box() == null
+                && reservationDTO.getReserv_start_time_box() == null && reservationDTO.getReserv_end_time_box() == null && reservationDTO.getReserv_host_mobile_box() == null && reservationDTO.getReserv_host_email_box() == null){
+            logger.info("OPAL7777");
+        }
         List<ReservationDTO> reservationSelectList =
 
                 reservationLogic.ReservationSelect(reservationDTO);
@@ -55,10 +63,14 @@ public class ReservationController {
 //                +reservationSelectList+
 //                reservationSelectList.get(0)
 //        );
-
+/*
         for (int i = 0; i < reservationSelectList.size(); i++) {
-            logger.info(reservationSelectList.get(i).getSpace_basicprice());
+            logger.info("====!!!$@#"+reservationSelectList.get(i).getSpace_basicprice());
         }
+        */
+        if (equals(null))
+        logger.info("=============>"+reservationSelectList);
+        logger.info("=====Size========>"+reservationSelectList.size());
 
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/Management/ManagementDash");
@@ -275,23 +287,16 @@ public class ReservationController {
         return ResponseEntity.ok().build();
     }
     /* 자동 완성기능 로직*/
-    @PostMapping(value = "/autofilled")
-    public ModelAndView AutoFilled(HttpServletRequest request, @RequestBody(required = true) ReservationDTO reservationDTO) {
+    @GetMapping(value = "/autofilled")
+    public List<String> AutoFilled(HttpServletRequest request, ReservationDTO reservationDTO) {
 
-        List<ReservationDTO> reservationSelectList =
+        logger.info("##### ===>"+reservationDTO);
+        List<String> autofilledList =
 
-                reservationLogic.ReservationSelect(reservationDTO);
-
-        request.setAttribute("reservationSelectList", reservationSelectList);
+                reservationLogic.AutoFilled(reservationDTO);
 
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/Management/ManagementDash");
-
-        if (reservationSelectList.size() == 0) {
-            logger.info("nonono");
-            return mv;
-        } else {
-            return mv;
-        }
+    return autofilledList;
     }
 }

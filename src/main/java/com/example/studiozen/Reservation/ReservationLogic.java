@@ -170,14 +170,14 @@ public class ReservationLogic {
     }
 
     /* 자동 완성기능 로직*/
-    public List<ReservationDTO> AutoFilled(ReservationDTO reservationDTO) {
-        List<ReservationDTO> reservationSelectList = null;
+    public List<String> AutoFilled(ReservationDTO reservationDTO) {
+        List<String> autofilledList = null;
         try {
-            reservationSelectList = reservationDAO.AutoFilled(reservationDTO);
+            autofilledList = reservationDAO.AutoFilled(reservationDTO);
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }
-        return reservationSelectList;
+        return autofilledList;
 
     }
 }

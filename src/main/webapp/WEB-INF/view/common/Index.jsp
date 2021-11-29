@@ -132,7 +132,7 @@
     let reader                  = '' ;
     let img                     = '' ;
     let choosenDate             =  '';
-
+    let autoFilledList = [];
     let pg                      =  '';
     let pay_method              = '' ;
     let merchant_uid            = '' ;
